@@ -1,0 +1,43 @@
+[2025/11/22 01:17:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:20) .env dosyası yüklenirken hata oluştu: %!(EXTRA *fs.PathError=open /.env: The system cannot find the file specified.)
+[2025/11/22 01:17:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
+	[::1]:5432 (localhost): tls error: server refused TLS connection
+	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
+[2025/11/22 01:18:10 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
+	[::1]:5432 (localhost): tls error: server refused TLS connection
+	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
+[2025/11/22 01:21:21 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
+	[::1]:5432 (localhost): tls error: server refused TLS connection
+	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
+[2025/11/22 01:21:40 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
+	[::1]:5432 (localhost): tls error: server refused TLS connection
+	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
+[2025/11/22 01:25:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:20) .env dosyası yüklenirken hata oluştu: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
+[2025/11/22 01:25:27 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
+	[::1]:5432 (localhost): tls error: server refused TLS connection
+	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
+	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
+[2025/11/22 01:29:28 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
+[2025/11/22 01:29:28 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:30:25 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
+[2025/11/22 01:30:25 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:31:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
+[2025/11/22 01:31:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:31:54 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
+[2025/11/22 01:31:54 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:32:07 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
+[2025/11/22 01:32:07 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:33:52 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
+[2025/11/22 01:33:52 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:34:29 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
+[2025/11/22 01:34:29 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:35:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/devtv.env: The system cannot find the path specified.)
+[2025/11/22 01:35:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 01:35:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/devtv.env: The system cannot find the path specified.)
+[2025/11/22 01:35:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
+[2025/11/22 12:59:59 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar başarıyla alındı
+[2025/11/22 13:28:11 +03] [DEFAULT] [INFO] (devtv/controllers.CreateFaciliator:26) Faciliator başarıyla oluşturuldu: %!(EXTRA string=Ahmet Aydın)
+[2025/11/22 13:29:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
