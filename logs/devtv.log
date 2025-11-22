@@ -41,3 +41,8 @@
 [2025/11/22 12:59:59 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar başarıyla alındı
 [2025/11/22 13:28:11 +03] [DEFAULT] [INFO] (devtv/controllers.CreateFaciliator:26) Faciliator başarıyla oluşturuldu: %!(EXTRA string=Ahmet Aydın)
 [2025/11/22 13:29:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
+[2025/11/22 13:53:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar başarıyla alındı
+[2025/11/22 13:53:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
+[2025/11/22 13:53:38 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
+[2025/11/22 13:54:55 +03] [DEFAULT] [INFO] (devtv/controllers.Login:62) Json başarıyla eşlendi
+[2025/11/22 13:54:55 +03] [DEFAULT] [INFO] (devtv/controllers.Login:90) Kullanıcı başarıyla giriş yaptı: %!(EXTRA string=poizdev)

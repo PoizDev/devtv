@@ -87,7 +87,7 @@ func Login(c *gin.Context) {
 	c.SetSameSite(http.SameSiteNoneMode)
 	c.SetCookie("Auth", tokenString, 3600*24*30, "/", "localhost", false, true) // Canlıya çıkarken Secure true yapılacak
 	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
-	log.Info("Kullanıcı başarıyla giriş yaptı: ", user.Username)
+	log.Info("Kullanıcı giriş yaptı: ", user.Username)
 }
 
 func GetAllUsers(c *gin.Context) {
@@ -100,5 +100,5 @@ func GetAllUsers(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, users)
-	log.Info("Tüm kullanıcılar başarıyla alındı")
+	log.Info("Tüm kullanıcılar alındı")
 }

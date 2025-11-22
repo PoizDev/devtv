@@ -23,7 +23,7 @@ func CreateFaciliator(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create faciliator"})
 		return
 	}
-	log.Info("Faciliator başarıyla oluşturuldu: ", faciliator.Name)
+	log.Info("Faciliator oluşturuldu: ", faciliator.Name)
 	c.JSON(http.StatusOK, gin.H{"message": "Faciliator created successfully"})
 }
 
@@ -37,7 +37,7 @@ func GetAllFaciliators(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, faciliators)
-	log.Info("Tüm faciliatorlar başarıyla alındı")
+	log.Info("Tüm faciliatorlar alındı")
 }
 
 func GetFaciliatorsByTopic(c *gin.Context) {
