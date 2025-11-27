@@ -10,5 +10,6 @@ func AutoMigrate() {
 		&models.Faciliators{},
 		&models.User{},
 		&models.Workshops{},
+		&models.WorkshopTimeSlot{},
 	)
 }

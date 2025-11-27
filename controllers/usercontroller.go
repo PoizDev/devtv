@@ -13,7 +13,6 @@ import (
 )
 
 func Signup(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	var body struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
@@ -48,7 +47,6 @@ func Signup(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	var body struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
@@ -91,14 +89,13 @@ func Login(c *gin.Context) {
 }
 
 func GetAllUsers(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	var users []models.User
-	result := in.DB.Find(&users)
+	result := in.DB.Select("user_id", "username", "role", "created_at").Find(&users)
 	if result.Error != nil {
 		log.Error("Kullanıcılar alınırken hata oluştu: ", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve users"})
 		return
 	}
 	c.JSON(http.StatusOK, users)
-	log.Info("Tüm kullanıcılar alındı")
+	log.Info("Tüm kullanıcılar alındı talep eden kulllanıcı ID: ", c.GetUint("userID"))
 }

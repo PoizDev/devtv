@@ -1,48 +1,105 @@
-[2025/11/22 01:17:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:20) .env dosyası yüklenirken hata oluştu: %!(EXTRA *fs.PathError=open /.env: The system cannot find the file specified.)
-[2025/11/22 01:17:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
-	[::1]:5432 (localhost): tls error: server refused TLS connection
-	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
-	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
-[2025/11/22 01:18:10 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
-	[::1]:5432 (localhost): tls error: server refused TLS connection
-	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
-	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
-[2025/11/22 01:21:21 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
-	[::1]:5432 (localhost): tls error: server refused TLS connection
-	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
-	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
-[2025/11/22 01:21:40 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
-	[::1]:5432 (localhost): tls error: server refused TLS connection
-	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
-	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
-[2025/11/22 01:25:26 +03] [DEFAULT] [EROR] (devtv/in.Connect:20) .env dosyası yüklenirken hata oluştu: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
-[2025/11/22 01:25:27 +03] [DEFAULT] [EROR] (devtv/in.Connect:26) Veritabanı bağlantısı başarısız oldu, %!(EXTRA *pgconn.ConnectError=failed to connect to `user=Musa database=`:
-	[::1]:5432 (localhost): tls error: server refused TLS connection
-	127.0.0.1:5432 (localhost): tls error: server refused TLS connection
-	[::1]:5432 (localhost): failed SASL auth: FATAL: password authentication failed for user "Musa" (SQLSTATE 28P01))
-[2025/11/22 01:29:28 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
-[2025/11/22 01:29:28 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:30:25 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open .env: The system cannot find the file specified.)
-[2025/11/22 01:30:25 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:31:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
-[2025/11/22 01:31:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:31:54 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
-[2025/11/22 01:31:54 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:32:07 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
-[2025/11/22 01:32:07 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:33:52 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
-[2025/11/22 01:33:52 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:34:29 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/.env: The system cannot find the path specified.)
-[2025/11/22 01:34:29 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:35:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/devtv.env: The system cannot find the path specified.)
-[2025/11/22 01:35:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 01:35:53 +03] [DEFAULT] [WARN] (devtv/in.Connect:19) .env dosyası yüklenemedi veya bulunamadı: %!(EXTRA *fs.PathError=open C/Users/poizd/Desktop/gdgbursatestleri/devtv/in/devtv.env: The system cannot find the path specified.)
-[2025/11/22 01:35:53 +03] [DEFAULT] [CRIT] (devtv/in.Connect:25) DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.
-[2025/11/22 12:59:59 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar başarıyla alındı
-[2025/11/22 13:28:11 +03] [DEFAULT] [INFO] (devtv/controllers.CreateFaciliator:26) Faciliator başarıyla oluşturuldu: %!(EXTRA string=Ahmet Aydın)
-[2025/11/22 13:29:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
-[2025/11/22 13:53:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar başarıyla alındı
-[2025/11/22 13:53:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
-[2025/11/22 13:53:38 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:40) Tüm faciliatorlar başarıyla alındı
-[2025/11/22 13:54:55 +03] [DEFAULT] [INFO] (devtv/controllers.Login:62) Json başarıyla eşlendi
-[2025/11/22 13:54:55 +03] [DEFAULT] [INFO] (devtv/controllers.Login:90) Kullanıcı başarıyla giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/27 05:43:36 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 05:47:53 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 05:59:14 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 05:59:40 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:01:34 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:04:47 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:04:48 +03] [DEFAULT] [INFO] (main.main:49) Server başlatılıyor - Port: 2012
+[2025/11/27 06:05:05 +03] [DEFAULT] [INFO] (devtv/controllers.Signup:46) Kullanıcı başarıyla oluşturuldu: %!(EXTRA string=poizdev)
+[2025/11/27 06:05:14 +03] [DEFAULT] [INFO] (devtv/controllers.Login:62) Json başarıyla eşlendi
+[2025/11/27 06:05:14 +03] [DEFAULT] [INFO] (devtv/controllers.Login:90) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/27 06:09:37 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func1:48) Yetkisiz erişim denemesi - Kullanıcı: %!(EXTRA string=poizdev, string= Role: , string=Admin)
+[2025/11/27 06:11:11 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func1:48) Yetkisiz erişim denemesi - Kullanıcı: %!(EXTRA string=poizdev, string= Role: , string=Admin)
+[2025/11/27 06:11:18 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func1:48) Yetkisiz erişim denemesi - Kullanıcı: %!(EXTRA string=poizdev, string= Role: , string=Admin)
+[2025/11/27 06:11:53 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func1:48) Yetkisiz erişim denemesi - Kullanıcı: %!(EXTRA string=poizdev, string= Role: , string=Admin)
+[2025/11/27 06:14:46 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:14:46 +03] [DEFAULT] [INFO] (main.main:49) Server başlatılıyor - Port: 2012
+[2025/11/27 06:14:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 06:35:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 06:47:56 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:47:56 +03] [DEFAULT] [INFO] (main.main:49) Server başlatılıyor - Port: 2012
+[2025/11/27 06:59:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 06:59:28 +03] [DEFAULT] [INFO] (main.main:49) Server başlatılıyor - Port: 2012
+[2025/11/27 07:00:42 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:00:42 +03] [DEFAULT] [INFO] (main.main:45) Server başlatılıyor - Port: 2012
+[2025/11/27 07:01:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:08:52 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:08:52 +03] [DEFAULT] [INFO] (main.main:46) Server başlatılıyor - Port: 2012
+[2025/11/27 07:09:35 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:09:36 +03] [DEFAULT] [INFO] (main.main:46) Server başlatılıyor - Port: 2012
+[2025/11/27 07:09:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:29 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:29 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:10:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:13:13 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:13:13 +03] [DEFAULT] [INFO] (main.main:46) Server başlatılıyor - Port: 2012
+[2025/11/27 07:13:49 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:13:50 +03] [DEFAULT] [INFO] (main.main:46) Server başlatılıyor - Port: 2012
+[2025/11/27 07:13:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:14:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:14:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:103) Tüm kullanıcılar alındı
+[2025/11/27 07:16:07 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:16:07 +03] [DEFAULT] [INFO] (main.main:51) Server başlatılıyor - Port: 2012
+[2025/11/27 07:17:24 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:17:24 +03] [DEFAULT] [INFO] (main.main:51) Server başlatılıyor - Port: 2012
+[2025/11/27 07:17:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:102) Tüm kullanıcılar alındı
+[2025/11/27 07:18:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:18:15 +03] [DEFAULT] [INFO] (main.main:51) Server başlatılıyor - Port: 2012
+[2025/11/27 07:18:41 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:18:41 +03] [DEFAULT] [INFO] (main.main:51) Server başlatılıyor - Port: 2012
+[2025/11/27 07:18:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 07:20:44 +03] [DEFAULT] [INFO] (devtv/controllers.CreateFaciliator:25) Faciliator oluşturuldu: %!(EXTRA string=Ahmet Aydın)
+[2025/11/27 07:20:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/27 07:24:34 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 07:24:35 +03] [DEFAULT] [INFO] (main.main:51) Server başlatılıyor - Port: 2012
+[2025/11/27 20:04:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:04:16 +03] [DEFAULT] [INFO] (main.main:52) Server başlatılıyor - Port: 2012
+[2025/11/27 20:05:38 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:05:39 +03] [DEFAULT] [INFO] (main.main:52) Server başlatılıyor - Port: 2012
+[2025/11/27 20:05:49 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:05:50 +03] [DEFAULT] [INFO] (main.main:52) Server başlatılıyor - Port: 2012
+[2025/11/27 20:06:59 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:07:00 +03] [DEFAULT] [INFO] (main.main:52) Server başlatılıyor - Port: 2012
+[2025/11/27 20:07:46 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:07:48 +03] [DEFAULT] [INFO] (main.main:52) Server başlatılıyor - Port: 2012
+[2025/11/27 20:10:28 +03] [DEFAULT] [INFO] (devtv/controllers.Login:60) Json başarıyla eşlendi
+[2025/11/27 20:10:28 +03] [DEFAULT] [INFO] (devtv/controllers.Login:88) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/27 20:11:24 +03] [DEFAULT] [INFO] (devtv/controllers.CreateWorkshopWithSlots:56) Workshop oluşturuldu: Doctor Strange Atölyesi (slot'sız)
+[2025/11/27 20:14:47 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:14:47 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 20:14:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:365) Tüm workshop'lar alındı
+[2025/11/27 20:17:10 +03] [DEFAULT] [EROR] (devtv/controllers.AddSlotsToWorkshop:98) Slot'lar eklenirken hata: %!(EXTRA *pgconn.PgError=ERROR: insert or update on table "workshop_time_slots" violates foreign key constraint "fk_workshop_time_slots_faciliator" (SQLSTATE 23503))
+[2025/11/27 20:17:30 +03] [DEFAULT] [EROR] (devtv/controllers.AddSlotsToWorkshop:98) Slot'lar eklenirken hata: %!(EXTRA *pgconn.PgError=ERROR: insert or update on table "workshop_time_slots" violates foreign key constraint "fk_workshop_time_slots_faciliator" (SQLSTATE 23503))
+[2025/11/27 20:17:51 +03] [DEFAULT] [INFO] (devtv/controllers.AddSlotsToWorkshop:103) Workshop ID 1'e 1 yeni slot eklendi
+[2025/11/27 20:22:46 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:22:48 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 20:26:21 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:26:23 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 20:26:36 +03] [DEFAULT] [EROR] (devtv/controllers.AddSlotsToWorkshop:87) Facilitator ID'si 8 olan kişi bulunamadı.
+[2025/11/27 20:28:02 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 20:28:03 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 22:03:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:05:03 +03] [DEFAULT] [INFO] (devtv/controllers.Signup:45) Kullanıcı başarıyla oluşturuldu: %!(EXTRA string=mco)
+[2025/11/27 22:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.Login:60) Json başarıyla eşlendi
+[2025/11/27 22:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.Login:88) Kullanıcı giriş yaptı: %!(EXTRA string=mco)
+[2025/11/27 22:06:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:375) Tüm workshop'lar alındı
+[2025/11/27 22:07:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:375) Tüm workshop'lar alındı
+[2025/11/27 22:08:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:08:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:08:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:08:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:09:09 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func3:21) Auth cookie bulunamadı
+[2025/11/27 22:09:29 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı
+[2025/11/27 22:10:34 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 22:10:34 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 22:10:38 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı talep eden kullanıcı adı: 
+[2025/11/27 22:11:02 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/27 22:11:03 +03] [DEFAULT] [INFO] (main.main:54) Server başlatılıyor - Port: 2012
+[2025/11/27 22:11:05 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/27 22:11:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:100) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=2)

@@ -11,7 +11,6 @@ import (
 )
 
 func CreateFaciliator(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	var faciliator models.Faciliators
 	if err := c.BindJSON(&faciliator); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
@@ -28,7 +27,6 @@ func CreateFaciliator(c *gin.Context) {
 }
 
 func GetAllFaciliators(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	var faciliators []models.Faciliators
 	result := in.DB.Find(&faciliators)
 	if result.Error != nil {
@@ -41,7 +39,6 @@ func GetAllFaciliators(c *gin.Context) {
 }
 
 func GetFaciliatorsByTopic(c *gin.Context) {
-	log.LoadConfiguration("./log4go.json")
 	topic := c.Param("topic")
 	var faciliators []models.Faciliators
 	result := in.DB.Where("topic = ?", topic).Find(&faciliators)

@@ -2,6 +2,7 @@ package in
 
 import (
 	"os"
+	"time"
 
 	log "github.com/jeanphorn/log4go"
 	"github.com/joho/godotenv"
@@ -31,5 +32,17 @@ func Connect() {
 		log.Error("Veritabanı bağlantısı başarısız oldu: ", err)
 		return
 	}
+
+	sqlDB, err := DB.DB()
+	if err != nil {
+		log.Error("sql.DB alınamadı. ", err)
+	}
+
+	sqlDB.SetMaxIdleConns(15)
+	sqlDB.SetMaxOpenConns(50)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
+	sqlDB.SetConnMaxIdleTime(1 * time.Minute)
+
 	log.Fine("Veritabanına başarıyla bağlanıldı.")
+	log.Info("Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min")
 }
