@@ -5,7 +5,7 @@ import "time"
 // Workshops - Ana workshop bilgisi
 type Workshops struct {
 	WorkshopID   uint      `json:"workshop_id" gorm:"primaryKey;autoIncrement"`
-	WorkshopName string    `json:"workshop_name" gorm:"type:varchar(100);not null"` // "Çam Atölyesi"
+	WorkshopName string    `json:"workshop_name" gorm:"type:varchar(100);not null"`
 	WorkshopDate time.Time `json:"workshop_date" gorm:"type:date;not null"`
 	IsLive       bool      `json:"is_live" gorm:"default:false"`
 	CreatedAt    time.Time `json:"created_at"`
@@ -18,15 +18,15 @@ type Workshops struct {
 // WorkshopTimeSlot - Her zaman dilimi için ayrı kayıt
 type WorkshopTimeSlot struct {
 	SlotID     uint       `json:"slot_id" gorm:"primaryKey;autoIncrement"`
-	WorkshopID uint       `json:"workshop_id" gorm:"not null;index"` // Hangi workshop? (Çam=1, Fidan=2)
+	WorkshopID uint       `json:"workshop_id" gorm:"not null;index:idx_workshop_slots,priority:1"` // Composite index
 	Workshop   *Workshops `json:"workshop,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 
 	FaciliatorID uint         `json:"faciliator_id" gorm:"not null;index"`
 	Faciliator   *Faciliators `json:"faciliator,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 
-	SlotStart time.Time `json:"slot_start" gorm:"type:timestamp;not null;index"`
-	SlotEnd   time.Time `json:"slot_end" gorm:"type:timestamp;not null"`
-	SlotOrder int       `json:"slot_order" gorm:"not null"` // Sıralama: 1, 2, 3...
+	SlotStart time.Time `json:"slot_start" gorm:"type:timestamp;not null;index:idx_time_range,priority:1;index:idx_workshop_slots,priority:2"`
+	SlotEnd   time.Time `json:"slot_end" gorm:"type:timestamp;not null;index:idx_time_range,priority:2"`
+	SlotOrder int       `json:"slot_order" gorm:"not null;index:idx_workshop_slots,priority:3"`
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -65,5 +65,5 @@ type UpcomingSlotResponse struct {
 	SlotStart      time.Time          `json:"slot_start"`
 	SlotEnd        time.Time          `json:"slot_end"`
 	Faciliator     FaciliatorResponse `json:"faciliator"`
-	TimeUntilStart string             `json:"time_until_start"` // "15 dakika sonra"
+	TimeUntilStart string             `json:"time_until_start"`
 }

@@ -28,8 +28,8 @@ func main() {
 	r.Use(cors.Default())
 
 	circuitBreaker := middlawares.NewCircuitBreaker(
-		5,              // 5 hata sonra aç
-		30*time.Second, // 30 saniye bekle
+		15, // 15 hata sonra aç
+		30*time.Second,
 	)
 	r.GET("/circuitbreaker", func(c *gin.Context) {
 		state := circuitBreaker.GetState()
@@ -81,6 +81,8 @@ func main() {
 		admin.PUT("/workshops/:id/delay", controllers.AddDelayToWorkshop)
 		admin.PUT("/workshops/:id/live", controllers.SetWorkshopLive)
 		admin.DELETE("/workshops/:id", controllers.DeleteWorkshop)
+
+		admin.DELETE("/slots/:id", controllers.DeleteSlots)
 	}
 
 	srv := &http.Server{
