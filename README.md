@@ -1,4 +1,4 @@
-# 🎪 DevFest Bursa - Workshop Yönetim API'si
+# GDG Bursa - DevTV
 
 <div align="center">
 
@@ -33,43 +33,43 @@
 
 ---
 
-## 🎯 Genel Bakış
+## Genel Bakış
 
 DevFest Bursa Workshop Yönetim API'si, DevFest etkinlikleri sırasında birden fazla eş zamanlı workshop yönetimi, gerçek zamanlı program takibi ve kusursuz katılımcı deneyimi için geliştirilmiş production-ready bir RESTful API'dir.
 
 ### Temel Vurgular
 
-- 🔴 **Gerçek zamanlı takip** - Mevcut ve yaklaşan workshop slotlarını anlık izleme
-- ⏰ **Dinamik programlama** - Canlı gecikme yönetimi ile esnek zamanlama
-- 👥 **Çoklu workshop desteği** - Paralel oturum yönetimi
-- 🔐 **Güvenli admin paneli** - JWT kimlik doğrulama ile
-- 🛡️ **Production-ready** - Graceful shutdown, circuit breaker ve timeout'lar
-- ⚡ **Yüksek performans** - Connection pooling ve optimize edilmiş sorgular
+- **Gerçek zamanlı takip** - Mevcut ve yaklaşan workshop slotlarını anlık izleme
+- **Dinamik programlama** - Canlı gecikme yönetimi ile esnek zamanlama
+- **Çoklu workshop desteği** - Paralel oturum yönetimi
+- **Güvenli admin paneli** - JWT kimlik doğrulama ile
+- **Production-ready** - Graceful shutdown, circuit breaker ve timeout'lar
+- **Yüksek performans** - Connection pooling ve optimize edilmiş sorgular
 
 ---
 
-## ✨ Özellikler
+## Özellikler
 
 ### Genel Kullanıcı Özellikleri
-- 📅 Tüm workshop'ları ve programları görüntüleme
-- 🎤 Konuşmacıları ve konularını inceleme
-- 🏢 Etkinlik sponsorlarını görüntüleme
-- 🔴 **Gerçek zamanlı mevcut slot takibi** - Tüm workshop'larda şu anda ne oluyor?
-- ⏭️ **Yaklaşan oturumlar önizlemesi** - Geri sayım sayaçları ile
-- 📱 Mobil uyumlu JSON yanıtları
+- Tüm workshop'ları ve programları görüntüleme
+- Konuşmacıları ve konularını inceleme
+- Etkinlik sponsorlarını görüntüleme
+- **Gerçek zamanlı mevcut slot takibi** - Tüm workshop'larda şu anda ne oluyor?
+-  **Yaklaşan oturumlar önizlemesi** - Geri sayım sayaçları ile
+- Mobil uyumlu JSON yanıtları
 
 ### Admin Özellikleri
-- 👤 Kullanıcı yönetimi ve kimlik doğrulama
-- 🎪 Birden fazla zaman dilimi ile workshop oluşturma
-- ➕ Mevcut workshop'lara slot ekleme
-- ⏰ **Workshop programlarını dinamik olarak erteleme/öne alma**
-- 🟢 Workshop canlı durumunu değiştirme
-- 🎤 Konuşmacı ve sponsor yönetimi
-- 🗑️ **Cascade delete** - Workshop'ları ilişkili verilerle temizleme
+- Kullanıcı yönetimi ve kimlik doğrulama
+- Birden fazla zaman dilimi ile workshop oluşturma
+- Mevcut workshop'lara slot ekleme
+- **Workshop programlarını dinamik olarak erteleme/öne alma**
+- Workshop canlı durumunu değiştirme
+- Konuşmacı ve sponsor yönetimi
+- **Cascade delete** - Workshop'ları ilişkili verilerle temizleme
 
 ---
 
-## 🛠️ Teknoloji Yığını
+## Teknoloji Yığını
 
 ### Temel Teknolojiler
 - **Dil:** Go 1.21+
@@ -95,7 +95,7 @@ DevFest Bursa Workshop Yönetim API'si, DevFest etkinlikleri sırasında birden 
 
 ---
 
-## 🚀 Hızlı Başlangıç
+## Hızlı Başlangıç
 
 ### Gereksinimler
 
@@ -150,7 +150,7 @@ DevFest Bursa Workshop Yönetim API'si, DevFest etkinlikleri sırasında birden 
 
 ---
 
-## 📁 Proje Yapısı
+## Proje Yapısı
 
 ```
 devtv/
@@ -178,7 +178,7 @@ devtv/
 
 ---
 
-## 📚 API Dokümantasyonu
+## API Dokümantasyonu
 
 ### Base URL
 ```
@@ -731,10 +731,10 @@ docker run -p 2012:2012 --env-file .env devfest-api
 
 ### Systemd Servisi
 
-**`/etc/systemd/system/devfest-api.service`:**
+**`/etc/systemd/system/devtv.service`:**
 ```ini
 [Unit]
-Description=DevFest Bursa API
+Description=DevTV
 After=network.target postgresql.service
 
 [Service]
@@ -801,7 +801,7 @@ Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LIC
 
 - Gin Web Framework ekibine
 - GORM katkıda bulunanlara
-- DevFest Bursa organizasyon ekibine
+- DevFest Bursa tasarım ekibine
 - Tüm açık kaynak katkıda bulunanlara
 
 ---
@@ -810,7 +810,7 @@ Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LIC
 
 - **Issue'lar:** [GitHub Issues](https://github.com/poizdev/devtv/issues)
 - **E-posta:** musaefekobak@gmail.com
-- **Website:** [devfestbursa.com](https://devfestbursa.com)
+- **Website:** [devfestbursa.com](https://devfestbursa.com) & [gdgbursa.com](https://gdgbursa.com)
 
 ---
 
