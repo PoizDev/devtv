@@ -1,0 +1,71 @@
+[2025/11/28 01:53:39 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 01:53:40 +03] [DEFAULT] [INFO] (main.main:76) Server başlatılıyor - Port: 2012
+[2025/11/28 01:54:14 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 01:54:14 +03] [DEFAULT] [INFO] (main.main:77) Server başlatılıyor - Port: 2012
+[2025/11/28 02:03:37 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 02:03:38 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 21:45:04 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 21:45:05 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 21:45:16 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 21:45:17 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 21:45:17 +03] [DEFAULT] [CRIT] (main.main.func2:89) Server başlatılamadı
+[2025/11/28 21:45:37 +03] [DEFAULT] [INFO] (devtv/controllers.Login:81) Json başarıyla eşlendi
+[2025/11/28 21:45:38 +03] [DEFAULT] [INFO] (devtv/controllers.Login:126) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/28 21:46:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:61) Tüm faciliatorlar alındı
+[2025/11/28 21:46:40 +03] [DEFAULT] [INFO] (devtv/controllers.Login:81) Json başarıyla eşlendi
+[2025/11/28 21:46:40 +03] [DEFAULT] [INFO] (devtv/controllers.Login:126) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/28 21:48:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:61) Tüm faciliatorlar alındı
+[2025/11/28 21:48:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:452) Tüm workshop'lar alındı
+[2025/11/28 21:48:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:452) Tüm workshop'lar alındı
+[2025/11/28 22:22:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:22:29 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:24:31 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:24:32 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:25:26 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:25:26 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:28:35 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:28:36 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:30:05 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:30:06 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:30:27 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:30:28 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:30:37 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:240) Yaklaşan slot bulunamadı
+[2025/11/28 22:31:48 +03] [DEFAULT] [INFO] (devtv/controllers.AddSlotsToWorkshop:113) Workshop ID 1'e 1 yeni slot eklendi
+[2025/11/28 22:31:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:240) Yaklaşan slot bulunamadı
+[2025/11/28 22:31:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:240) Yaklaşan slot bulunamadı
+[2025/11/28 22:32:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:387) Tüm workshop'lar alındı
+[2025/11/28 22:34:07 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:34:08 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:35:56 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:35:57 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:38:51 +03] [DEFAULT] [INFO] (devtv/controllers.CreateFaciliator:25) Faciliator oluşturuldu: %!(EXTRA string=Ahmet Aydın)
+[2025/11/28 22:42:02 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func5:21) Auth cookie bulunamadı
+[2025/11/28 22:42:13 +03] [DEFAULT] [INFO] (devtv/controllers.Login:60) Json başarıyla eşlendi
+[2025/11/28 22:42:13 +03] [DEFAULT] [INFO] (devtv/controllers.Login:88) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/28 22:42:32 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func5:21) Auth cookie bulunamadı
+[2025/11/28 22:44:10 +03] [DEFAULT] [INFO] (devtv/controllers.CreateWorkshopWithSlots:56) Workshop oluşturuldu: Çam Atölyesi (1 slot eklendi)
+[2025/11/28 22:46:10 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:46:10 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:46:11 +03] [DEFAULT] [INFO] (devtv/controllers.CreateWorkshopWithSlots:56) Workshop oluşturuldu: Çam Atölyesi (1 slot eklendi)
+[2025/11/28 22:46:47 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:46:47 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:52:19 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:52:20 +03] [DEFAULT] [INFO] (main.main.func2:87) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:52:32 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:52:33 +03] [DEFAULT] [INFO] (main.main.func2:88) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:55:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı
+[2025/11/28 22:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı
+[2025/11/28 22:56:18 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 22:56:19 +03] [DEFAULT] [INFO] (main.main.func2:88) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 22:56:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı
+[2025/11/28 22:59:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı
+[2025/11/28 22:59:39 +03] [DEFAULT] [EROR] (devtv/controllers.DeleteWorkshop:440) Slot'lar silinirken hata: %!(EXTRA *pgconn.PgError=ERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02))
+[2025/11/28 23:00:08 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 23:00:09 +03] [DEFAULT] [INFO] (main.main.func2:88) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 23:00:11 +03] [DEFAULT] [EROR] (devtv/controllers.DeleteWorkshop:440) Slot'lar silinirken hata: %!(EXTRA *pgconn.PgError=ERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02))
+[2025/11/28 23:00:41 +03] [DEFAULT] [EROR] (devtv/controllers.DeleteWorkshop:440) Slot'lar silinirken hata: %!(EXTRA *pgconn.PgError=ERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02))
+[2025/11/28 23:02:59 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/28 23:03:00 +03] [DEFAULT] [INFO] (main.main.func2:88) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/28 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.DeleteWorkshop:478) Workshop silindi - ID: %!(EXTRA string=3, string= Slot sayısı: , int64=1)
+[2025/11/28 23:03:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı
+[2025/11/28 23:03:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:408) Tüm workshop'lar alındı

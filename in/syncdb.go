@@ -11,5 +11,6 @@ func AutoMigrate() {
 		&models.User{},
 		&models.Workshops{},
 		&models.WorkshopTimeSlot{},
+		&models.Sponsors{},
 	)
 }

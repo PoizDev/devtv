@@ -22,6 +22,7 @@ func Signup(c *gin.Context) {
 	if err := c.BindJSON(&body); err != nil {
 		log.Error("Json'ı eşlerken hata oluştu: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)

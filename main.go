@@ -1,9 +1,14 @@
 package main
 
 import (
+	"context"
 	"devtv/controllers"
 	"devtv/in"
 	middlawares "devtv/middlewares"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -22,20 +27,45 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
+	circuitBreaker := middlawares.NewCircuitBreaker(
+		5,              // 5 hata sonra aç
+		30*time.Second, // 30 saniye bekle
+	)
+	r.GET("/circuitbreaker", func(c *gin.Context) {
+		state := circuitBreaker.GetState()
+		failures := circuitBreaker.GetFailures()
+
+		stateText := "CLOSED"
+		switch state {
+		case 1: // StateOpen
+			stateText = "OPEN"
+		case 2: // StateHalfOpen
+			stateText = "HALF-OPEN"
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":          "ok",
+			"circuit_breaker": stateText,
+			"failures":        failures,
 		})
 	})
+	r.Use(middlawares.CircuitBreakerMiddleware(circuitBreaker))
 	r.Use(middlawares.TimeoutMiddleware(5 * time.Minute))
+
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
 
 	r.GET("/faciliator", controllers.GetAllFaciliators)
 
+	r.GET("/sponsors", controllers.GetSponsors)
+
+	r.GET("/ws/current", controllers.GetCurrentSlotsWS)
+	r.GET("/ws/workshop/:id/schedule", controllers.GetWorkshopScheduleWS)
+	r.GET("/ws/upcoming", controllers.GetUpcomingSlotsWS)
+
 	r.GET("/workshops", controllers.GetAllWorkshops)
 	r.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
-	r.GET("/workshops/current", controllers.GetCurrentSlot)
+	r.GET("/workshops/current", controllers.GetCurrentSlots)
 	r.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
 
 	admin := r.Group("/admin")
@@ -50,10 +80,39 @@ func main() {
 		admin.POST("/workshops/:id/slots", controllers.AddSlotsToWorkshop)
 		admin.PUT("/workshops/:id/delay", controllers.AddDelayToWorkshop)
 		admin.PUT("/workshops/:id/live", controllers.SetWorkshopLive)
+		admin.DELETE("/workshops/:id", controllers.DeleteWorkshop)
 	}
 
-	log.Info("Server başlatılıyor - Port: 2012")
-	r.Run(":2012")
+	srv := &http.Server{
+		Addr:    ":2012",
+		Handler: r,
+	}
+
+	go func() {
+		log.Info("Server Başlatılıyor - Port, ", srv.Addr)
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Critical("Server başlatılamadı")
+		}
+	}()
+
+	//shutdown sinyalini dinlemesi için
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Critical("Server zorla kapatıldı, ", err.Error())
+	}
+
+	sqlDB, _ := in.DB.DB()
+	if err := sqlDB.Close(); err != nil {
+		log.Error("DB Bağlantısı kapanamadı: %s", err)
+	}
+
+	log.Info("Server kapatıldı.")
 }
 
 /* Cors planlaması:

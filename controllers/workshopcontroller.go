@@ -177,41 +177,62 @@ func GetWorkshopSchedule(c *gin.Context) {
 }
 
 // GetCurrentSlot - Şu anda aktif olan slot'u getir
-func GetCurrentSlot(c *gin.Context) {
+// GetCurrentSlots - Şu anda aktif olan TÜM slot'ları getir
+func GetCurrentSlots(c *gin.Context) {
 	now := time.Now()
 
-	var slot models.WorkshopTimeSlot
+	var slots []models.WorkshopTimeSlot
 	err := in.DB.
 		Preload("Faciliator").
 		Preload("Workshop").
 		Where("slot_start <= ? AND slot_end >= ?", now, now).
-		First(&slot).Error
+		Find(&slots).Error // ← Find() = Tümünü getir!
 
 	if err != nil {
+		log.Error("Database hatası: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if len(slots) == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Şu anda aktif slot yok",
-			"slot":    nil,
+			"slots":   []models.TimeSlotResponse{},
+			"total":   0,
 		})
 		return
 	}
 
-	response := models.TimeSlotResponse{
-		SlotID:    slot.SlotID,
-		SlotStart: slot.SlotStart,
-		SlotEnd:   slot.SlotEnd,
-		SlotOrder: slot.SlotOrder,
-		Faciliator: models.FaciliatorResponse{
-			FaciliatorID: slot.Faciliator.FaciliatorID,
-			Name:         slot.Faciliator.Name,
-			Topic:        slot.Faciliator.Topic,
-			TopicDetails: slot.Faciliator.TopicDetails,
-			Photograph:   slot.Faciliator.Photograph,
-		},
+	var response []models.TimeSlotResponse
+	for _, slot := range slots {
+		response = append(response, models.TimeSlotResponse{
+			SlotID:    slot.SlotID,
+			SlotStart: slot.SlotStart,
+			SlotEnd:   slot.SlotEnd,
+			SlotOrder: slot.SlotOrder,
+			Faciliator: models.FaciliatorResponse{
+				FaciliatorID: slot.Faciliator.FaciliatorID,
+				Name:         slot.Faciliator.Name,
+				Topic:        slot.Faciliator.Topic,
+				TopicDetails: slot.Faciliator.TopicDetails,
+				Photograph:   slot.Faciliator.Photograph,
+			},
+		})
+	}
+
+	// Workshop bilgilerini de ekle
+	var workshopInfo []gin.H
+	for _, slot := range slots {
+		workshopInfo = append(workshopInfo, gin.H{
+			"workshop_id":   slot.Workshop.WorkshopID,
+			"workshop_name": slot.Workshop.WorkshopName,
+			"slot":          response[len(workshopInfo)], // İlgili slot'u bağla
+		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"slot":          response,
-		"workshop_name": slot.Workshop.WorkshopName,
+		"active_workshops": workshopInfo,
+		"total":            len(workshopInfo),
 	})
 }
 
@@ -230,7 +251,19 @@ func GetUpcomingSlots(c *gin.Context) {
 		Find(&slots).Error
 
 	if err != nil {
+		log.Error("Database hatası: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ✅ DOĞRU: Boş slice kontrolü
+	if len(slots) == 0 {
+		log.Info("Yaklaşan slot bulunamadı")
+		c.JSON(http.StatusOK, gin.H{
+			"message":        "Gelecekte bir workshop görünmüyor, ilginiz için teşekkür ederiz.",
+			"upcoming_slots": []models.UpcomingSlotResponse{},
+			"total":          0,
+		})
 		return
 	}
 
@@ -279,14 +312,13 @@ func AddDelayToWorkshop(c *gin.Context) {
 	now := time.Now()
 
 	// SADECE bu workshop'un gelecek slot'larını güncelle
-	result := in.DB.Exec(`
-		UPDATE workshop_time_slots 
-		SET slot_start = slot_start + INTERVAL '? minutes',
-		    slot_end = slot_end + INTERVAL '? minutes',
-		    updated_at = NOW()
-		WHERE workshop_id = ? 
-		  AND slot_start > ?
-	`, req.DelayMinutes, req.DelayMinutes, workshopID, now)
+	result := in.DB.Model(&models.WorkshopTimeSlot{}).
+		Where("workshop_id = ? AND slot_start > ?", workshopID, now).
+		Updates(map[string]interface{}{
+			"slot_start": gorm.Expr("slot_start + interval '1 minute' * ?", req.DelayMinutes),
+			"slot_end":   gorm.Expr("slot_end + interval '1 minute' * ?", req.DelayMinutes),
+			"updated_at": time.Now(),
+		})
 
 	if result.Error != nil {
 		log.Error("Slot'lar güncellenirken hata: ", result.Error)
@@ -373,4 +405,113 @@ func GetAllWorkshops(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, workshops)
 	log.Info("Tüm workshop'lar alındı")
+}
+
+func DeleteWorkshop(c *gin.Context) {
+	workshopID := c.Param("id")
+
+	if workshopID == "" {
+		log.Warn("Workshop ID parametresi boş")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Workshop ID gerekli"})
+		return
+	}
+
+	var workshopIDInt uint
+	if _, err := fmt.Sscanf(workshopID, "%d", &workshopIDInt); err != nil {
+		log.Warn("Geçersiz workshop ID formatı: ", workshopID)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz workshop ID"})
+		return
+	}
+
+	// 3. Workshop var mı kontrol et
+	var workshop models.Workshops
+	if err := in.DB.First(&workshop, workshopID).Error; err != nil {
+		log.Warn("Silinmek istenen workshop bulunamadı: ", workshopID)
+		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı"})
+		return
+	}
+
+	// 4. Transaction başlat
+	tx := in.DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if tx.Error != nil {
+		log.Error("Transaction başlatılamadı: ", tx.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "İşlem başlatılamadı"})
+		return
+	}
+
+	// 5. Önce slot'ları sil
+	deleteSlots := tx.Where("workshop_id = ?", workshopID).Delete(&models.WorkshopTimeSlot{})
+	if deleteSlots.Error != nil {
+		tx.Rollback()
+		log.Error("Slot'lar silinirken hata: ", deleteSlots.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot'lar silinemedi"})
+		return
+	}
+
+	deletedSlotCount := deleteSlots.RowsAffected
+
+	// 6. Sonra workshop'u sil
+	if err := tx.Delete(&workshop).Error; err != nil {
+		tx.Rollback()
+		log.Error("Workshop silinirken hata: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Workshop silinemedi"})
+		return
+	}
+
+	// 7. Transaction'ı tamamla
+	if err := tx.Commit().Error; err != nil {
+		log.Error("Transaction commit edilemedi: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "İşlem tamamlanamadı"})
+		return
+	}
+
+	log.Info("Workshop silindi - ID: ", workshopID, " Slot sayısı: ", deletedSlotCount)
+	c.JSON(http.StatusOK, gin.H{
+		"message":       "Workshop ve slot'ları başarıyla silindi",
+		"workshop_id":   workshop.WorkshopID,
+		"workshop_name": workshop.WorkshopName,
+		"deleted_slots": deletedSlotCount,
+	})
+}
+
+func DeleteSlots(c *gin.Context) {
+	slotID := c.Param("id")
+
+	if slotID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Slot ID gerekli",
+		})
+		log.Warn("Slot ID parametresi boş")
+		return
+	}
+
+	// Önce slot var mı kontrol et
+	var slot models.WorkshopTimeSlot
+	if err := in.DB.First(&slot, "slot_id = ?", slotID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Silinmek istenen slot bulunamadı",
+		})
+		log.Warn("Silinmek istenen slot bulunamadı - ID: ", slotID)
+		return
+	}
+
+	// Slot'u sil
+	result := in.DB.Delete(&slot)
+	if result.Error != nil {
+		log.Error("Slot silinirken hata: ", result.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot silinemedi"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Slot başarıyla silindi",
+		"slot_id": slotID,
+	})
+	log.Info("Slot silindi - ID: ", slotID)
 }

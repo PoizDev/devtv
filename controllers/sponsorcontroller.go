@@ -9,6 +9,8 @@ import (
 	log "github.com/jeanphorn/log4go"
 )
 
+//'Redis ile Cache'lenme yapılacak ama şimdi değil
+
 func CreateSponsor(c *gin.Context) {
 	var sponsors models.Sponsors
 	if err := c.BindJSON(&sponsors); err != nil {
