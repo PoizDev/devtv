@@ -36,7 +36,7 @@ func CreateWorkshopWithSlots(c *gin.Context) {
 		WorkshopName: req.WorkshopName,
 		WorkshopDate: req.WorkshopDate,
 		IsLive:       false,
-		TimeSlots:    req.TimeSlots, // Boş array bile olsa sorun yok
+		TimeSlots:    req.TimeSlots,
 	}
 
 	err := in.DB.Create(&workshop).Error
@@ -73,14 +73,12 @@ func AddSlotsToWorkshop(c *gin.Context) {
 		return
 	}
 
-	// Workshop var mı kontrol et
 	var workshop models.Workshops
 	if err := in.DB.First(&workshop, workshopID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı"})
 		return
 	}
 
-	// Her slot için facilitator kontrolü yap
 	for _, slot := range req.TimeSlots {
 		var facilitator models.Faciliators
 		if err := in.DB.First(&facilitator, slot.FaciliatorID).Error; err != nil {
@@ -90,20 +88,17 @@ func AddSlotsToWorkshop(c *gin.Context) {
 		}
 	}
 
-	// Mevcut en büyük slot_order'ı bul
 	var maxOrder int
 	in.DB.Model(&models.WorkshopTimeSlot{}).
 		Where("workshop_id = ?", workshopID).
 		Select("COALESCE(MAX(slot_order), 0)").
 		Scan(&maxOrder)
 
-	// Yeni slot'lara sıralı order ekle
 	for i := range req.TimeSlots {
 		req.TimeSlots[i].WorkshopID = workshop.WorkshopID
 		req.TimeSlots[i].SlotOrder = maxOrder + i + 1
 	}
 
-	// Slot'ları kaydet
 	if err := in.DB.Create(&req.TimeSlots).Error; err != nil {
 		log.Error("Slot'lar eklenirken hata: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot'lar eklenemedi"})
@@ -118,7 +113,6 @@ func AddSlotsToWorkshop(c *gin.Context) {
 	})
 }
 
-// GetWorkshopSchedule - Belirli bir workshop'un programını getir
 func GetWorkshopSchedule(c *gin.Context) {
 	workshopID := c.Param("id")
 
@@ -135,7 +129,6 @@ func GetWorkshopSchedule(c *gin.Context) {
 		return
 	}
 
-	// Şu anki slot'u bul
 	now := time.Now()
 	var currentSlot *models.TimeSlotResponse
 	var allSlots []models.TimeSlotResponse
@@ -155,7 +148,6 @@ func GetWorkshopSchedule(c *gin.Context) {
 			},
 		}
 
-		// Şu anda aktif mi?
 		if now.After(slot.SlotStart) && now.Before(slot.SlotEnd) {
 			currentSlot = &slotResponse
 		}
@@ -176,8 +168,6 @@ func GetWorkshopSchedule(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// GetCurrentSlot - Şu anda aktif olan slot'u getir
-// GetCurrentSlots - Şu anda aktif olan TÜM slot'ları getir
 func GetCurrentSlots(c *gin.Context) {
 	now := time.Now()
 
@@ -186,7 +176,7 @@ func GetCurrentSlots(c *gin.Context) {
 		Preload("Faciliator").
 		Preload("Workshop").
 		Where("slot_start <= ? AND slot_end >= ?", now, now).
-		Find(&slots).Error // ← Find() = Tümünü getir!
+		Find(&slots).Error
 
 	if err != nil {
 		log.Error("Database hatası: ", err)
@@ -226,7 +216,7 @@ func GetCurrentSlots(c *gin.Context) {
 		workshopInfo = append(workshopInfo, gin.H{
 			"workshop_id":   slot.Workshop.WorkshopID,
 			"workshop_name": slot.Workshop.WorkshopName,
-			"slot":          response[len(workshopInfo)], // İlgili slot'u bağla
+			"slot":          response[len(workshopInfo)],
 		})
 	}
 
@@ -236,7 +226,6 @@ func GetCurrentSlots(c *gin.Context) {
 	})
 }
 
-// GetUpcomingSlots - Sıradaki slot'ları getir
 func GetUpcomingSlots(c *gin.Context) {
 	limit := 5
 	now := time.Now()
@@ -256,7 +245,6 @@ func GetUpcomingSlots(c *gin.Context) {
 		return
 	}
 
-	// ✅ DOĞRU: Boş slice kontrolü
 	if len(slots) == 0 {
 		log.Info("Yaklaşan slot bulunamadı")
 		c.JSON(http.StatusOK, gin.H{
@@ -294,8 +282,6 @@ func GetUpcomingSlots(c *gin.Context) {
 	})
 }
 
-// AddDelayToWorkshop - Belirli bir workshop'a gecikme ekle
-// SADECE bu workshop'un gelecek slot'larını günceller
 func AddDelayToWorkshop(c *gin.Context) {
 	workshopID := c.Param("id")
 
@@ -311,7 +297,6 @@ func AddDelayToWorkshop(c *gin.Context) {
 
 	now := time.Now()
 
-	// SADECE bu workshop'un gelecek slot'larını güncelle
 	result := in.DB.Model(&models.WorkshopTimeSlot{}).
 		Where("workshop_id = ? AND slot_start > ?", workshopID, now).
 		Updates(map[string]interface{}{
