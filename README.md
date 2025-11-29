@@ -15,7 +15,7 @@
 
 ---
 
-## 📋 İçindekiler
+## İçindekiler
 
 - [Genel Bakış](#-genel-bakış)
 - [Özellikler](#-özellikler)
@@ -193,7 +193,7 @@ Cookie: Auth=<jwt_token>
 
 ---
 
-### 🔓 Genel Endpoint'ler
+### Genel Endpoint'ler
 
 #### Sağlık Kontrolü & Durum
 
@@ -302,7 +302,7 @@ GET /sponsors      # Tüm sponsorları listele
 
 ---
 
-### 🔐 Admin Endpoint'leri
+### Admin Endpoint'leri
 
 Tüm admin endpoint'leri kimlik doğrulama ve admin rolü gerektirir.
 
@@ -419,7 +419,7 @@ POST /admin/create/sponsor
 
 ---
 
-## 📸 Fotoğraf Yönetimi
+## Fotoğraf Yönetimi
 
 ### Statik Dosya Servisi
 
@@ -541,7 +541,7 @@ func resizeImage(src, dst string) error {
 
 ---
 
-## 🗄️ Veritabanı Şeması
+## Veritabanı Şeması
 
 ### Users Tablosu
 ```sql
@@ -612,7 +612,7 @@ CREATE TABLE sponsors (
 
 ---
 
-## 🛡️ Middleware & Pattern'ler
+## Middleware & Pattern'ler
 
 ### Authentication Middleware
 - JWT token doğrulama
@@ -645,7 +645,7 @@ ConnMaxIdleTime:  1 dakika
 
 ---
 
-## ⚙️ Yapılandırma
+## Yapılandırma
 
 ### Environment Değişkenleri
 
@@ -669,7 +669,7 @@ MaxAge:           12 * time.Hour
 
 ---
 
-## 💻 Geliştirme
+## Geliştirme
 
 ### Development Modunda Çalıştır
 ```bash
@@ -698,7 +698,7 @@ golangci-lint run
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ### Docker Deployment
 
@@ -758,7 +758,7 @@ sudo systemctl status devfest-api
 
 ---
 
-## 🤝 Katkıda Bulunma
+## Katkıda Bulunma
 
 Katkılarınızı bekliyoruz! Lütfen şu adımları izleyin:
 
@@ -781,13 +781,13 @@ chore: Bağımlılıklar güncellendi
 
 ---
 
-## 📄 Lisans
+## Lisans
 
 Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
 ---
 
-## 👥 Ekip
+## Ekip
 
 **Geliştirici:** Musa Efe KOBAK ([@poizdev](https://github.com/poizdev))
 
@@ -797,7 +797,7 @@ Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LIC
 
 ---
 
-## 🙏 Teşekkürler
+## Teşekkürler
 
 - Gin Web Framework ekibine
 - GORM katkıda bulunanlara
@@ -806,7 +806,7 @@ Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LIC
 
 ---
 
-## 📞 Destek
+## Destek
 
 - **Issue'lar:** [GitHub Issues](https://github.com/poizdev/devtv/issues)
 - **E-posta:** musaefekobak@gmail.com
