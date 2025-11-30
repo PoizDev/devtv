@@ -1,0 +1,47 @@
+[2025/11/29 11:24:16 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 11:24:16 +03] [DEFAULT] [INFO] (main.main.func2:92) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 11:25:17 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 11:25:17 +03] [DEFAULT] [INFO] (main.main.func2:92) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 11:52:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 11:52:15 +03] [DEFAULT] [INFO] (main.main.func2:94) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 18:51:43 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 18:51:44 +03] [DEFAULT] [INFO] (main.main.func2:94) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 20:08:30 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 20:08:31 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 20:08:38 +03] [DEFAULT] [INFO] (devtv/controllers.Login:61) Json başarıyla eşlendi
+[2025/11/29 20:08:39 +03] [DEFAULT] [INFO] (devtv/controllers.Login:89) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/29 20:10:54 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 20:10:55 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 20:13:51 +03] [DEFAULT] [INFO] (devtv/controllers.CreateSponsor:27) Sponsor oluşturuldu: %!(EXTRA string=Google)
+[2025/11/29 20:20:39 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 20:20:39 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 20:20:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/29 20:48:06 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 20:48:07 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 20:53:59 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 20:53:59 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 21:03:36 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 21:03:36 +03] [DEFAULT] [INFO] (main.main.func2:100) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 21:05:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 21:05:15 +03] [DEFAULT] [INFO] (main.main.func2:101) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 21:05:26 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateWorkshops:550) Workshop güncellendi - ID: %!(EXTRA string=1, string= Name: , string=Erol Kaftanoğlu Atölyesi)
+[2025/11/29 21:05:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/29 21:06:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:392) Tüm workshop'lar alındı
+[2025/11/29 21:07:24 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 21:07:25 +03] [DEFAULT] [INFO] (main.main.func2:101) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 21:07:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/29 21:08:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/29 21:58:10 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 21:58:11 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 22:18:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/29 22:19:16 +03] [DEFAULT] [WARN] (devtv/controllers.UpdateFaciliator:109) json parse hatası: %!(EXTRA *json.SyntaxError=invalid character '"' after object key:value pair)
+[2025/11/29 22:19:25 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateFaciliator:145) Faciliator güncellendi - ID: %!(EXTRA string=2, string=İsim: , string=Emre Hızlı)
+[2025/11/29 22:19:40 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateFaciliator:145) Faciliator güncellendi - ID: %!(EXTRA string=2, string=İsim: , string=Emre Hızlı)
+[2025/11/29 22:20:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/29 22:20:18 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateFaciliator:145) Faciliator güncellendi - ID: %!(EXTRA string=2, string=İsim: , string=Emre Hızlı)
+[2025/11/29 22:21:52 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 22:21:52 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/29 22:21:53 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateFaciliator:148) Faciliator güncellendi - ID: %!(EXTRA string=2, string=İsim: , string=Emre Hızlı)
+[2025/11/29 22:28:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/29 23:26:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/29 23:26:15 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)

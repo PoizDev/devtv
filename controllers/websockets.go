@@ -268,3 +268,55 @@ func GetUpcomingSlotsWS(c *gin.Context) {
 		})
 	}
 }
+
+func GetSponsorsWS(c *gin.Context) {
+	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		log.Error("WebSocket upgrade hatası: ", err)
+		return
+	}
+	defer ws.Close()
+
+	clients[ws] = true
+	log.Info("Yeni WebSocket bağlantısı: GetSponsors")
+
+	ticker := time.NewTicker(5 * time.Second)
+	defer ticker.Stop()
+
+	go func() {
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				delete(clients, ws)
+				log.Info("WebSocket bağlantısı kapatıldı: GetSponsors")
+				return
+			}
+		}
+	}()
+
+	for range ticker.C {
+		var sponsors []models.Sponsors
+
+		err := in.DB.Find(&sponsors).Error
+		if err != nil {
+			log.Error("Database hatası: ", err)
+			ws.WriteJSON(gin.H{"error": err.Error()})
+			continue
+		}
+
+		if len(sponsors) == 0 {
+			ws.WriteJSON(gin.H{
+				"message":   "Henüz sponsor eklenmemiş",
+				"sponsors":  []models.Sponsors{},
+				"total":     0,
+				"timestamp": time.Now(),
+			})
+			continue
+		}
+
+		ws.WriteJSON(gin.H{
+			"sponsors":  sponsors,
+			"total":     len(sponsors),
+			"timestamp": time.Now(),
+		})
+	}
+}

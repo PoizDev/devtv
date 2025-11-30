@@ -100,3 +100,41 @@ func GetAllUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 	log.Info("Tüm kullanıcılar alındı talep eden kulllanıcı ID: ", c.GetUint("userID"))
 }
+
+func DeleteUsers(c *gin.Context) {
+	userID := c.Param("id")
+
+	if userID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "User ID gerekli",
+		})
+		log.Warn("User ID parametresi boş")
+		return
+	}
+
+	var user models.User
+	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Silinmek istenen user bulunamadı",
+		})
+		log.Warn("Silinmek istenen user bulunamadı - ID", userID)
+		return
+	}
+
+	result := in.DB.Delete(&user)
+	if result.Error != nil {
+		log.Error("User silinirken hata: ", result.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "User silinemedi, " + result.Error.Error(),
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User silindi",
+		"user_id": userID,
+	})
+	log.Info("User silindi - ID: ", userID)
+}
+
+func UpdateUser(c *gin.Context) {
+
+}

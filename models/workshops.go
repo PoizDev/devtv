@@ -2,7 +2,6 @@ package models
 
 import "time"
 
-// Workshops - Ana workshop bilgisi
 type Workshops struct {
 	WorkshopID   uint      `json:"workshop_id" gorm:"primaryKey;autoIncrement"`
 	WorkshopName string    `json:"workshop_name" gorm:"type:varchar(100);not null"`
@@ -11,11 +10,9 @@ type Workshops struct {
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
 
-	// İlişkiler
 	TimeSlots []WorkshopTimeSlot `json:"time_slots" gorm:"foreignKey:WorkshopID"`
 }
 
-// WorkshopTimeSlot - Her zaman dilimi için ayrı kayıt
 type WorkshopTimeSlot struct {
 	SlotID     uint       `json:"slot_id" gorm:"primaryKey;autoIncrement"`
 	WorkshopID uint       `json:"workshop_id" gorm:"not null;index:idx_workshop_slots,priority:1"` // Composite index
@@ -32,7 +29,6 @@ type WorkshopTimeSlot struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-// DTO'lar - API Response için
 type WorkshopScheduleResponse struct {
 	WorkshopID   uint               `json:"workshop_id"`
 	WorkshopName string             `json:"workshop_name"`

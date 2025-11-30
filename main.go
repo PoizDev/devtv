@@ -5,6 +5,7 @@ import (
 	"devtv/controllers"
 	"devtv/in"
 	middlawares "devtv/middlewares"
+	middlewares "devtv/middlewares"
 	"net/http"
 	"os"
 	"os/signal"
@@ -27,7 +28,8 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	circuitBreaker := middlawares.NewCircuitBreaker(
+	middlewares.StartHealthCollector()
+	circuitBreaker := middlewares.NewCircuitBreaker(
 		15, // 15 hata sonra aç
 		30*time.Second,
 	)
@@ -49,8 +51,9 @@ func main() {
 			"failures":        failures,
 		})
 	})
-	r.Use(middlawares.CircuitBreakerMiddleware(circuitBreaker))
-	r.Use(middlawares.TimeoutMiddleware(5 * time.Minute))
+
+	r.Use(middlewares.CircuitBreakerMiddleware(circuitBreaker))
+	r.Use(middlewares.TimeoutMiddleware(5 * time.Minute))
 
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
@@ -62,6 +65,15 @@ func main() {
 	r.GET("/ws/current", controllers.GetCurrentSlotsWS)
 	r.GET("/ws/workshop/:id/schedule", controllers.GetWorkshopScheduleWS)
 	r.GET("/ws/upcoming", controllers.GetUpcomingSlotsWS)
+	r.GET("/ws/sponsors", controllers.GetSponsorsWS)
+	r.GET("/health", func(c *gin.Context) {
+		health := middlewares.GetCachedHealthData()
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "healthy",
+			"timestamp": time.Now(),
+			"data":      health,
+		})
+	})
 
 	r.GET("/workshops", controllers.GetAllWorkshops)
 	r.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
@@ -74,15 +86,24 @@ func main() {
 		admin.GET("/users", controllers.GetAllUsers)
 
 		admin.POST("/create/faciliator", controllers.CreateFaciliator)
+		admin.PUT("/faciliator/:id", controllers.UpdateFaciliator)
 
+		admin.DELETE("/users/:id")
+
+		admin.POST("sponsors/add", controllers.CreateSponsor)
+		admin.DELETE("sponsors/id", controllers.DeleteSponsors)
+
+		admin.DELETE("faciliator/:id", controllers.DeleteFacilitator)
 		admin.POST("/create/sponsor", controllers.CreateSponsor)
 		admin.POST("/workshops/create", controllers.CreateWorkshopWithSlots)
 		admin.POST("/workshops/:id/slots", controllers.AddSlotsToWorkshop)
 		admin.PUT("/workshops/:id/delay", controllers.AddDelayToWorkshop)
 		admin.PUT("/workshops/:id/live", controllers.SetWorkshopLive)
+		admin.PUT("/workshops/:id", controllers.UpdateWorkshops)
 		admin.DELETE("/workshops/:id", controllers.DeleteWorkshop)
 
 		admin.DELETE("/slots/:id", controllers.DeleteSlots)
+		admin.PUT("/slots/:id", controllers.UpdateTimeSlot)
 	}
 
 	srv := &http.Server{

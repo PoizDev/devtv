@@ -298,7 +298,7 @@ func AddDelayToWorkshop(c *gin.Context) {
 	now := time.Now()
 
 	result := in.DB.Model(&models.WorkshopTimeSlot{}).
-		Where("workshop_id = ? AND slot_start > ?", workshopID, now).
+		Where("workshop_id = ? AND slot_end > ?", workshopID, now).
 		Updates(map[string]interface{}{
 			"slot_start": gorm.Expr("slot_start + interval '1 minute' * ?", req.DelayMinutes),
 			"slot_end":   gorm.Expr("slot_end + interval '1 minute' * ?", req.DelayMinutes),
@@ -382,14 +382,33 @@ func formatDuration(d time.Duration) string {
 
 func GetAllWorkshops(c *gin.Context) {
 	var workshops []models.Workshops
-	result := in.DB.Find(&workshops)
+	result := in.DB.
+		Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
+			return db.Order("slot_order ASC")
+		}).
+		Preload("TimeSlots.Faciliator").
+		Find(&workshops)
+
 	if result.Error != nil {
 		log.Error("Workshop'lar alınırken hata oluştu: ", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve workshops"})
 		return
 	}
-	c.JSON(http.StatusOK, workshops)
-	log.Info("Tüm workshop'lar alındı")
+
+	if len(workshops) == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"message":   "Workshop bulunamadı",
+			"workshops": []models.Workshops{},
+			"total":     0,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"workshops": workshops,
+		"total":     len(workshops),
+	})
+	log.Info("Tüm workshop'lar alındı - Toplam: ", len(workshops))
 }
 
 func DeleteWorkshop(c *gin.Context) {
@@ -499,4 +518,149 @@ func DeleteSlots(c *gin.Context) {
 		"slot_id": slotID,
 	})
 	log.Info("Slot silindi - ID: ", slotID)
+}
+
+func UpdateWorkshops(c *gin.Context) {
+	workshopID := c.Param("id")
+
+	if workshopID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Workshop ID gerekli",
+		})
+		log.Warn("Workshop ID boş.")
+		return
+	}
+
+	type UpdateWorkshopRequest struct {
+		WorkshopName string    `json:"workshop_name"`
+		WorkshopDate time.Time `json:"workshop_date"`
+	}
+
+	var req UpdateWorkshopRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		log.Warn("JSON parse hatası: ", err)
+		return
+	}
+
+	var workshop models.Workshops
+	if err := in.DB.First(&workshop, workshopID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı"})
+		log.Warn("Güncellenecek workshop bulunamadı - ID: ", workshopID)
+		return
+	}
+
+	// Güncelle
+	updateData := map[string]interface{}{}
+
+	if req.WorkshopName != "" {
+		updateData["workshop_name"] = req.WorkshopName
+	}
+	if !req.WorkshopDate.IsZero() {
+		updateData["workshop_date"] = req.WorkshopDate
+	}
+
+	if err := in.DB.Model(&workshop).Updates(updateData).Error; err != nil {
+		log.Error("Workshop güncellenirken hata: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Workshop güncellenemedi"})
+		return
+	}
+
+	log.Info("Workshop güncellendi - ID: ", workshopID, " Name: ", req.WorkshopName)
+	c.JSON(http.StatusOK, gin.H{
+		"message":  "Workshop başarıyla güncellendi",
+		"workshop": workshop,
+	})
+}
+
+// UpdateTimeSlot - Tek bir slot'u güncelle
+func UpdateTimeSlot(c *gin.Context) {
+	slotID := c.Param("id")
+
+	// 1. Parametre kontrolü
+	if slotID == "" {
+		log.Warn("Slot ID boş")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Slot ID gerekli"})
+		return
+	}
+
+	// 2. Request struct
+	type UpdateSlotRequest struct {
+		FaciliatorID *uint      `json:"faciliator_id"` // Pointer = opsiyonel
+		SlotStart    *time.Time `json:"slot_start"`
+		SlotEnd      *time.Time `json:"slot_end"`
+		SlotOrder    *int       `json:"slot_order"`
+	}
+
+	var req UpdateSlotRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		log.Warn("Geçersiz JSON formatı: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz veri formatı"})
+		return
+	}
+
+	// 3. Slot var mı kontrol et
+	var slot models.WorkshopTimeSlot
+	if err := in.DB.First(&slot, slotID).Error; err != nil {
+		log.Warn("Güncellenecek slot bulunamadı: ", slotID)
+		c.JSON(http.StatusNotFound, gin.H{"error": "Slot bulunamadı"})
+		return
+	}
+
+	// 4. Güncelleme map'i oluştur (sadece gönderilen alanlar)
+	updates := make(map[string]interface{})
+
+	if req.FaciliatorID != nil {
+		// Faciliator var mı kontrol et
+		var faciliator models.Faciliators
+		if err := in.DB.First(&faciliator, *req.FaciliatorID).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Konuşmacı bulunamadı"})
+			return
+		}
+		updates["faciliator_id"] = *req.FaciliatorID
+	}
+
+	if req.SlotStart != nil {
+		updates["slot_start"] = *req.SlotStart
+	}
+
+	if req.SlotEnd != nil {
+		updates["slot_end"] = *req.SlotEnd
+	}
+
+	if req.SlotOrder != nil {
+		updates["slot_order"] = *req.SlotOrder
+	}
+
+	// 5. Hiçbir alan gönderilmemişse
+	if len(updates) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Güncellenecek alan bulunamadı"})
+		return
+	}
+
+	// 6. Zamanları kontrol et
+	if req.SlotStart != nil && req.SlotEnd != nil {
+		if req.SlotEnd.Before(*req.SlotStart) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Bitiş zamanı başlangıçtan önce olamaz"})
+			return
+		}
+	}
+
+	// 7. Güncelle
+	if err := in.DB.Model(&slot).Updates(updates).Error; err != nil {
+		log.Error("Slot güncellenirken hata: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot güncellenemedi"})
+		return
+	}
+
+	// 8. Güncel veriyi al
+	if err := in.DB.Preload("Faciliator").Preload("Workshop").First(&slot, slotID).Error; err != nil {
+		log.Error("Güncel slot alınamadı: ", err)
+	}
+
+	log.Info("Slot güncellendi - ID: ", slotID)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Slot başarıyla güncellendi",
+		"slot":    slot,
+	})
 }
