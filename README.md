@@ -163,9 +163,11 @@ devtv/
 │   └── sponsorcontroller.go
 ├── middlewares/            # HTTP middleware'leri
 │   ├── middlewares.go      # Auth & Timeout
+│   ├── health.go           # Server Sağlık Kontrolcücsü
 │   └── circuitbreaker.go   # Circuit breaker pattern
 ├── models/                 # Veritabanı modelleri & DTO'lar
 │   ├── user.go
+│   ├── healthmodel.go
 │   ├── workshops.go
 │   ├── faciliators.go
 │   └── sponsors.go
