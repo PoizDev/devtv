@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevFest Bursa Dashboard 2025 - Mobil Optimize</title>
+    
+    <style>
+        /* =======================================================
+           1. GENEL STİLLER (RESET & FONT)
+           ======================================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            /* Google Fontlarına benzeyen bir yığın */
+            font-family: 'Google Sans', 'Product Sans', 'Roboto', sans-serif; 
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* =======================================================
+           2. MOBİL BAŞLIK VE ALT BİLGİ 
+           ======================================================= */
+        .mobile-header, .mobile-footer {
+            /* MASAÜSTÜ GÖRÜNÜMDE GİZLİ (Varsayılan Kural) */
+            display: none; 
+            padding: 0 5px; 
+            width: 100%;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: -10px; 
+        }
+
+        .mobile-header-logo {
+            height: 30px; 
+            width: auto;
+            object-fit: contain;
+        }
+        
+        /* Mobil başlık metin stili (Font kalınlığı 500) */
+        .mobile-header-text {
+            display: flex; 
+            align-items: center;
+            font-size: 1.2rem; 
+            font-weight: 500;
+            color: #000;
+            margin: 0;
+            gap: 5px; 
+        }
+
+        .mobile-footer {
+            display: flex;
+            justify-content: center;
+            padding-top: 15px;
+        }
+
+        .mobile-footer img {
+            height: 50px; 
+            width: auto;
+            object-fit: contain;
+            opacity: 0.7; 
+        }
+
+        /* =======================================================
+           3. ANA YAPI (GRID) - MASAÜSTÜ
+           ======================================================= */
+        .top-section {
+            grid-template-columns: 2.8fr 1fr; 
+            display: grid;
+            gap: 20px;
+            height: auto;
+            align-items: flex-start;
+            /* MASAÜSTÜ BOŞLUK (Önceki istek) */
+            margin-top: 20px; 
+        }
+
+        /* =======================================================
+           4. VİDEO BÖLÜMÜ
+           ======================================================= */
+        .main-video-card {
+            background-color: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 613px; 
+            max-height: 700px; 
+            
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+
+        .devfest-logo-overlay {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            z-index: 10;
+        }
+
+        .devfest-logo-overlay img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .video-player-wrapper {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .styled-video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* =======================================================
+           5. SİDEBAR (OTURUMLAR)
+           ======================================================= */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: auto;
+            width: 100%;
+            overflow: visible; 
+            grid-row: 1 / 3; 
+            grid-column: 2 / 3;
+        }
+
+        /* Durum Başlığı ve Animasyon */
+        .status-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1a73e8;
+            font-weight: 500;
+            padding: 15px 20px 10px 20px;
+            flex-shrink: 0;
+            margin-bottom: 0;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1a73e8;
+            border-radius: 50%;
+        }
+        .pulse-animation {
+            animation: pulse-fade 2s infinite ease-in-out;
+        }
+        @keyframes pulse-fade {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .mobile-status-dot {
+            background-color: #d93025; 
+        }
+        .mobile-header .status-dot {
+            width: 6px;
+            height: 6px;
+        }
+
+
+        .active-sessions-box {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #e8f0fe;
+        }
+
+        .card-divider {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 0 20px;
+        }
+
+        .scrollable-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: visible; 
+            padding-right: 0;
+            flex-grow: 1;
+            align-items: flex-start;
+            padding-bottom: 25px; 
+        }
+
+        .side-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            min-height: 150px; 
+            width: 100%;
+        }
+
+        .active-sessions-box .side-card {
+            box-shadow: none;
+            background: transparent;
+            border-radius: 0;
+            border: none;
+            min-height: 120px; 
+            padding: 10px 20px; 
+        }
+
+        .card.side-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+            padding-right: 15px;
+        }
+
+        .meta-tag {
+            font-size: 0.95rem;
+            color: #1a73e8;
+        }
+        .meta-tag.active-tag {
+            color: #828d0f;
+        }
+
+        /* Konuşmacı başlığı h4 stili (Önceki istek) */
+        .side-card h4 {
+            font-size: 1.1rem; 
+            font-weight: 600;
+            margin: 2px 0;
+        }
+        .desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .speaker-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .speaker-img {
+            width: 80px; 
+            height: 80px; 
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+        }
+
+        .time-btn {
+            border: none;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+        .blue-btn {
+            background-color: #1a73e8;
+        }
+        .olive-btn {
+            background-color: #9cab12;
+        }
+
+
+        /* =======================================================
+           6. SPONSORLAR VE ORGANİZATÖR BÖLÜMÜ
+           ======================================================= */
+        .sponsors-group {
+            grid-column: 1 / 2; 
+            grid-row: 2 / 3; 
+            display: grid;
+            grid-template-columns: 4fr 1fr; 
+            gap: 20px;
+            margin-top: -26px; 
+        }
+
+        .sponsors-card, .organizer-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            align-items: center;
+            padding-top: 20px; 
+            padding-bottom: 20px;
+        }
+        
+        .sponsors-card {
+            overflow: hidden;
+            padding: 15px 0; 
+            background-image: url('sponsor-bg.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: transparent; 
+        }
+
+        .sponsors-card h3 {
+            font-weight: 500;
+            font-style: normal;
+            font-size: 20px; 
+            line-height: 100%;
+            text-align: center;
+            color: #000; 
+            margin-bottom: 10px; 
+            padding-top: 5px; 
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7); 
+        }
+        
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            width: max-content;
+            gap: 40px; 
+            animation: scroll 30s linear infinite;
+        }
+
+        .slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        .slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img {
+            height: 50px; 
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .organizer-card {
+            padding: 10px 20px; 
+        }
+        
+        .organizer-card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 50px; 
+            object-fit: contain;
+            margin: 10px 0; 
+        }
+
+        .current-time {
+            font-family: 'Google Sans', 'Product Sans', 'Roboto', sans-serif;
+            font-size: 2.5rem; 
+            font-weight: 500; 
+            color: #000; 
+            line-height: 1.5; 
+            margin: 10px 0; 
+        }
+
+        .bottom-section { display: none; }
+        .empty-placeholder { display: none; }
+
+
+        /* =======================================================
+           7. RESPONSIVE TASARIM (1024px Altı)
+           ======================================================= */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                /* Yan boşlukları küçült */
+                padding: 10px; 
+                gap: 15px;
+            }
+
+            /* MOBİL BAŞLIK VE ALT BİLGİYİ GÖSTER */
+            .mobile-header, .mobile-footer {
+                display: flex;
+            }
+            .mobile-header {
+                /* Üst boşluğu düzelt */
+                margin-top: 0; 
+                margin-bottom: 5px;
+                padding: 0 10px;
+            }
+            .mobile-footer {
+                 padding: 15px 10px 0 10px;
+            }
+
+            /* ANA BÖLÜMLERİ YÖNET */
+            .top-section {
+                grid-template-columns: 1fr; 
+                height: auto;
+                gap: 15px;
+                /* Mobil görünümde üst boşluğu sıfırlar */
+                margin-top: 0; 
+            }
+
+            /* VİDEO KARTINI GİZLE */
+            .main-video-card {
+                display: none; 
+            }
+
+            .sidebar {
+                grid-row: auto; 
+                grid-column: auto;
+                width: 100%; 
+            }
+
+            /* SPONSOR GRUBU KARTINI GİZLE */
+            .sponsors-group {
+                display: none; 
+            }
+            
+            /* Oturum kartları içindeki paddingleri biraz azaltılabilir */
+            .active-sessions-box .side-card {
+                padding: 10px 15px;
+            }
+            .side-card {
+                padding: 15px;
+                min-height: 100px;
+            }
+            /* KONUŞMACI FOTOĞRAFI BOYUTU (Önceki istek) */
+            .speaker-img {
+                width: 70px; /* 70px olarak ayarlandı */
+                height: 70px;
+            }
+            .time-btn {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <header class="mobile-header">
+            <img src="gdg-logo.png" alt="GDG Bursa Logo" class="mobile-header-logo">
+            
+            <div class="mobile-header-text">
+                <div class="status-dot pulse-animation mobile-status-dot"></div>
+                Etkinlik Akışı
+            </div>
+        </header>
+
+        <div class="top-section">
+            
+            <main class="main-video-card">
+                <div class="devfest-logo-overlay">
+                    <img src="devfest-icon.png" alt="DevFest Bursa Logo" />
+                </div>
+                <div class="video-player-wrapper">
+                    <video controls class="styled-video-player" poster="arkaplan.png">
+                        <source src="movie.mp4" type="video/mp4">
+                        Tarayıcınız video etiketini desteklemiyor.
+                    </video>
+                </div>
+            </main>
+
+            <aside class="sidebar">
+                
+                <div class="card active-sessions-box">
+                    
+                    <div class="status-header">
+                        Devam ediyor <div class="status-dot pulse-animation"></div>
+                    </div>
+
+                    <div class="side-card active-session">
+                        <div class="card-info">
+                            <span class="meta-tag" style="color:#d93025; font-weight:bold;">Ana Salon</span>
+                            <h4>{Konuşmacı Adı}</h4>
+                            <p class="desc">(Keynote Sunumu)</p>
+                        </div>
+                        <div class="speaker-area">
+                            <img src="https://fotolifeakademi.com/uploads/2023/11/telefonla-biyometrik-fotograf-nasil-cekilir.jpeg" alt="Speaker" class="speaker-img">
+                            <button class="time-btn blue-btn">13.00-14.00</button>
+                        </div>
+                    </div>
+
+                    <hr class="card-divider">
+
+                    <div class="side-card active-session">
+                        <div class="card-info">
+                            <span class="meta-tag">{Atölye adı} Atölye</span>
+                            <h4>{Konuşmacı Adı}</h4>
+                            <p class="desc">(Workshop konusu hakkında kısa bilgi)</p>
+                        </div>
+                        <div class="speaker-area">
+                            <img src="https://fotolifeakademi.com/uploads/2023/11/telefonla-biyometrik-fotograf-nasil-cekilir.jpeg" alt="Speaker" class="speaker-img">
+                            <button class="time-btn blue-btn">13.00-14.00</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scrollable-list">
+                    
+                    <div class="card side-card">
+                        <div class="card-info">
+                            <span class="meta-tag">{Atölye adı} Atölye</span>
+                            <h4>{Konuşmacı Adı}</h4>
+                            <p class="desc">(Workshop konusu hakkında kısa bilgi)</p>
+                        </div>
+                        <div class="speaker-area">
+                            <img src="https://fotolifeakademi.com/uploads/2023/11/telefonla-biyometrik-fotograf-nasil-cekilir.jpeg" alt="Speaker" class="speaker-img">
+                            <button class="time-btn olive-btn">14.00-15.00</button>
+                        </div>
+                    </div>
+
+                     <div class="card side-card">
+                        <div class="card-info">
+                            <span class="meta-tag active-tag">{Atölye adı} Atölye</span>
+                            <h4>{Konuşmacı Adı}</h4>
+                            <p class="desc">(Workshop konusu hakkında kısa bilgi)</p>
+                        </div>
+                         <div class="speaker-area">
+                            <img src="https://fotolifeakademi.com/uploads/2023/11/telefonla-biyometrik-fotograf-nasil-cekilir.jpeg" alt="Speaker" class="speaker-img">
+                            <button class="time-btn olive-btn">15.00-17.00</button>
+                        </div>
+                    </div>
+
+                     <div class="card side-card">
+                        <div class="card-info">
+                            <span class="meta-tag">{Atölye adı} Atölye</span>
+                            <h4>{Konuşmacı Adı 3}</h4>
+                            <p class="desc">(Workshop konusu hakkında kısa bilgi 3)</p>
+                        </div>
+                         <div class="speaker-area">
+                            <img src="https://fotolifeakademi.com/uploads/2023/11/telefonla-biyometrik-fotograf-nasil-cekilir.jpeg" alt="Speaker" class="speaker-img">
+                            <button class="time-btn olive-btn">17.00-18.00</button>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+            
+            <div class="sponsors-group">
+                
+                <div class="card sponsors-card">
+                    <h3>Sponsorlarımız</h3>
+                    
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slide"><img src="merinos.png" alt="Sponsor 1"></div>
+                            <div class="slide"><img src="btu.png" alt="Sponsor 2"></div>
+                            <div class="slide"><img src="adidas.webp" alt="Sponsor 3"></div>
+                            <div class="slide"><img src="nike.svg" alt="Sponsor 4"></div>
+                            <div class="slide"><img src="bmw.png" alt="Sponsor 5"></div>
+                            <div class="slide"><img src="apple.svg" alt="Sponsor 6"></div>
+
+                            <div class="slide"><img src="merinos.png" alt="Sponsor 1"></div>
+                            <div class="slide"><img src="btu.png" alt="Sponsor 2"></div>
+                            <div class="slide"><img src="adidas.webp" alt="Sponsor 3"></div>
+                            <div class="slide"><img src="nike.svg" alt="Sponsor 4"></div>
+                            <div class="slide"><img src="bmw.png" alt="Sponsor 5"></div>
+                            <div class="slide"><img src="apple.svg" alt="Sponsor 6"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card organizer-card">
+                    <img src="gdg-logo.png" alt="GDG Bursa Logo">
+                    
+                    <span id="currentTime" class="current-time"></span> 
+                </div>
+            </div>
+            
+        </div>
+        
+        <footer class="mobile-footer">
+             <img src="devfest-siyah.png" alt="DevFest Logo">
+        </footer>
+        
+    </div>
+
+    <script>
+        // 🕰️ Anlık Saati Güncelleyen Fonksiyon
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            
+            const timeElement = document.getElementById('currentTime');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DevFest 2025 Paneli Mobil Başlık ve Alt Bilgi ile Güncellendi.');
+            
+            const videoPlayer = document.querySelector('.styled-video-player');
+
+            if (videoPlayer) {
+                videoPlayer.addEventListener('play', () => {
+                    console.log('Video oynatılıyor.');
+                });
+
+                videoPlayer.addEventListener('pause', () => {
+                    console.log('Video duraklatıldı.');
+                });
+            }
+
+            // 🕰️ Saati Başlat
+            updateTime(); 
+            setInterval(updateTime, 1000); 
+        });
+    </script>
+</body>
+</html>

@@ -4,8 +4,8 @@ import (
 	"context"
 	"devtv/controllers"
 	"devtv/in"
-	middlawares "devtv/middlewares"
-	middlewares "devtv/middlewares"
+	"devtv/middlewares"
+
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,6 +15,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/jeanphorn/log4go"
+	"golang.org/x/time/rate"
 )
 
 func initialize() {
@@ -52,6 +53,9 @@ func main() {
 		})
 	})
 
+	rateLimiter := middlewares.NewIPRateLimiter(rate.Limit(5), 10)
+
+	r.Use(middlewares.RateLimitMiddleware(rateLimiter))
 	r.Use(middlewares.CircuitBreakerMiddleware(circuitBreaker))
 	r.Use(middlewares.TimeoutMiddleware(5 * time.Minute))
 
@@ -81,7 +85,7 @@ func main() {
 	r.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
 
 	admin := r.Group("/admin")
-	admin.Use(middlawares.AuthMiddleware())
+	admin.Use(middlewares.AuthMiddleware())
 	{
 		admin.GET("/users", controllers.GetAllUsers)
 

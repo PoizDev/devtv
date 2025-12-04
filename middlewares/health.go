@@ -1,4 +1,4 @@
-package middlawares
+package middlewares
 
 import (
 	"devtv/in"

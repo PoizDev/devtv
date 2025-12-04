@@ -1,0 +1,641 @@
+[2025/11/30 12:58:51 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 12:58:51 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 12:59:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 13:00:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 13:00:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 13:01:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 14:26:09 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 14:26:09 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 14:26:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:26:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:26:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 14:31:16 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 14:31:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:31:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:31:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:31:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:31:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:40:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:40:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:40:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:40:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 14:40:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:40:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:40:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:41:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 14:41:42 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateWorkshops:569) Workshop güncellendi - ID: %!(EXTRA string=1, string= Name: , string=Erol Kaftanoğlu Atölyesi)
+[2025/11/30 14:48:42 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 14:48:43 +03] [DEFAULT] [INFO] (main.main.func2:102) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 14:48:43 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 14:48:43 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:48:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:48:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:49:05 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 14:49:05 +03] [DEFAULT] [INFO] (main.main.func2:103) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 14:49:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:49:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:49:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:49:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:51:58 +03] [DEFAULT] [WARN] (devtv/controllers.UpdateTimeSlot:605) Güncellenecek slot bulunamadı: %!(EXTRA string=:id)
+[2025/11/30 14:52:10 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/11/30 14:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 14:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 14:52:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 14:52:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 14:52:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:11:16 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 15:11:16 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 15:11:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:11:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:11:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:11:35 +03] [DEFAULT] [EROR] (devtv/controllers.GetSponsorsWS:275) WebSocket upgrade hatası: %!(EXTRA websocket.HandshakeError=websocket: the client is not using the websocket protocol: 'upgrade' token not found in 'Connection' header)
+[2025/11/30 15:11:53 +03] [DEFAULT] [EROR] (devtv/controllers.GetSponsorsWS:275) WebSocket upgrade hatası: %!(EXTRA websocket.HandshakeError=websocket: the client is not using the websocket protocol: 'upgrade' token not found in 'Connection' header)
+[2025/11/30 15:11:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:11:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:11:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:13:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:13:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:13:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:13:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:13:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:13:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:25:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:25:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:25:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:281) Yeni WebSocket bağlantısı: GetSponsors
+[2025/11/30 15:25:27 +03] [DEFAULT] [EROR] (devtv/controllers.GetSponsorsWS:275) WebSocket upgrade hatası: %!(EXTRA websocket.HandshakeError=websocket: the client is not using the websocket protocol: 'upgrade' token not found in 'Connection' header)
+[2025/11/30 15:25:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:25:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:25:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:25:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:25:29 +03] [DEFAULT] [EROR] (devtv/controllers.GetSponsorsWS:275) WebSocket upgrade hatası: %!(EXTRA websocket.HandshakeError=websocket: the client is not using the websocket protocol: 'upgrade' token not found in 'Connection' header)
+[2025/11/30 15:25:29 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:25:29 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:26:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:26:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:26:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:26:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:26:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:27:46 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 15:27:46 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 15:27:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:27:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:27:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:27:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:27:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:27:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:281) Yeni WebSocket bağlantısı: GetSponsors
+[2025/11/30 15:27:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:27:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:27:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:27:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:27:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:27:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:28:33 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateFaciliator:148) Faciliator güncellendi - ID: %!(EXTRA string=2, string=İsim: , string=Emre Hızlı)
+[2025/11/30 15:28:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:28:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:28:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:28:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:28:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:29:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS.func1:290) WebSocket bağlantısı kapatıldı: GetSponsors
+[2025/11/30 15:29:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:29:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:33:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:33:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:33:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:33:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:33:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:34:06 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/11/30 15:34:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:34:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:34:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:34:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:34:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:57:06 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 15:57:07 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 15:57:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:57:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:57:18 +03] [DEFAULT] [INFO] (devtv/controllers.Login:61) Json başarıyla eşlendi
+[2025/11/30 15:57:18 +03] [DEFAULT] [INFO] (devtv/controllers.Login:89) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/11/30 15:57:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:57:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:57:53 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 15:57:54 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 15:57:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 15:57:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:57:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 15:57:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:57:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:57:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:58:30 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateWorkshops:569) Workshop güncellendi - ID: %!(EXTRA string=1, string= Name: , string=)
+[2025/11/30 15:58:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 15:59:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:59:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:59:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 15:59:49 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateWorkshops:569) Workshop güncellendi - ID: %!(EXTRA string=1, string= Name: , string=)
+[2025/11/30 15:59:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 15:59:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 15:59:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 15:59:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 15:59:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 16:00:49 +03] [DEFAULT] [INFO] (devtv/controllers.AddDelayToWorkshop:325) Workshop 5 dakika ertelendi. 0 slot güncellendi.
+[2025/11/30 16:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 16:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 16:01:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 16:01:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 16:01:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS.func1:209) WebSocket bağlantısı kapatıldı: GetUpcomingSlots
+[2025/11/30 16:01:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 16:01:35 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 16:01:36 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 16:02:26 +03] [DEFAULT] [INFO] (devtv/controllers.AddDelayToWorkshop:325) Workshop 5 dakika ertelendi. 0 slot güncellendi.
+[2025/11/30 16:04:04 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/11/30 16:04:09 +03] [DEFAULT] [INFO] (devtv/controllers.AddDelayToWorkshop:325) Workshop 5 dakika ertelendi. 0 slot güncellendi.
+[2025/11/30 16:06:25 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/11/30 16:06:36 +03] [DEFAULT] [INFO] (devtv/controllers.AddDelayToWorkshop:325) Workshop 5 dakika ertelendi. 1 slot güncellendi.
+[2025/11/30 16:09:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 16:11:42 +03] [DEFAULT] [INFO] (devtv/controllers.DeleteSlots:520) Slot silindi - ID: %!(EXTRA string=6)
+[2025/11/30 16:11:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 17:13:50 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:13:51 +03] [DEFAULT] [INFO] (main.main.func2:106) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:20:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 17:21:32 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:21:32 +03] [DEFAULT] [INFO] (main.main.func2:106) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:22:51 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:22:51 +03] [DEFAULT] [INFO] (main.main.func2:105) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:23:13 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:23:14 +03] [DEFAULT] [INFO] (main.main.func2:106) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:25:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 17:25:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 17:25:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:200) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/11/30 17:26:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 17:26:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:26:28 +03] [DEFAULT] [INFO] (main.main.func2:106) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:26:57 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:26:58 +03] [DEFAULT] [INFO] (main.main.func2:105) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:26:59 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 17:27:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 17:27:35 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:27:35 +03] [DEFAULT] [INFO] (main.main.func2:104) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:27:38 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 17:27:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 17:29:09 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:29:09 +03] [DEFAULT] [INFO] (main.main.func2:106) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:29:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 17:29:34 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 17:29:35 +03] [DEFAULT] [INFO] (main.main.func2:105) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 17:29:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 17:29:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 17:29:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 19:40:27 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 19:40:29 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:40:29 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 19:40:29 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 19:40:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 19:40:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 19:41:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:41:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:41:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 19:42:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:42:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:43:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:43:22 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func6:21) Auth cookie bulunamadı
+[2025/11/30 19:43:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:43:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 19:44:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:44:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:44:59 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 19:45:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:45:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 19:45:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:46:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:46:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:47:00 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:47:30 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:48:10 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 19:48:12 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:48:12 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 19:48:12 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 19:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateWorkshops:569) Workshop güncellendi - ID: %!(EXTRA string=1, string= Name: , string=Erol Kaftanoğlu Atölyesi)
+[2025/11/30 19:48:42 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/11/30 19:48:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:49:06 +03] [DEFAULT] [INFO] (devtv/controllers.AddDelayToWorkshop:325) Workshop 5 dakika ertelendi. 1 slot güncellendi.
+[2025/11/30 19:49:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:49:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:50:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:50:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:51:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:51:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:52:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:52:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:53:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:53:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:54:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:54:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:55:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:55:43 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:56:13 +03] [DEFAULT] [DEBG] (devtv/middlewares.updateHealthData:128) Health data güncellendi
+[2025/11/30 19:56:41 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 19:56:42 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 19:56:42 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 19:59:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 20:12:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:14:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:02 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 20:17:03 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 20:17:04 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 20:17:04 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:04 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:04 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 20:17:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:22 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 20:17:24 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 20:17:24 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 20:17:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:31 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:17:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/11/30 20:17:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/11/30 20:17:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:35) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/11/30 20:17:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS.func1:45) WebSocket bağlantısı kapatıldı: GetCurrentSlots
+[2025/11/30 20:28:41 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/11/30 20:28:43 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/11/30 20:28:43 +03] [DEFAULT] [INFO] (main.main.func3:115) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/11/30 21:00:49 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 21:00:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 21:00:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/11/30 21:01:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 21:07:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:101) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/11/30 21:08:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/11/30 21:08:43 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
