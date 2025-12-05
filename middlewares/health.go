@@ -21,29 +21,23 @@ import (
 var AppStartTime = time.Now()
 var ActiveWebSockets int32 = 0
 
-// Cache için global değişkenler
 var (
 	cachedHealthData models.HealthData
 	healthCacheMu    sync.RWMutex
 	lastUpdateTime   time.Time
 )
 
-// Bu fonksiyon WebSocket açılırken çağrılacak
 func IncreaseWS() {
 	atomic.AddInt32(&ActiveWebSockets, 1)
 }
 
-// Bu fonksiyon WebSocket kapanırken çağrılacak
 func DecreaseWS() {
 	atomic.AddInt32(&ActiveWebSockets, -1)
 }
 
-// StartHealthCollector - Arka planda health data'yı topla (30 saniyede bir)
 func StartHealthCollector() {
-	// İlk veriyi hemen topla
 	updateHealthData()
 
-	// Her 30 saniyede bir güncelle
 	ticker := time.NewTicker(30 * time.Second)
 	go func() {
 		for range ticker.C {
@@ -54,18 +48,13 @@ func StartHealthCollector() {
 	log.Info("Health collector başlatıldı - Güncelleme: 30 saniye")
 }
 
-// updateHealthData - Sistem metriklerini topla ve cache'le
 func updateHealthData() {
-	// ---- SYSTEM UPTIME ----
 	uptime, _ := host.Uptime()
 
-	// ---- CPU ----
 	cpuPercent, _ := cpu.Percent(time.Second, false)
 
-	// ---- RAM ----
 	vm, _ := mem.VirtualMemory()
 
-	// ---- NETWORK ----
 	netStats, _ := net.IOCounters(false)
 	var bytesRecv, bytesSent uint64
 	if len(netStats) > 0 {
@@ -73,7 +62,6 @@ func updateHealthData() {
 		bytesSent = netStats[0].BytesSent
 	}
 
-	// ---- DISK ----
 	paths := []string{"/", "C:\\"}
 	var allDisks []models.DiskUsage
 
@@ -89,7 +77,6 @@ func updateHealthData() {
 		}
 	}
 
-	// ---- DB POOL ----
 	sqlDB, _ := in.DB.DB()
 	dbStats := sqlDB.Stats()
 	db := models.DBStats{
@@ -99,13 +86,10 @@ func updateHealthData() {
 		Idle:         dbStats.Idle,
 	}
 
-	// ---- GOROUTINES ----
 	goroutines := runtime.NumGoroutine()
 
-	// ---- APP UPTIME ----
-	appUptime := time.Since(AppStartTime).String()
+	appUptime := FormatUptime(time.Since(AppStartTime))
 
-	// Cache'i güncelle (thread-safe)
 	healthCacheMu.Lock()
 	cachedHealthData = models.HealthData{
 		Uptime:          uptime,
@@ -128,18 +112,15 @@ func updateHealthData() {
 	log.Fine("Health data güncellendi")
 }
 
-// GetCachedHealthData - Cache'den health data'yı al (çok hızlı!)
 func GetCachedHealthData() models.HealthData {
 	healthCacheMu.RLock()
 	defer healthCacheMu.RUnlock()
 
-	// Real-time güncellenebilecek değerler
 	data := cachedHealthData
 	data.ActiveWebSockets = int(atomic.LoadInt32(&ActiveWebSockets))
 	data.GoRoutinesCount = runtime.NumGoroutine()
-	data.AppUptime = time.Since(AppStartTime).String()
+	data.AppUptime = FormatUptime(time.Since(AppStartTime))
 
-	// DB stats da real-time olabilir (çok hızlı)
 	sqlDB, _ := in.DB.DB()
 	if sqlDB != nil {
 		dbStats := sqlDB.Stats()
@@ -154,7 +135,6 @@ func GetCachedHealthData() models.HealthData {
 	return data
 }
 
-// HealthMiddleware - Artık sadece cache'den okur (çok hızlı!)
 func HealthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Cache'den oku (< 1ms)
@@ -181,6 +161,7 @@ func GetHealth(c *gin.Context) {
 	}
 
 	healthData := data.(models.HealthData)
+	metrics := GetMetrics()
 
 	// Metadata ekle
 	response := gin.H{
@@ -188,6 +169,7 @@ func GetHealth(c *gin.Context) {
 		"timestamp": time.Now(),
 		"cache_age": time.Since(lastUpdateTime).String(),
 		"data":      healthData,
+		"metrics":   metrics,
 	}
 
 	c.JSON(http.StatusOK, response)

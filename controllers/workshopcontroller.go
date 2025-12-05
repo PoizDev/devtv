@@ -664,3 +664,21 @@ func UpdateTimeSlot(c *gin.Context) {
 		"slot":    slot,
 	})
 }
+
+func GetCurrentSlotInWorkshop(c *gin.Context) {
+	workshopID := c.Param("id")
+
+	if workshopID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Workshop ID'si gerekli"})
+		log.Warn("Workshop ID Parametresi boş")
+	}
+	var workshop models.Workshops
+	err := in.DB.Preload("WorkshopTimeSlots").Preload("Faciliators").Where("slot_start <= ? AND slot_end >= ?", time.Now(), time.Now()).First(&workshop, workshopID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı"})
+		log.Warn("Workshop bulunamadı - ID: ", workshopID)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Workshop başarıyla alındı", "workshop": workshop})
+	log.Info("Workshop alındı - ID: ", workshopID)
+}

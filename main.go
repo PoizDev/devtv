@@ -19,6 +19,7 @@ import (
 )
 
 func initialize() {
+	//'İçeriye aktaracaklarım burada
 	in.Connect()
 	in.AutoMigrate()
 	log.LoadConfiguration("./log4go.json")
@@ -28,12 +29,13 @@ func main() {
 	initialize()
 	r := gin.Default()
 	r.Use(cors.Default())
-
+	//'Sağlık için kontrolcüler setuplar falan filan
 	middlewares.StartHealthCollector()
 	circuitBreaker := middlewares.NewCircuitBreaker(
 		15, // 15 hata sonra aç
 		30*time.Second,
 	)
+	//'Circuit Breaker dalgasının statusü
 	r.GET("/circuitbreaker", func(c *gin.Context) {
 		state := circuitBreaker.GetState()
 		failures := circuitBreaker.GetFailures()
@@ -53,37 +55,49 @@ func main() {
 		})
 	})
 
+	//'Middleware'ları burada çekiyorum
 	rateLimiter := middlewares.NewIPRateLimiter(rate.Limit(5), 10)
 
+	r.Use(middlewares.MetricsMiddleware())
 	r.Use(middlewares.RateLimitMiddleware(rateLimiter))
 	r.Use(middlewares.CircuitBreakerMiddleware(circuitBreaker))
 	r.Use(middlewares.TimeoutMiddleware(5 * time.Minute))
+	r.Use(middlewares.RequestLoggerMiddleWare())
 
+	//'Login Signup tayfa
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
-
+	//'Konuşmacılar / Atölye Tayfa
 	r.GET("/faciliator", controllers.GetAllFaciliators)
-
+	//'Sponsorlar
 	r.GET("/sponsors", controllers.GetSponsors)
 
+	//'Burası Websocketler için ayrıldı
 	r.GET("/ws/current", controllers.GetCurrentSlotsWS)
+	r.GET("/ws/:id/current", controllers.GetCurrentSlotInWorkshopWS)
 	r.GET("/ws/workshop/:id/schedule", controllers.GetWorkshopScheduleWS)
 	r.GET("/ws/upcoming", controllers.GetUpcomingSlotsWS)
 	r.GET("/ws/sponsors", controllers.GetSponsorsWS)
-	r.GET("/health", func(c *gin.Context) {
-		health := middlewares.GetCachedHealthData()
-		c.JSON(http.StatusOK, gin.H{
-			"status":    "healthy",
-			"timestamp": time.Now(),
-			"data":      health,
-		})
-	})
 
+	//'Workshop HTTP isteği
 	r.GET("/workshops", controllers.GetAllWorkshops)
 	r.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
 	r.GET("/workshops/current", controllers.GetCurrentSlots)
 	r.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
+	r.GET("/workshop/:id/slots", controllers.GetCurrentSlotInWorkshop)
 
+	r.GET("/health", func(c *gin.Context) {
+		health := middlewares.GetCachedHealthData()
+		metrics := middlewares.GetMetrics()
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "healthy",
+			"timestamp": time.Now(),
+			"data":      health,
+			"metrics":   metrics,
+		})
+	})
+
+	//'adminin accesi
 	admin := r.Group("/admin")
 	admin.Use(middlewares.AuthMiddleware())
 	{
@@ -109,7 +123,7 @@ func main() {
 		admin.DELETE("/slots/:id", controllers.DeleteSlots)
 		admin.PUT("/slots/:id", controllers.UpdateTimeSlot)
 	}
-
+	//' Server detayları
 	srv := &http.Server{
 		Addr:    ":2012",
 		Handler: r,
@@ -122,7 +136,7 @@ func main() {
 		}
 	}()
 
-	//shutdown sinyalini dinlemesi için
+	//'shutdown sinyalini dinlemesi için
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
@@ -142,7 +156,7 @@ func main() {
 	log.Info("Server kapatıldı.")
 }
 
-/* Cors planlaması:
+/* //' Cors planlaması, live'a alınırken bu kullanılacak:
 
 	AllowOrigins:     []string{
 	"https://devfestbursa.com"

@@ -1,0 +1,76 @@
+[2025/12/03 22:55:26 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/03 22:55:27 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/03 22:55:27 +03] [DEFAULT] [INFO] (main.main.func3:119) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/03 22:56:25 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/03 22:56:27 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/03 22:56:27 +03] [DEFAULT] [INFO] (main.main.func3:119) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/03 23:01:50 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:43 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/03 23:03:44 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/03 23:03:44 +03] [DEFAULT] [INFO] (main.main.func3:119) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:03:45 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:53) Rate limit aşıldı - IP: %!(EXTRA string=::1)
+[2025/12/03 23:05:00 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/03 23:05:02 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/03 23:05:02 +03] [DEFAULT] [INFO] (main.main.func3:119) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/03 23:05:11 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:54) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (main.main.func3:119) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/03 23:05:13 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func4:55) Rate limit aşıldı - IP: ::1 | Path: /workshops

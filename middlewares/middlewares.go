@@ -4,6 +4,7 @@ import (
 	"context"
 	"devtv/in"
 	"devtv/models"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -74,4 +75,85 @@ func TimeoutMiddleware(timeout time.Duration) func(*gin.Context) {
 			c.Abort()
 		}
 	}
+}
+
+func RequestLoggerMiddleWare() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		start := time.Now()
+
+		c.Next()
+
+		duration := time.Since(start)
+		log.Info(fmt.Sprintf(
+			"%s %s %s %d %s",
+			c.Request.Method,
+			c.Request.URL.Path,
+			c.ClientIP(),
+			c.Writer.Status(),
+			duration,
+		))
+	}
+}
+
+func FormatUptime(d time.Duration) string {
+	days := int(d.Hours() / 24)
+	hours := int(d.Hours()) % 24
+	minutes := int(d.Minutes()) % 60
+	seconds := int(d.Seconds()) % 60
+
+	parts := []string{}
+
+	if days > 0 {
+		if days == 1 {
+			parts = append(parts, "1 day")
+		} else {
+			parts = append(parts, fmt.Sprintf("%d days", days))
+		}
+	}
+
+	if hours > 0 {
+		if hours == 1 {
+			parts = append(parts, "1 hour")
+		} else {
+			parts = append(parts, fmt.Sprintf("%d hours", hours))
+		}
+	}
+
+	if minutes > 0 {
+		if minutes == 1 {
+			parts = append(parts, "1 minute")
+		} else {
+			parts = append(parts, fmt.Sprintf("%d minutes", minutes))
+		}
+	}
+
+	// Eğer hiçbir şey yoksa (< 1 dakika), saniye göster
+	if len(parts) == 0 {
+		if seconds == 1 {
+			return "1 second"
+		}
+		return fmt.Sprintf("%d seconds", seconds)
+	}
+
+	// İlk 2 parçayı birleştir (örn: "2 hours 30 minutes")
+	if len(parts) > 2 {
+		parts = parts[:2]
+	}
+
+	if len(parts) > 3 {
+		parts = parts[:3]
+	}
+
+	return joinParts(parts)
+}
+
+// joinParts - String slice'ı birleştir
+func joinParts(parts []string) string {
+	if len(parts) == 0 {
+		return "0 seconds"
+	}
+	if len(parts) == 1 {
+		return parts[0]
+	}
+	return parts[0] + " " + parts[1]
 }
