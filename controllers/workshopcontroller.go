@@ -35,7 +35,6 @@ func CreateWorkshopWithSlots(c *gin.Context) {
 	workshop := models.Workshops{
 		WorkshopName: req.WorkshopName,
 		WorkshopDate: req.WorkshopDate,
-		IsLive:       false,
 		TimeSlots:    req.TimeSlots,
 	}
 
@@ -159,7 +158,6 @@ func GetWorkshopSchedule(c *gin.Context) {
 		WorkshopID:   workshop.WorkshopID,
 		WorkshopName: workshop.WorkshopName,
 		WorkshopDate: workshop.WorkshopDate,
-		IsLive:       workshop.IsLive,
 		CurrentSlot:  currentSlot,
 		AllSlots:     allSlots,
 		TotalSlots:   len(allSlots),
@@ -327,39 +325,6 @@ func AddDelayToWorkshop(c *gin.Context) {
 		"message":       message,
 		"delay_minutes": req.DelayMinutes,
 		"updated_slots": updatedCount,
-	})
-}
-
-// SetWorkshopLive - Workshop'u canlı/kapalı yap
-func SetWorkshopLive(c *gin.Context) {
-	workshopID := c.Param("id")
-
-	type LiveRequest struct {
-		IsLive bool `json:"is_live"`
-	}
-
-	var req LiveRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	err := in.DB.Model(&models.Workshops{}).
-		Where("workshop_id = ?", workshopID).
-		Update("is_live", req.IsLive).Error
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Güncelleme başarısız"})
-		return
-	}
-
-	status := "kapatıldı"
-	if req.IsLive {
-		status = "canlı yayına alındı"
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": fmt.Sprintf("Workshop %s", status),
 	})
 }
 

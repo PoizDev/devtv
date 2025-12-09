@@ -263,8 +263,7 @@ func startUpcomingSlotsBroadcaster() {
 			Preload("Faciliator").
 			Preload("Workshop").
 			Where("slot_start > ?", now).
-			Order("slot_start ASC").
-			Limit(5).
+			Order("slot_start").
 			Find(&slots).Error
 
 		if err != nil {
@@ -408,7 +407,6 @@ func startSpecificWorkshopBroadcaster(workshopID string) {
 			WorkshopID:   workshop.WorkshopID,
 			WorkshopName: workshop.WorkshopName,
 			WorkshopDate: workshop.WorkshopDate,
-			IsLive:       workshop.IsLive,
 			CurrentSlot:  currentSlot,
 			AllSlots:     allSlots,
 			TotalSlots:   len(allSlots),
@@ -542,7 +540,6 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string) {
 		response := gin.H{
 			"workshop_id":   workshop.WorkshopID,
 			"workshop_name": workshop.WorkshopName,
-			"is_live":       workshop.IsLive,
 			"timestamp":     now,
 		}
 

@@ -6,7 +6,6 @@ type Workshops struct {
 	WorkshopID   uint      `json:"workshop_id" gorm:"primaryKey;autoIncrement"`
 	WorkshopName string    `json:"workshop_name" gorm:"type:varchar(100);not null"`
 	WorkshopDate time.Time `json:"workshop_date" gorm:"type:date;not null"`
-	IsLive       bool      `json:"is_live" gorm:"default:false"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
 
@@ -33,7 +32,6 @@ type WorkshopScheduleResponse struct {
 	WorkshopID   uint               `json:"workshop_id"`
 	WorkshopName string             `json:"workshop_name"`
 	WorkshopDate time.Time          `json:"workshop_date"`
-	IsLive       bool               `json:"is_live"`
 	CurrentSlot  *TimeSlotResponse  `json:"current_slot,omitempty"`
 	AllSlots     []TimeSlotResponse `json:"all_slots"`
 	TotalSlots   int                `json:"total_slots"`

@@ -1,0 +1,450 @@
+[2025/12/07 18:25:35 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:25:36 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:26:24 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:26:25 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:26:25 +03] [DEFAULT] [INFO] (main.main.func3:148) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:30:43 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:30:44 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:30:44 +03] [DEFAULT] [INFO] (main.main.func3:148) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:32:03 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:32:04 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:32:04 +03] [DEFAULT] [INFO] (main.main.func4:155) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:32:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel 127.0.0.1 200 1.6829ms
+[2025/12/07 18:32:15 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:32:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:32:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /favicon.ico 127.0.0.1 404 0s
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 67.9059ms
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 996.6µs
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/current 127.0.0.1 200 2.0088ms
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 5.0011ms
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/07 18:32:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming 127.0.0.1 200 78.0054ms
+[2025/12/07 18:32:25 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/current 127.0.0.1 200 565.5µs
+[2025/12/07 18:32:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/07 18:32:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming 127.0.0.1 200 541µs
+[2025/12/07 18:32:31 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:37 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/current 127.0.0.1 200 1.031ms
+[2025/12/07 18:32:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/07 18:32:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming 127.0.0.1 200 1.0946ms
+[2025/12/07 18:32:43 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:46 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 3.2968ms
+[2025/12/07 18:32:49 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:32:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/current 127.0.0.1 200 550.1µs
+[2025/12/07 18:32:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/07 18:32:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming 127.0.0.1 200 591.9µs
+[2025/12/07 18:32:56 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 542.4µs
+[2025/12/07 18:32:56 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/current 127.0.0.1 200 534.5µs
+[2025/12/07 18:32:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/07 18:32:56 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming 127.0.0.1 200 610µs
+[2025/12/07 18:32:59 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:05 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:33:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:47:56 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:47:58 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:47:58 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:48:05 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel 127.0.0.1 200 2.1893ms
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 64.2319ms
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 508µs
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 736.4µs
+[2025/12/07 18:48:16 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 778.7µs
+[2025/12/07 18:48:16 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:48:18 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:18 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 62.022ms
+[2025/12/07 18:48:19 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 0s
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 2.2528ms
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 70.8102ms
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 67.2722ms
+[2025/12/07 18:48:19 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:19 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 538.8µs
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 2.1961ms
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 62.4941ms
+[2025/12/07 18:48:20 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 506.7µs
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 0s
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 1.0558ms
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 64.9754ms
+[2025/12/07 18:48:21 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 506.6µs
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 506.6µs
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 3.1564ms
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 64.694ms
+[2025/12/07 18:48:21 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:21 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 506.6µs
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 506.6µs
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 64.2789ms
+[2025/12/07 18:48:22 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:22 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /sponsors
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 2.4711ms
+[2025/12/07 18:48:22 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 62.6659ms
+[2025/12/07 18:48:22 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 504.8µs
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 504.8µs
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 1.0955ms
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 67.6934ms
+[2025/12/07 18:48:22 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /login
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 66.3824ms
+[2025/12/07 18:48:23 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 0s
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 506.7µs
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 7.5858ms
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 57.5362ms
+[2025/12/07 18:48:45 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 506.8µs
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 506.8µs
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:48:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 1.5773ms
+[2025/12/07 18:48:46 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:48:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel 127.0.0.1 200 2.7873ms
+[2025/12/07 18:48:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel 127.0.0.1 200 5.6603ms
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 61.2292ms
+[2025/12/07 18:48:58 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 534.8µs
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 0s
+[2025/12/07 18:48:58 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:48:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 3.4581ms
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=berkecantas)
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 66.4749ms
+[2025/12/07 18:49:09 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 0s
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 404.6µs
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:49:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 2.3848ms
+[2025/12/07 18:49:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:49:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:49:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:50:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:50:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:50:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:51:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:51:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:51:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:51:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:04 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:52:05 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:52:05 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:52:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel 127.0.0.1 200 2.7234ms
+[2025/12/07 18:52:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /favicon.ico 127.0.0.1 404 0s
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=berkecantas)
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 62.8965ms
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:12 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 1.1857ms
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 530.3µs
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:52:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 83.4594ms
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 58.8913ms
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:22 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 635µs
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 1.2099ms
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:52:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 2.8732ms
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 62.2562ms
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:24 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 505.4µs
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:52:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 0s
+[2025/12/07 18:52:24 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:52:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:52:54 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 63.5787ms
+[2025/12/07 18:53:12 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 1.135ms
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 507.5µs
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 0s
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:53:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops 127.0.0.1 200 2.2565ms
+[2025/12/07 18:53:12 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /health
+[2025/12/07 18:53:19 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:53:20 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:53:20 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login 127.0.0.1 200 66.2289ms
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 679.2µs
+[2025/12/07 18:53:21 +03] [DEFAULT] [WARN] (main.main.AuthMiddleware.func10:22) Auth cookie bulunamadı
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users 127.0.0.1 401 0s
+[2025/12/07 18:53:21 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /workshops
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors 127.0.0.1 200 1.6286ms
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:53:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator 127.0.0.1 200 68.2476ms
+[2025/12/07 18:53:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:53:25 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:53:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:53:43 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 998.6µs
+[2025/12/07 18:53:45 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:53:45 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:53:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 65.4841ms
+[2025/12/07 18:53:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 3.7873ms
+[2025/12/07 18:53:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:53:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:25 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health 127.0.0.1 200 0s
+[2025/12/07 18:54:44 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 18:54:45 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 18:54:45 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 18:54:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 505.4µs
+[2025/12/07 18:54:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:54:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:54:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:54:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:54:57 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 18:54:57 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 18:54:57 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 64.7132ms
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.5965ms
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops ::1 200 84.8399ms
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 89.8839ms
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:54:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 93.6803ms
+[2025/12/07 18:55:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:55:13 +03] [DEFAULT] [INFO] (devtv/controllers.DeleteUser:133) User silindi - ID: %!(EXTRA string=4)
+[2025/12/07 18:55:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) DELETE /admin/users/4 ::1 200 14.0743ms
+[2025/12/07 18:55:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:55:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.2447ms
+[2025/12/07 18:55:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel ::1 200 2.9769ms
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 643.2µs
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.1552ms
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 1.6657ms
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 18:55:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops ::1 200 8.1243ms
+[2025/12/07 18:55:15 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /favicon.ico
+[2025/12/07 18:55:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:55:33 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 510µs
+[2025/12/07 18:55:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:55:33 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 509.1µs
+[2025/12/07 18:55:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel ::1 200 2.3151ms
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 571.4µs
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.0789ms
+[2025/12/07 18:56:15 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 18:56:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 2.7629ms
+[2025/12/07 18:56:15 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /favicon.ico
+[2025/12/07 18:56:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:57:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:57:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:58:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 506.3µs
+[2025/12/07 18:58:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:59:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 18:59:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 3.7221ms
+[2025/12/07 19:00:45 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:01:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:01:41 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 19:01:42 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 19:01:42 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 19:01:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel ::1 200 3.9299ms
+[2025/12/07 19:01:43 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /favicon.ico ::1 404 0s
+[2025/12/07 19:01:51 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:01:52 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:01:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 63.8942ms
+[2025/12/07 19:01:53 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:01:53 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:01:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 57.9015ms
+[2025/12/07 19:01:56 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:01:56 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:01:56 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 64.4983ms
+[2025/12/07 19:02:33 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:02:34 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:02:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 61.5178ms
+[2025/12/07 19:05:17 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 19:05:18 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 19:05:18 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 19:05:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:05:21 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:05:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 60.413ms
+[2025/12/07 19:05:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:05:22 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:05:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 63.6467ms
+[2025/12/07 19:21:25 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 19:21:27 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 19:21:27 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 19:21:27 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:21:27 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:21:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 62.0823ms
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /panel ::1 200 4.0714ms
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.1654ms
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 507.8µs
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 1.8249ms
+[2025/12/07 19:21:32 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /sponsors
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 19:21:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops ::1 200 2.9096ms
+[2025/12/07 19:21:32 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/ahmetaydin.png
+[2025/12/07 19:21:32 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/emrehizli.jpeg
+[2025/12/07 19:21:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/2/schedule ::1 200 2.1848ms
+[2025/12/07 19:22:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:22:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/1/schedule ::1 200 1.1026ms
+[2025/12/07 19:22:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /logout ::1 404 0s
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 69.1828ms
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 545.6µs
+[2025/12/07 19:22:30 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /workshops
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 75.0325ms
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /punlic/logo/google.png ::1 404 0s
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 19:22:30 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 82.2923ms
+[2025/12/07 19:22:30 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/ahmetaydin.png
+[2025/12/07 19:22:30 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/emrehizli.jpeg
+[2025/12/07 19:22:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /logout ::1 404 0s
+[2025/12/07 19:22:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:22:39 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:22:39 +03] [DEFAULT] [EROR] (devtv/controllers.Login:63) Kullanıcı bulunamadı: %!(EXTRA *errors.errorString=record not found)
+[2025/12/07 19:22:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 401 3.0043ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.Login:59) Json başarıyla eşlendi
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.Login:87) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 58.191ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllUsers:99) Tüm kullanıcılar alındı talep eden kulllanıcı ID: %!(EXTRA uint=1)
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /admin/users ::1 200 1.5818ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 1.0563ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 1.5818ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:411) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=2)
+[2025/12/07 19:22:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops ::1 200 1.9194ms
+[2025/12/07 19:22:48 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /punlic/logo/google.png
+[2025/12/07 19:22:48 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/ahmetaydin.png
+[2025/12/07 19:22:48 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: ::1 | Path: /public/faciliators/emrehizli.jpeg
+[2025/12/07 19:22:59 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /logout ::1 404 0s
+[2025/12/07 19:23:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s
+[2025/12/07 19:23:08 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/07 19:23:09 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/07 19:23:09 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/07 22:26:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 15.8229ms
+[2025/12/07 22:26:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 0s

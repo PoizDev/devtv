@@ -1,0 +1,42 @@
+server: 
+  port: ":2012"
+  shutdown_timeout: 30s #'Sistem kapanmadan önce istekleri yerine getirmek için bulunan süre
+  log_config_path: "./log4go.json" #'Log dosyasının yolu
+  env_path: "./in/devtv.env" #'Env dosyası yolu
+
+database:
+  max_idle_conns: 15 #'Maksimum boşta açık bağlantı sayısı
+  max_open_conns: 50 #'Maksimum açık bağlantı sayısı
+  conn_max_lifetime: 5m #'Bağlantıların maksimum açık kalma süresi
+  conn_max_idle_time: 1m #'Bağlantıların maksimum boşta açık kalma süresi
+
+middleware:
+  circuit_breaker:
+    threshold: 15 #'Kaç hatadan sonra kesileceğini belirleyen sayı
+    timeout: 30s #'Bağlantının kesileceği süre
+  rate_limit:
+    burst: 5 #'Bir IP'nin anlık olarak yapabileceği maksimum istek kapasitesini belirleyen sayı
+    limit: 10 #'Bir IP'nin saniyede ortalama yapabileceği istek hızını belirleyen sayı
+  request_timeout: 5m #'İsteklerin timeout olacağı süre
+
+cors:
+  allow-origins: #'Hangi domainlere izin verdiğimiz
+  - "https://api.devfestbursa.com" 
+  - "https://www.api.devfestbursa.com"
+  allowed_methods: #' Hangi metotlara izin verdiğimiz
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "PATCH"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers: #'Hangi headerlara izin verdiğimiz
+    - "Origin"
+    - "Content-Type"
+    - "Authorization"
+    - "Accept"
+  expose_headers: #'Hangi headerları gösterdiğimiz
+    - "Content-Length"
+    - "Set-Cookie"
+  allow_credentials: true #'Credentials'a izin veriyo muyuz
+  max_age: 12h #'

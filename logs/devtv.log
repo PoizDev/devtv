@@ -1,6 +1,1400 @@
-[2025/12/05 13:13:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
-[2025/12/05 13:13:30 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
-[2025/12/05 13:13:30 +03] [DEFAULT] [INFO] (main.main.func3:133) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
-[2025/12/05 13:13:33 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 4.0173ms
-[2025/12/05 13:13:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 0s
-[2025/12/05 18:07:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 0s
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 11.689828s
+[2025/12/09 00:00:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 11689ms | Status: 200
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 11.6727167s
+[2025/12/09 00:00:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 11673ms | Status: 200
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 11.6064716s
+[2025/12/09 00:00:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 11606ms | Status: 200
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 11.6225126s
+[2025/12/09 00:00:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 11622ms | Status: 200
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:08 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 338.7723ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 353.5028ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 326.8311ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 300.5675ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 324.757ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 312.4053ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 299.957ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 280.4914ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 213.6753ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 189.2066ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 173.603ms
+[2025/12/09 00:00:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 155.3128ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 275.2996ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 257.4102ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 298.8281ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 264.3328ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 316.0985ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 289.7842ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 281.6608ms
+[2025/12/09 00:00:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 270.7129ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 203.8301ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 236.3569ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 258.0636ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 166.6539ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 247.7159ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 214.637ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 257.4417ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 224.1767ms
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:11 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 308.1169ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 278.3332ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 269.7135ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 286.022ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 285.3467ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 321.7399ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 290.7801ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 301.4123ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 220.8134ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 195.476ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 212.0411ms
+[2025/12/09 00:00:12 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 203.8741ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 200.6322ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 229.0546ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 216.0113ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 208.6224ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 211.0555ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 265.1492ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 225.6168ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 236.854ms
+[2025/12/09 00:00:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 224.5957ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 32.5102ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 74.293ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 189.0576ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 159.7965ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 174.0781ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 208.4615ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 202.866ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 210.4465ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 241.2617ms
+[2025/12/09 00:00:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 252.8451ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 203.9517ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 250.3462ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 226.6078ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 217.2652ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 26.9108ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 145.0444ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 37.1912ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 128.9691ms
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:15 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 262.8734ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 247.9983ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 232.3929ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 258.1845ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:456) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=5)
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 238.1926ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 278.8695ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 248.0138ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 295.7873ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 265.8561ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 288.0537ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 277.9064ms
+[2025/12/09 00:00:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 322.5958ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 85.9842ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 95.47ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 48.3749ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 61.518ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [WARN] (main.main.RateLimitMiddleware.func6:55) Rate limit aşıldı - IP: 127.0.0.1 | Path: /ws/5/current
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 267.8971ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 260.2144ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 293.6277ms
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 258.373ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 281.4503ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 299.2563ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 271.48ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 396.8378ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 370.7733ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 411.6145ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 9.0767ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 91.8705ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 77.7702ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 84.7002ms
+[2025/12/09 00:00:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 111.2382ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 192.9979ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 225.299ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 259.5559ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 206.1127ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 221.6098ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 263.8266ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 205.0059ms
+[2025/12/09 00:00:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 215.6514ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 322.3248ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 354.4743ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 446.0762ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 308.6251ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 290.118ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 263.3769ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 271.0662ms
+[2025/12/09 00:00:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 255.3096ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:456) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=5)
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 56.7029ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 136.9517ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 230.1107ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 130.7454ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 156.5738ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 118.7112ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 164.4792ms
+[2025/12/09 00:00:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 139.409ms
+[2025/12/09 00:00:25 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 8.0823ms
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/09 00:00:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 3.8688ms
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 21.7343135s
+[2025/12/09 00:00:48 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 21734ms | Status: 200
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 21.4730164s
+[2025/12/09 00:00:48 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 21475ms | Status: 200
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 21.4633366s
+[2025/12/09 00:00:48 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 21463ms | Status: 200
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 21.4338326s
+[2025/12/09 00:00:48 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 21434ms | Status: 200
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 11.9102856s
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 11.9412916s
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 11.9511535s
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 11.9219993s
+[2025/12/09 00:01:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 11910ms | Status: 200
+[2025/12/09 00:01:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 11951ms | Status: 200
+[2025/12/09 00:01:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 11921ms | Status: 200
+[2025/12/09 00:01:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 11941ms | Status: 200
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:01:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:01:40 +03] [DEFAULT] [INFO] (devtv/controllers.CreateSponsor:27) Sponsor oluşturuldu: %!(EXTRA string=TREX)
+[2025/12/09 00:01:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /admin/sponsors/add ::1 200 3.9656ms
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 43.6331527s
+[2025/12/09 00:01:44 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 43633ms | Status: 200
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 43.6450542s
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 43.5972762s
+[2025/12/09 00:01:44 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 43645ms | Status: 200
+[2025/12/09 00:01:44 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 43597ms | Status: 200
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 43.6118229s
+[2025/12/09 00:01:44 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 43611ms | Status: 200
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:01:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:02:15 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=7)
+[2025/12/09 00:02:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/7 ::1 200 152.9525ms
+[2025/12/09 00:02:21 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/12/09 00:02:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/5 ::1 200 9.2805ms
+[2025/12/09 00:02:23 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/09 00:02:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/11 ::1 200 37.6431ms
+[2025/12/09 00:02:25 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=10)
+[2025/12/09 00:02:25 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/10 ::1 200 11.1748ms
+[2025/12/09 00:02:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 43.577863s
+[2025/12/09 00:02:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 43577ms | Status: 200
+[2025/12/09 00:02:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 43.5692726s
+[2025/12/09 00:02:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 43569ms | Status: 200
+[2025/12/09 00:02:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 43.6230021s
+[2025/12/09 00:02:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 43623ms | Status: 200
+[2025/12/09 00:02:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 43.5897277s
+[2025/12/09 00:02:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 43589ms | Status: 200
+[2025/12/09 00:02:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:02:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:02:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:02:28 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:34:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 33m53.4906196s
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 00:34:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 33m53.7526477s
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 00:34:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 33m53.4999224s
+[2025/12/09 00:34:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 33m54.0295039s
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/1/current)
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 2033491ms | Status: 200
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 2033754ms | Status: 200
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 2033501ms | Status: 200
+[2025/12/09 00:34:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 2034032ms | Status: 200
+[2025/12/09 00:34:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:34:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:34:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:34:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:36:01 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 33m33.7802666s
+[2025/12/09 00:36:01 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 33m33.814973s
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 00:36:01 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 33m33.8020121s
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 00:36:01 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 33m33.7719573s
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/5/current)
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 2013781ms | Status: 200
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 2013816ms | Status: 200
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 2013774ms | Status: 200
+[2025/12/09 00:36:01 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 2013804ms | Status: 200
+[2025/12/09 00:36:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:36:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:36:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:36:02 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:36:12 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 4.4335ms
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:36:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2.1103769s
+[2025/12/09 00:36:16 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 2110ms | Status: 200
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2.1511389s
+[2025/12/09 00:36:16 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 2151ms | Status: 200
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2.5944733s
+[2025/12/09 00:36:16 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 2594ms | Status: 200
+[2025/12/09 00:36:16 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 2.1078536s
+[2025/12/09 00:36:16 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 2107ms | Status: 200
+[2025/12/09 00:36:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:36:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:36:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:36:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:36:46 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=10)
+[2025/12/09 00:36:46 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/10 ::1 200 58.1628ms
+[2025/12/09 00:36:48 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/09 00:36:48 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/11 ::1 200 49.5892ms
+[2025/12/09 00:36:51 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=9)
+[2025/12/09 00:36:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/9 ::1 200 13.9834ms
+[2025/12/09 00:36:53 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=7)
+[2025/12/09 00:36:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/7 ::1 200 47.7977ms
+[2025/12/09 00:37:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 58.5716083s
+[2025/12/09 00:37:15 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 58571ms | Status: 200
+[2025/12/09 00:37:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 58.5367293s
+[2025/12/09 00:37:15 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 58536ms | Status: 200
+[2025/12/09 00:37:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 58.5115501s
+[2025/12/09 00:37:15 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 58511ms | Status: 200
+[2025/12/09 00:37:15 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 58.5243327s
+[2025/12/09 00:37:15 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 58524ms | Status: 200
+[2025/12/09 00:37:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:37:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:37:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:37:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:37:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:37:31 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:37:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:37:33 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:37:35 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2m19.6945732s
+[2025/12/09 00:39:52 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 139695ms | Status: 200
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2m20.0409077s
+[2025/12/09 00:39:52 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 140041ms | Status: 200
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 2m19.7258853s
+[2025/12/09 00:39:52 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 139725ms | Status: 200
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2m19.8015481s
+[2025/12/09 00:39:52 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 139801ms | Status: 200
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:39:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:39:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1.1278852s
+[2025/12/09 00:39:53 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 1127ms | Status: 200
+[2025/12/09 00:39:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1.1064729s
+[2025/12/09 00:39:53 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 1106ms | Status: 200
+[2025/12/09 00:39:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1.0766503s
+[2025/12/09 00:39:53 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 1077ms | Status: 200
+[2025/12/09 00:39:53 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1.0956251s
+[2025/12/09 00:39:53 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 1095ms | Status: 200
+[2025/12/09 00:39:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:39:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:39:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:39:54 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:40:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 46.8624163s
+[2025/12/09 00:40:40 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 46862ms | Status: 200
+[2025/12/09 00:40:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 46.8474898s
+[2025/12/09 00:40:40 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 46848ms | Status: 200
+[2025/12/09 00:40:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 46.8839909s
+[2025/12/09 00:40:40 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 46883ms | Status: 200
+[2025/12/09 00:40:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 46.9256874s
+[2025/12/09 00:40:40 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 46925ms | Status: 200
+[2025/12/09 00:40:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:40:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:40:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:40:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:43:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming ::1 200 6m18.235894s
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 00:43:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current ::1 200 6m19.1333405s
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 00:43:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current ::1 200 6m15.7851457s
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/1/current)
+[2025/12/09 00:43:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors ::1 200 6m19.1274734s
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 378238ms | Status: 200
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 379136ms | Status: 200
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 375789ms | Status: 200
+[2025/12/09 00:43:51 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 379157ms | Status: 200
+[2025/12/09 00:43:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:43:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:43:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:43:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:46:38 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 2m45.3110776s
+[2025/12/09 00:46:38 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 165311ms | Status: 200
+[2025/12/09 00:46:38 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2m45.326091s
+[2025/12/09 00:46:38 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 165326ms | Status: 200
+[2025/12/09 00:46:38 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2m45.3171599s
+[2025/12/09 00:46:38 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 165318ms | Status: 200
+[2025/12/09 00:46:38 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2m45.3336823s
+[2025/12/09 00:46:38 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 165334ms | Status: 200
+[2025/12/09 00:46:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:46:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:46:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:46:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:46:39 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 6m21.8824231s
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 6m21.8280625s
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 381883ms | Status: 200
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 6m21.7252683s
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/5/current)
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 6m21.7555815s
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 381828ms | Status: 200
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 381728ms | Status: 200
+[2025/12/09 00:47:03 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 381759ms | Status: 200
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:47:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:47:11 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:47:13 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:47:14 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:47:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:48:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/09 00:48:07 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 646.8µs
+[2025/12/09 00:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors ::1 200 3m23.0665445s
+[2025/12/09 00:50:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 203066ms | Status: 200
+[2025/12/09 00:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current ::1 200 3m25.7502043s
+[2025/12/09 00:50:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 205750ms | Status: 200
+[2025/12/09 00:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current ::1 200 3m25.7362866s
+[2025/12/09 00:50:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 205736ms | Status: 200
+[2025/12/09 00:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current ::1 200 3m25.7881952s
+[2025/12/09 00:50:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 205788ms | Status: 200
+[2025/12/09 00:50:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming ::1 200 3m25.7752611s
+[2025/12/09 00:50:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 205775ms | Status: 200
+[2025/12/09 00:50:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:50:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:50:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:50:40 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:50:45 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:50:46 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:50:46 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:50:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:50:46 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 8.3994ms
+[2025/12/09 00:50:46 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:50:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:50:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:50:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 8.2790011s
+[2025/12/09 00:50:55 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 8279ms | Status: 200
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 8.2983517s
+[2025/12/09 00:50:55 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 8298ms | Status: 200
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 8.3140721s
+[2025/12/09 00:50:55 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 8314ms | Status: 200
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 8.5750237s
+[2025/12/09 00:50:55 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 8575ms | Status: 200
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:50:55 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:50:58 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors ::1 200 9.9118ms
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:51:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:51:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:51:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:51:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:51:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:51:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 19.3257929s
+[2025/12/09 00:51:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 19325ms | Status: 200
+[2025/12/09 00:51:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 19.3600644s
+[2025/12/09 00:51:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 19360ms | Status: 200
+[2025/12/09 00:51:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 19.3031127s
+[2025/12/09 00:51:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 19304ms | Status: 200
+[2025/12/09 00:51:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 19.3471061s
+[2025/12/09 00:51:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 19347ms | Status: 200
+[2025/12/09 00:51:20 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 19.3181666s
+[2025/12/09 00:51:20 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 19318ms | Status: 200
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:456) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=1)
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:51:21 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:51:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current ::1 200 38.2686171s
+[2025/12/09 00:51:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 38268ms | Status: 200
+[2025/12/09 00:51:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 38.5816774s
+[2025/12/09 00:51:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 38581ms | Status: 200
+[2025/12/09 00:51:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming ::1 200 38.2874693s
+[2025/12/09 00:51:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 38287ms | Status: 200
+[2025/12/09 00:51:39 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current ::1 200 38.3212359s
+[2025/12/09 00:51:39 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 38321ms | Status: 200
+[2025/12/09 00:51:49 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:51:51 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:51:52 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:51:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:51:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:51:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:51:53 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m7.9822991s
+[2025/12/09 00:53:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 67982ms | Status: 200
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m7.6596049s
+[2025/12/09 00:53:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 67659ms | Status: 200
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m7.3518156s
+[2025/12/09 00:53:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 67351ms | Status: 200
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m7.3758792s
+[2025/12/09 00:53:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 67375ms | Status: 200
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:53:00 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:597) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:53:15 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:53:16 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:53:16 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:53:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:53:16 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:53:17 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:53:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 7.4433963s
+[2025/12/09 00:53:24 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 7443ms | Status: 200
+[2025/12/09 00:53:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 7.6925577s
+[2025/12/09 00:53:24 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 7693ms | Status: 200
+[2025/12/09 00:53:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 7.6786234s
+[2025/12/09 00:53:24 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 7678ms | Status: 200
+[2025/12/09 00:53:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 7.9836853s
+[2025/12/09 00:53:24 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 7984ms | Status: 200
+[2025/12/09 00:53:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:53:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:53:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:53:25 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:54:18 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:54:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 4.9625ms
+[2025/12/09 00:54:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:54:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:54:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:54:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2.1089438s
+[2025/12/09 00:54:22 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 2110ms | Status: 200
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 2.120486s
+[2025/12/09 00:54:22 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 2120ms | Status: 200
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2.1356056s
+[2025/12/09 00:54:22 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 2136ms | Status: 200
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:54:22 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:55:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m25.0570523s
+[2025/12/09 00:55:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 85057ms | Status: 200
+[2025/12/09 00:55:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m25.0397056s
+[2025/12/09 00:55:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 85039ms | Status: 200
+[2025/12/09 00:55:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m24.9989925s
+[2025/12/09 00:55:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 84998ms | Status: 200
+[2025/12/09 00:55:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m25.0103555s
+[2025/12/09 00:55:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 85011ms | Status: 200
+[2025/12/09 00:55:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:55:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:55:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:55:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:55:55 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 00:55:56 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 00:55:56 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 00:55:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:55:56 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 13.7874ms
+[2025/12/09 00:55:56 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 3.945ms
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:55:57 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1.5875092s
+[2025/12/09 00:55:58 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 1587ms | Status: 200
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1.5799474s
+[2025/12/09 00:55:58 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 1579ms | Status: 200
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1.5960956s
+[2025/12/09 00:55:58 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 1596ms | Status: 200
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1.5408988s
+[2025/12/09 00:55:58 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 1543ms | Status: 200
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:55:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 00:56:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2.1783049s
+[2025/12/09 00:56:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2.1529164s
+[2025/12/09 00:56:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 2178ms | Status: 200
+[2025/12/09 00:56:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 2152ms | Status: 200
+[2025/12/09 00:56:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 2.1322656s
+[2025/12/09 00:56:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 2132ms | Status: 200
+[2025/12/09 00:56:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2.1400113s
+[2025/12/09 00:56:00 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 2141ms | Status: 200
+[2025/12/09 00:56:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 00:56:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 00:56:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 00:56:01 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:00:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 4m46.1847919s
+[2025/12/09 01:00:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 286185ms | Status: 200
+[2025/12/09 01:00:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 4m46.2205197s
+[2025/12/09 01:00:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 4m46.20213s
+[2025/12/09 01:00:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 286220ms | Status: 200
+[2025/12/09 01:00:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 286202ms | Status: 200
+[2025/12/09 01:00:47 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 4m46.2490619s
+[2025/12/09 01:00:47 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 286249ms | Status: 200
+[2025/12/09 01:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:00:48 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:04:29 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=7)
+[2025/12/09 01:04:29 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/7 ::1 200 29.3976ms
+[2025/12/09 01:04:32 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=9)
+[2025/12/09 01:04:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/9 ::1 200 38.6073ms
+[2025/12/09 01:04:35 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=10)
+[2025/12/09 01:04:35 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/10 ::1 200 195.722ms
+[2025/12/09 01:04:37 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/09 01:04:37 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/11 ::1 200 37.8742ms
+[2025/12/09 01:05:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 4m34.8826201s
+[2025/12/09 01:05:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 4m34.8277502s
+[2025/12/09 01:05:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 274882ms | Status: 200
+[2025/12/09 01:05:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 274827ms | Status: 200
+[2025/12/09 01:05:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 4m34.8589616s
+[2025/12/09 01:05:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 274858ms | Status: 200
+[2025/12/09 01:05:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 4m34.7829043s
+[2025/12/09 01:05:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 274782ms | Status: 200
+[2025/12/09 01:05:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:05:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:05:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:05:24 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 3.1767962s
+[2025/12/09 01:05:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 3176ms | Status: 200
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 3.2126457s
+[2025/12/09 01:05:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 3212ms | Status: 200
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 3.2598247s
+[2025/12/09 01:05:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 3259ms | Status: 200
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 3.1602384s
+[2025/12/09 01:05:27 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 3160ms | Status: 200
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:05:27 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 4.1348287s
+[2025/12/09 01:05:32 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 4134ms | Status: 200
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 4.1049034s
+[2025/12/09 01:05:32 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 4104ms | Status: 200
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 4.1957289s
+[2025/12/09 01:05:32 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 4195ms | Status: 200
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 4.0779791s
+[2025/12/09 01:05:32 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 4077ms | Status: 200
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:05:32 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1.8571424s
+[2025/12/09 01:05:34 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 1857ms | Status: 200
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1.9159938s
+[2025/12/09 01:05:34 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 1915ms | Status: 200
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1.8890614s
+[2025/12/09 01:05:34 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 1889ms | Status: 200
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1.9722019s
+[2025/12/09 01:05:34 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 1972ms | Status: 200
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:05:34 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:07:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 525.2µs
+[2025/12/09 01:12:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 16m39.2179014s
+[2025/12/09 01:12:36 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/1/current)
+[2025/12/09 01:12:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 16m39.1742988s
+[2025/12/09 01:12:36 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 01:12:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 16m39.1893255s
+[2025/12/09 01:12:36 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 01:12:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 16m39.7799427s
+[2025/12/09 01:12:36 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 01:12:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 16m39.2149284s
+[2025/12/09 01:12:36 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/5/current)
+[2025/12/09 01:12:37 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 999544ms | Status: 200
+[2025/12/09 01:12:37 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 999651ms | Status: 200
+[2025/12/09 01:12:37 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 999751ms | Status: 200
+[2025/12/09 01:12:37 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 1000403ms | Status: 200
+[2025/12/09 01:12:37 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 999951ms | Status: 200
+[2025/12/09 01:12:37 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:455) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=1)
+[2025/12/09 01:14:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 01:14:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 01:14:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 01:14:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 1
+[2025/12/09 01:14:09 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 01:17:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 2m53.7858088s
+[2025/12/09 01:17:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2m53.810129s
+[2025/12/09 01:17:02 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 173786ms | Status: 200
+[2025/12/09 01:17:02 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 173810ms | Status: 200
+[2025/12/09 01:17:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/1/current 127.0.0.1 200 2m53.80033s
+[2025/12/09 01:17:02 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/1/current | Duration: 173801ms | Status: 200
+[2025/12/09 01:17:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2m53.8408745s
+[2025/12/09 01:17:02 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 173840ms | Status: 200
+[2025/12/09 01:17:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2m53.8317472s
+[2025/12/09 01:17:02 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 173832ms | Status: 200
+[2025/12/09 01:17:04 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:455) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=1)
+[2025/12/09 01:25:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 19m33.4203468s
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/sponsors)
+[2025/12/09 01:25:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 19m33.3716504s
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/upcoming)
+[2025/12/09 01:25:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 19m33.3893839s
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/current)
+[2025/12/09 01:25:08 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 19m33.3596399s
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.TimeoutMiddleware.func8:73) İstek zaman aşımına uğradı: %!(EXTRA string=/ws/5/current)
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 1173422ms | Status: 200
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 1173374ms | Status: 200
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 1173391ms | Status: 200
+[2025/12/09 01:25:08 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 1173361ms | Status: 200
+[2025/12/09 01:25:12 +03] [DEFAULT] [INFO] (devtv/controllers.startWorkshopCurrentSlotBroadcaster:455) Workshop Current Slot yayını kapatıldı (kimse yok): %!(EXTRA string=5)
+[2025/12/09 19:50:54 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 19:50:56 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 19:50:56 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 19:51:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 19:51:41 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 19:51:42 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 19:51:42 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:596) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 19:53:02 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/09 19:53:02 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/11 ::1 200 24.0677ms
+[2025/12/09 19:53:10 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:661) Slot güncellendi - ID: %!(EXTRA string=10)
+[2025/12/09 19:53:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/10 ::1 200 12.2599ms
+[2025/12/09 19:54:36 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsors:40) Tüm sponsorlar alındı
+[2025/12/09 19:54:36 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /sponsors ::1 200 513µs
+[2025/12/09 19:55:44 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlots:249) Yaklaşan slot bulunamadı
+[2025/12/09 19:55:44 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops/upcoming ::1 200 1.3995ms
+[2025/12/09 19:57:00 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /health ::1 200 24.9214ms
+[2025/12/09 20:54:19 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 20:54:20 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 20:54:20 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 20:54:27 +03] [DEFAULT] [INFO] (devtv/controllers.Login:61) Json başarıyla eşlendi
+[2025/12/09 20:54:27 +03] [DEFAULT] [INFO] (devtv/controllers.Login:89) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2025/12/09 20:54:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) POST /login ::1 200 83.9212ms
+[2025/12/09 21:01:00 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 21:01:01 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 21:01:01 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 21:01:18 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 21:01:19 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 21:01:19 +03] [DEFAULT] [INFO] (main.main.func4:156) Server Başlatılıyor - Port: :2012
+[2025/12/09 21:01:36 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/09 21:01:37 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/09 21:01:37 +03] [DEFAULT] [INFO] (main.main.func4:155) Server Başlatılıyor - Port: :2012
+[2025/12/09 21:05:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2025/12/09 21:05:03 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /faciliator ::1 200 2.7937ms
+[2025/12/09 21:20:19 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=7)
+[2025/12/09 21:20:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/7 ::1 200 143.5776ms
+[2025/12/09 21:20:33 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=9)
+[2025/12/09 21:20:33 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/9 ::1 200 7.3513ms
+[2025/12/09 21:20:35 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=10)
+[2025/12/09 21:20:35 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/10 ::1 200 148.3655ms
+[2025/12/09 21:20:37 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/09 21:20:37 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/11 ::1 200 9.012ms
+[2025/12/09 21:20:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:20:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:20:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:20:58 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 20.596212s
+[2025/12/09 21:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 20596ms | Status: 200
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 20.5876109s
+[2025/12/09 21:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 20587ms | Status: 200
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 20.6106881s
+[2025/12/09 21:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 20610ms | Status: 200
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 20.6550817s
+[2025/12/09 21:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 20655ms | Status: 200
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:21:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.5986794s
+[2025/12/09 21:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119598ms | Status: 200
+[2025/12/09 21:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.6157742s
+[2025/12/09 21:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119615ms | Status: 200
+[2025/12/09 21:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.6103277s
+[2025/12/09 21:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119610ms | Status: 200
+[2025/12/09 21:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.62221s
+[2025/12/09 21:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119622ms | Status: 200
+[2025/12/09 21:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.2219796s
+[2025/12/09 21:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119221ms | Status: 200
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.23925s
+[2025/12/09 21:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119239ms | Status: 200
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.2273436s
+[2025/12/09 21:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119227ms | Status: 200
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.2337336s
+[2025/12/09 21:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119233ms | Status: 200
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7779447s
+[2025/12/09 21:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119777ms | Status: 200
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.785798s
+[2025/12/09 21:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119785ms | Status: 200
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.7747301s
+[2025/12/09 21:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119774ms | Status: 200
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.8051469s
+[2025/12/09 21:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119805ms | Status: 200
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 3.7022785s
+[2025/12/09 21:27:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 3702ms | Status: 200
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 3.6857357s
+[2025/12/09 21:27:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 3685ms | Status: 200
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 3.7077427s
+[2025/12/09 21:27:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 3707ms | Status: 200
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 3.6898212s
+[2025/12/09 21:27:23 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 3689ms | Status: 200
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:27:23 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:28:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 55.1166368s
+[2025/12/09 21:28:18 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 55116ms | Status: 200
+[2025/12/09 21:28:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 55.1108998s
+[2025/12/09 21:28:18 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 55110ms | Status: 200
+[2025/12/09 21:28:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 55.1056426s
+[2025/12/09 21:28:18 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 55105ms | Status: 200
+[2025/12/09 21:28:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 55.1232771s
+[2025/12/09 21:28:18 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 55123ms | Status: 200
+[2025/12/09 21:28:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:28:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:28:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:28:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 7.1716083s
+[2025/12/09 21:28:26 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 7171ms | Status: 200
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 7.1881984s
+[2025/12/09 21:28:26 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 7188ms | Status: 200
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 7.1717442s
+[2025/12/09 21:28:26 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 7175ms | Status: 200
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 7.1825483s
+[2025/12/09 21:28:26 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 7182ms | Status: 200
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:28:26 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 52.9551739s
+[2025/12/09 21:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 52955ms | Status: 200
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 52.9029659s
+[2025/12/09 21:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 52903ms | Status: 200
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 52.966324s
+[2025/12/09 21:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 52966ms | Status: 200
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 52.9344381s
+[2025/12/09 21:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 52934ms | Status: 200
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:29:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.88229s
+[2025/12/09 21:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119882ms | Status: 200
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.8664219s
+[2025/12/09 21:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119866ms | Status: 200
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8780431s
+[2025/12/09 21:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119878ms | Status: 200
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8594499s
+[2025/12/09 21:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119859ms | Status: 200
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.4336041s
+[2025/12/09 21:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119433ms | Status: 200
+[2025/12/09 21:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.4609853s
+[2025/12/09 21:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119460ms | Status: 200
+[2025/12/09 21:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.4518139s
+[2025/12/09 21:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119452ms | Status: 200
+[2025/12/09 21:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.4397664s
+[2025/12/09 21:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119439ms | Status: 200
+[2025/12/09 21:33:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:33:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:33:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:33:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.1686666s
+[2025/12/09 21:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119168ms | Status: 200
+[2025/12/09 21:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.1440716s
+[2025/12/09 21:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119144ms | Status: 200
+[2025/12/09 21:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.1531233s
+[2025/12/09 21:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119153ms | Status: 200
+[2025/12/09 21:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.1383673s
+[2025/12/09 21:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119138ms | Status: 200
+[2025/12/09 21:35:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:35:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:35:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:35:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:36:10 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:376) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=4)
+[2025/12/09 21:36:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /workshops ::1 200 18.3428ms
+[2025/12/09 21:36:57 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=5)
+[2025/12/09 21:36:57 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) PUT /admin/slots/5 ::1 200 43.001ms
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m58.5648229s
+[2025/12/09 21:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 118564ms | Status: 200
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m58.5551151s
+[2025/12/09 21:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 118555ms | Status: 200
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m58.5868479s
+[2025/12/09 21:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 118586ms | Status: 200
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m58.560768s
+[2025/12/09 21:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 118560ms | Status: 200
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.7656684s
+[2025/12/09 21:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119765ms | Status: 200
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.8738695s
+[2025/12/09 21:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119873ms | Status: 200
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7960082s
+[2025/12/09 21:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119796ms | Status: 200
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8236801s
+[2025/12/09 21:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119823ms | Status: 200
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:39:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.4755729s
+[2025/12/09 21:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119475ms | Status: 200
+[2025/12/09 21:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.4676814s
+[2025/12/09 21:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.4064116s
+[2025/12/09 21:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119467ms | Status: 200
+[2025/12/09 21:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119406ms | Status: 200
+[2025/12/09 21:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.3859507s
+[2025/12/09 21:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119386ms | Status: 200
+[2025/12/09 21:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:43:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m58.7708003s
+[2025/12/09 21:43:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 118770ms | Status: 200
+[2025/12/09 21:43:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m58.7638471s
+[2025/12/09 21:43:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 118763ms | Status: 200
+[2025/12/09 21:43:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m58.7599029s
+[2025/12/09 21:43:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 118759ms | Status: 200
+[2025/12/09 21:43:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m58.769714s
+[2025/12/09 21:43:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 118769ms | Status: 200
+[2025/12/09 21:43:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:43:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:43:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:43:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:45:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.2449325s
+[2025/12/09 21:45:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119244ms | Status: 200
+[2025/12/09 21:45:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.2791666s
+[2025/12/09 21:45:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119279ms | Status: 200
+[2025/12/09 21:45:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.2527293s
+[2025/12/09 21:45:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.2588036s
+[2025/12/09 21:45:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119252ms | Status: 200
+[2025/12/09 21:45:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119258ms | Status: 200
+[2025/12/09 21:45:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:45:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:45:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:45:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:47:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.1390559s
+[2025/12/09 21:47:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119139ms | Status: 200
+[2025/12/09 21:47:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.1360094s
+[2025/12/09 21:47:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.1313456s
+[2025/12/09 21:47:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119131ms | Status: 200
+[2025/12/09 21:47:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119136ms | Status: 200
+[2025/12/09 21:47:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.1256097s
+[2025/12/09 21:47:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119125ms | Status: 200
+[2025/12/09 21:47:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:47:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:47:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:47:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.1440669s
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.1137651s
+[2025/12/09 21:49:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119113ms | Status: 200
+[2025/12/09 21:49:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119144ms | Status: 200
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.1491986s
+[2025/12/09 21:49:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119149ms | Status: 200
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.1384779s
+[2025/12/09 21:49:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119138ms | Status: 200
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:49:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.867923s
+[2025/12/09 21:51:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119867ms | Status: 200
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.855275s
+[2025/12/09 21:51:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119855ms | Status: 200
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8630886s
+[2025/12/09 21:51:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119863ms | Status: 200
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8461352s
+[2025/12/09 21:51:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119846ms | Status: 200
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:51:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.6011997s
+[2025/12/09 21:53:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119601ms | Status: 200
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.6370849s
+[2025/12/09 21:53:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119637ms | Status: 200
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.6091601s
+[2025/12/09 21:53:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119609ms | Status: 200
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.6144182s
+[2025/12/09 21:53:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119614ms | Status: 200
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:53:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.6955452s
+[2025/12/09 21:55:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119695ms | Status: 200
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.7589662s
+[2025/12/09 21:55:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119758ms | Status: 200
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7334374s
+[2025/12/09 21:55:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119733ms | Status: 200
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7517382s
+[2025/12/09 21:55:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119751ms | Status: 200
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:55:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.7036478s
+[2025/12/09 21:57:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119703ms | Status: 200
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.6947607s
+[2025/12/09 21:57:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119694ms | Status: 200
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.6881369s
+[2025/12/09 21:57:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119688ms | Status: 200
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7019634s
+[2025/12/09 21:57:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119701ms | Status: 200
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:57:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.92674s
+[2025/12/09 21:59:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119926ms | Status: 200
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.9363802s
+[2025/12/09 21:59:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119936ms | Status: 200
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.9194879s
+[2025/12/09 21:59:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119920ms | Status: 200
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.9483812s
+[2025/12/09 21:59:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119948ms | Status: 200
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 21:59:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7248909s
+[2025/12/09 22:01:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119724ms | Status: 200
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.7319972s
+[2025/12/09 22:01:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119731ms | Status: 200
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7189788s
+[2025/12/09 22:01:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119718ms | Status: 200
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.7142584s
+[2025/12/09 22:01:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119714ms | Status: 200
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:01:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:03:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.8491248s
+[2025/12/09 22:03:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119849ms | Status: 200
+[2025/12/09 22:03:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.838374s
+[2025/12/09 22:03:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119838ms | Status: 200
+[2025/12/09 22:03:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8473621s
+[2025/12/09 22:03:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119847ms | Status: 200
+[2025/12/09 22:03:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8295842s
+[2025/12/09 22:03:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119829ms | Status: 200
+[2025/12/09 22:03:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:03:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:03:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:03:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.1913782s
+[2025/12/09 22:05:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119191ms | Status: 200
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.197221s
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.1792834s
+[2025/12/09 22:05:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119197ms | Status: 200
+[2025/12/09 22:05:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119179ms | Status: 200
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.1746828s
+[2025/12/09 22:05:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119174ms | Status: 200
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:05:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.7367594s
+[2025/12/09 22:07:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119736ms | Status: 200
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7476844s
+[2025/12/09 22:07:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119747ms | Status: 200
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.7738272s
+[2025/12/09 22:07:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119773ms | Status: 200
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7440835s
+[2025/12/09 22:07:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119744ms | Status: 200
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:07:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.4318533s
+[2025/12/09 22:09:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119432ms | Status: 200
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.427287s
+[2025/12/09 22:09:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119427ms | Status: 200
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.422051s
+[2025/12/09 22:09:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119422ms | Status: 200
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.4379748s
+[2025/12/09 22:09:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119437ms | Status: 200
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:09:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.6970975s
+[2025/12/09 22:11:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119697ms | Status: 200
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7090797s
+[2025/12/09 22:11:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119709ms | Status: 200
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.7316255s
+[2025/12/09 22:11:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119731ms | Status: 200
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7029903s
+[2025/12/09 22:11:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119702ms | Status: 200
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:11:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8343284s
+[2025/12/09 22:13:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119834ms | Status: 200
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.8678157s
+[2025/12/09 22:13:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119867ms | Status: 200
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.8417186s
+[2025/12/09 22:13:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119841ms | Status: 200
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8520163s
+[2025/12/09 22:13:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119852ms | Status: 200
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:13:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:15:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.9309001s
+[2025/12/09 22:15:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119930ms | Status: 200
+[2025/12/09 22:15:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.9180135s
+[2025/12/09 22:15:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119918ms | Status: 200
+[2025/12/09 22:15:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.9336991s
+[2025/12/09 22:15:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119933ms | Status: 200
+[2025/12/09 22:15:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.9133721s
+[2025/12/09 22:15:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119913ms | Status: 200
+[2025/12/09 22:15:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:15:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:15:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:15:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m58.6982554s
+[2025/12/09 22:17:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 118698ms | Status: 200
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m58.7153679s
+[2025/12/09 22:17:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 118715ms | Status: 200
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m58.7055103s
+[2025/12/09 22:17:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 118706ms | Status: 200
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m58.7100409s
+[2025/12/09 22:17:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 118710ms | Status: 200
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:17:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.9183906s
+[2025/12/09 22:19:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119920ms | Status: 200
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.928987s
+[2025/12/09 22:19:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119928ms | Status: 200
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.9475081s
+[2025/12/09 22:19:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119947ms | Status: 200
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.9150267s
+[2025/12/09 22:19:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119915ms | Status: 200
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:19:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.5613582s
+[2025/12/09 22:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119561ms | Status: 200
+[2025/12/09 22:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.5838322s
+[2025/12/09 22:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119583ms | Status: 200
+[2025/12/09 22:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.5794684s
+[2025/12/09 22:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119579ms | Status: 200
+[2025/12/09 22:21:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.5696766s
+[2025/12/09 22:21:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119569ms | Status: 200
+[2025/12/09 22:21:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:21:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:21:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:21:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.6096277s
+[2025/12/09 22:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119609ms | Status: 200
+[2025/12/09 22:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.5892343s
+[2025/12/09 22:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.6066409s
+[2025/12/09 22:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119606ms | Status: 200
+[2025/12/09 22:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119589ms | Status: 200
+[2025/12/09 22:23:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.5785411s
+[2025/12/09 22:23:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119579ms | Status: 200
+[2025/12/09 22:23:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:23:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.3293455s
+[2025/12/09 22:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119329ms | Status: 200
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.3016412s
+[2025/12/09 22:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119301ms | Status: 200
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.3362034s
+[2025/12/09 22:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119336ms | Status: 200
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.310075s
+[2025/12/09 22:25:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119310ms | Status: 200
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:25:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.802126s
+[2025/12/09 22:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119802ms | Status: 200
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.7800671s
+[2025/12/09 22:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119780ms | Status: 200
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.7661918s
+[2025/12/09 22:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119766ms | Status: 200
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.7873353s
+[2025/12/09 22:27:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119787ms | Status: 200
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:27:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 2m0.2666722s
+[2025/12/09 22:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 120266ms | Status: 200
+[2025/12/09 22:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 2m0.3048443s
+[2025/12/09 22:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 120304ms | Status: 200
+[2025/12/09 22:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 2m0.2780985s
+[2025/12/09 22:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 120278ms | Status: 200
+[2025/12/09 22:29:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 2m0.2839145s
+[2025/12/09 22:29:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 120284ms | Status: 200
+[2025/12/09 22:29:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:29:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:29:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:29:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.2861824s
+[2025/12/09 22:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119286ms | Status: 200
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.2397527s
+[2025/12/09 22:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119239ms | Status: 200
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.2597847s
+[2025/12/09 22:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119259ms | Status: 200
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.2306221s
+[2025/12/09 22:31:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119230ms | Status: 200
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:31:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.8925665s
+[2025/12/09 22:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119892ms | Status: 200
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.8876487s
+[2025/12/09 22:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119887ms | Status: 200
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8950446s
+[2025/12/09 22:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119895ms | Status: 200
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8719464s
+[2025/12/09 22:33:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119871ms | Status: 200
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:33:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.605146s
+[2025/12/09 22:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119605ms | Status: 200
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.6373183s
+[2025/12/09 22:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119637ms | Status: 200
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.6097737s
+[2025/12/09 22:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119609ms | Status: 200
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.6150586s
+[2025/12/09 22:35:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119615ms | Status: 200
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:35:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.866856s
+[2025/12/09 22:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119867ms | Status: 200
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.8446304s
+[2025/12/09 22:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119844ms | Status: 200
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.8487356s
+[2025/12/09 22:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119848ms | Status: 200
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.8419918s
+[2025/12/09 22:37:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119841ms | Status: 200
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:37:19 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m59.5899202s
+[2025/12/09 22:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 119589ms | Status: 200
+[2025/12/09 22:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m59.6169326s
+[2025/12/09 22:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 119616ms | Status: 200
+[2025/12/09 22:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m59.5954058s
+[2025/12/09 22:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 119595ms | Status: 200
+[2025/12/09 22:39:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m59.6020494s
+[2025/12/09 22:39:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 119602ms | Status: 200
+[2025/12/09 22:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:39:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/09 22:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/5/current 127.0.0.1 200 1m58.8156639s
+[2025/12/09 22:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/5/current | Duration: 118816ms | Status: 200
+[2025/12/09 22:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/sponsors 127.0.0.1 200 1m58.8457941s
+[2025/12/09 22:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/sponsors | Duration: 118846ms | Status: 200
+[2025/12/09 22:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/upcoming 127.0.0.1 200 1m58.8239333s
+[2025/12/09 22:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/upcoming | Duration: 118823ms | Status: 200
+[2025/12/09 22:41:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func9:87) GET /ws/current 127.0.0.1 200 1m58.8307949s
+[2025/12/09 22:41:19 +03] [DEFAULT] [WARN] (main.main.MetricsMiddleware.func5:60) SLOW REQUEST: GET /ws/current | Duration: 118830ms | Status: 200
+[2025/12/09 22:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/09 22:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/09 22:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/09 22:41:20 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5

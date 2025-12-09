@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0a0a0f',
+                        surface: '#12121a',
+                        card: '#1a1a24',
+                        border: '#2a2a3a',
+                        primary: '#3b82f6',
+                        accent: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #0a0a0f; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .bento-grid { display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr); }
+        .bento-item { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 1rem; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #12121a; }
+        ::-webkit-scrollbar-thumb { background: #3a3a4a; border-radius: 3px; }
+        .tier-gold { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000; }
+        .tier-silver { background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%); color: #000; }
+        .tier-bronze { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #fff; }
+        .tier-partner { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: #fff; }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-8 w-full max-w-md fade-in">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold">Admin Girisi</h2>
+                <p class="text-gray-400 mt-2">Devam etmek icin giris yapin</p>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Kullanici Adi</label>
+                    <input type="text" id="loginUsername" required
+                        class="w-full px-4 py-3 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Sifre</label>
+                    <input type="password" id="loginPassword" required
+                        class="w-full px-4 py-3 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition">
+                </div>
+                <button type="submit" class="w-full py-3 bg-primary hover:bg-primary/90 rounded-xl font-semibold transition mt-6">
+                    Giris Yap
+                </button>
+                <p id="loginError" class="text-red-400 text-sm text-center hidden"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+        <!-- Header -->
+        <header class="border-b border-border bg-surface/50 backdrop-blur-sm sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-bold">Admin Panel</h1>
+                </div>
+                <button onclick="logout()" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Cikis
+                </button>
+            </div>
+        </header>
+
+        <!-- Bento Grid -->
+        <main class="max-w-7xl mx-auto p-6">
+            <div class="bento-grid">
+                <!-- Stats Cards Row -->
+                <div class="bento-item col-span-3 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">Sistem Durumu</span>
+                        <div id="healthDot" class="w-2.5 h-2.5 rounded-full bg-gray-500"></div>
+                    </div>
+                    <p id="healthStatus" class="text-2xl font-bold">-</p>
+                    <p id="healthUptime" class="text-xs text-gray-500 mt-1">Uptime: -</p>
+                </div>
+
+                <div class="bento-item col-span-3 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">CPU Kullanimi</span>
+                        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                        </svg>
+                    </div>
+                    <p id="cpuUsage" class="text-2xl font-bold">-%</p>
+                    <div class="w-full h-1.5 bg-surface rounded-full mt-3">
+                        <div id="cpuBar" class="h-full bg-primary rounded-full transition-all" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="bento-item col-span-3 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">Bellek Kullanimi</span>
+                        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <p id="memUsage" class="text-2xl font-bold">- MB</p>
+                    <div class="w-full h-1.5 bg-surface rounded-full mt-3">
+                        <div id="memBar" class="h-full bg-accent rounded-full transition-all" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="bento-item col-span-3 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">Goroutines</span>
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <p id="goroutines" class="text-2xl font-bold">-</p>
+                    <p class="text-xs text-gray-500 mt-1">Aktif islemler</p>
+                </div>
+
+                <!-- Users Table -->
+                <div class="bento-item col-span-8 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            Kullanicilar
+                        </h3>
+                        <button onclick="loadUsers()" class="p-2 hover:bg-white/10 rounded-lg transition">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-border">
+                                    <th class="pb-3 font-medium">ID</th>
+                                    <th class="pb-3 font-medium">Kullanici</th>
+                                    <th class="pb-3 font-medium">Rol</th>
+                                    <th class="pb-3 font-medium">Olusturulma</th>
+                                    <th class="pb-3 font-medium text-right">Islemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersBody">
+                                <tr><td colspan="5" class="py-8 text-center text-gray-500">Yukleniyor...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Facilitators -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                            </svg>
+                            Konusmacilar
+                        </h3>
+                        <button onclick="openModal('facilitatorModal')" class="p-2 bg-purple-500/20 hover:bg-purple-500/30 rounded-lg transition">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="facilitatorsList" class="space-y-2 max-h-64 overflow-y-auto">
+                        <p class="text-gray-500 text-sm">Yukleniyor...</p>
+                    </div>
+                </div>
+
+                <!-- Sponsors -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Sponsorlar
+                        </h3>
+                        <button onclick="openModal('sponsorModal')" class="p-2 bg-accent/20 hover:bg-accent/30 rounded-lg transition">
+                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="sponsorsList" class="space-y-2 max-h-64 overflow-y-auto">
+                        <p class="text-gray-500 text-sm">Yukleniyor...</p>
+                    </div>
+                </div>
+
+                <!-- Workshops -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                            Workshop'lar
+                        </h3>
+                        <button onclick="openModal('workshopModal')" class="p-2 bg-orange-500/20 hover:bg-orange-500/30 rounded-lg transition">
+                            <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="workshopsList" class="space-y-2 max-h-64 overflow-y-auto">
+                        <p class="text-gray-500 text-sm">Yukleniyor...</p>
+                    </div>
+                </div>
+
+                <!-- WebSocket Stats -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">WebSocket</span>
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <p id="wsConnections" class="text-2xl font-bold">0</p>
+                    <p class="text-xs text-gray-500 mt-1">Aktif baglanti</p>
+                </div>
+
+                <!-- DB Status -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">Veritabani</span>
+                        <div id="dbDot" class="w-2.5 h-2.5 rounded-full bg-gray-500"></div>
+                    </div>
+                    <p id="dbStatus" class="text-2xl font-bold">-</p>
+                    <p id="dbLatency" class="text-xs text-gray-500 mt-1">Baglanti: -</p>
+                </div>
+
+                <!-- Request Stats -->
+                <div class="bento-item col-span-4 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-400 text-sm">Istekler</span>
+                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <p id="totalRequests" class="text-2xl font-bold">-</p>
+                    <p id="successRate" class="text-xs text-gray-500 mt-1">Basari: -%</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Facilitator Modal -->
+    <div id="facilitatorModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-md fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold">Yeni Konusmaci</h3>
+                <button onclick="closeModal('facilitatorModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="facilitatorForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Ad Soyad *</label>
+                    <input type="text" name="name" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Unvan (GDE, Expert vb.) *</label>
+                    <input type="text" name="title" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Konu Basligi *</label>
+                    <input type="text" name="topic" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Konu Detayi</label>
+                    <textarea name="topic_details" rows="3" class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none resize-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Fotograf URL *</label>
+                    <input type="url" name="photograph" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 rounded-xl font-medium transition">Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sponsor Modal -->
+    <div id="sponsorModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-md fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold">Yeni Sponsor</h3>
+                <button onclick="closeModal('sponsorModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="sponsorForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Sponsor Adi *</label>
+                    <input type="text" name="sponsor_name" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Tier *</label>
+                    <select name="sponsor_tier" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                        <option value="Partner">Partner</option>
+                        <option value="Bronze">Bronze</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Gold">Gold</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Logo URL *</label>
+                    <input type="url" name="logo" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Website URL</label>
+                    <input type="url" name="website" class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Reklam Video URL</label>
+                    <input type="url" name="advertise_video" class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 rounded-xl font-medium transition">Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Workshop Modal -->
+    <div id="workshopModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-md fade-in">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold">Yeni Workshop</h3>
+                <button onclick="closeModal('workshopModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="workshopForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Workshop Adi *</label>
+                    <input type="text" name="workshop_name" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Workshop Tarihi *</label>
+                    <input type="date" name="workshop_date" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 rounded-xl font-medium transition">Olustur</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Workshop Detail Modal (Time Slots & Delay) -->
+    <div id="workshopDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-2xl fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold" id="workshopDetailTitle">Workshop Detayi</h3>
+                <button onclick="closeModal('workshopDetailModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Workshop Controls -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-surface p-4 rounded-xl">
+                    <p class="text-sm text-gray-400 mb-2">Canli Yayin</p>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="workshopLiveToggle" class="w-5 h-5 rounded bg-surface border-border text-primary focus:ring-primary">
+                        <span id="workshopLiveStatus" class="text-sm">Kapali</span>
+                    </label>
+                </div>
+                <div class="bg-surface p-4 rounded-xl">
+                    <p class="text-sm text-gray-400 mb-2">Gecikme Ekle</p>
+                    <div class="flex gap-2">
+                        <button onclick="addDelay(-5)" class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition">-5dk</button>
+                        <button onclick="addDelay(5)" class="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm transition">+5dk</button>
+                        <button onclick="addDelay(10)" class="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm transition">+10dk</button>
+                        <button onclick="addDelay(15)" class="px-3 py-1.5 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded-lg text-sm transition">+15dk</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Slots List -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-medium">Zaman Slotlari</h4>
+                    <button onclick="openModal('addSlotModal')" class="px-3 py-1.5 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg text-sm transition flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Slot Ekle
+                    </button>
+                </div>
+                <div id="timeslotsList" class="space-y-2">
+                    <p class="text-gray-500 text-sm py-4 text-center">Slot bulunamadi</p>
+                </div>
+            </div>
+
+            <input type="hidden" id="currentWorkshopId">
+        </div>
+    </div>
+
+    <!-- Add Slot Modal -->
+    <div id="addSlotModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-[60]">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-md fade-in">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold">Yeni Slot Ekle</h3>
+                <button onclick="closeModal('addSlotModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="addSlotForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Konusmaci *</label>
+                    <select name="faciliator_id" id="slotFacilitatorSelect" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                        <option value="">Secin...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Baslangic Zamani *</label>
+                    <input type="datetime-local" name="slot_start" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Bitis Zamani *</label>
+                    <input type="datetime-local" name="slot_end" required class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 rounded-xl font-medium transition">Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Edit Modal -->
+    <div id="userEditModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-card border border-border rounded-2xl p-6 w-full max-w-md fade-in">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold">Kullanici Duzenle</h3>
+                <button onclick="closeModal('userEditModal')" class="p-2 hover:bg-white/10 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form id="userEditForm" class="space-y-4">
+                <input type="hidden" name="user_id" id="editUserId">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Yeni Sifre (bos birakilabilir)</label>
+                    <input type="password" name="password" class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Rol</label>
+                    <select name="role" id="editUserRole" class="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 rounded-xl font-medium transition">Guncelle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 px-5 py-3 rounded-xl hidden transform transition-all duration-300 translate-y-4 opacity-0"></div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let authToken = localStorage.getItem('jwt_token') || '';
+        let facilitatorsCache = [];
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            // Her zaman bir test istegi yaparak auth durumunu kontrol et
+            checkAuthAndInit();
+        });
+
+        async function checkAuthAndInit() {
+            try {
+                // Health endpoint auth gerektirmez, once bunu deneyelim
+                // Sonra users endpoint ile auth kontrolu yapalim
+                const res = await fetch(`${API_BASE}/admin/users`, {
+                    credentials: 'include',
+                    headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {}
+                });
+                
+                if (res.ok) {
+                    showMainContent();
+                    loadAllData();
+                }
+                // 401 alirsa login ekrani zaten gorunuyor
+            } catch (err) {
+                // Login ekrani gorunmeye devam etsin
+                console.log('[v0] Auth check failed, showing login');
+            }
+        }
+
+        // Auth - Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    if (data.token) {
+                        authToken = data.token;
+                        localStorage.setItem('jwt_token', authToken);
+                    }
+                    showMainContent();
+                    loadAllData();
+                    showToast('Giris basarili', 'success');
+                } else {
+                    document.getElementById('loginError').textContent = data.error || 'Giris basarisiz';
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            } catch (err) {
+                document.getElementById('loginError').textContent = 'Baglanti hatasi';
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        });
+
+        function logout() {
+            fetch(`${API_BASE}/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
+            localStorage.removeItem('jwt_token');
+            authToken = '';
+            document.getElementById('mainContent').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+            showToast('Cikis yapildi', 'info');
+        }
+
+        function showMainContent() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('flex');
+            document.getElementById('mainContent').classList.remove('hidden');
+        }
+
+        async function apiRequest(endpoint, options = {}) {
+            const headers = {
+                'Content-Type': 'application/json',
+                ...options.headers
+            };
+            
+            // Token varsa header'a ekle
+            if (authToken) {
+                headers['Authorization'] = `Bearer ${authToken}`;
+            }
+            
+            const config = {
+                ...options,
+                credentials: 'include', // Cookie'leri her istekte gonder
+                headers
+            };
+            
+            const res = await fetch(`${API_BASE}${endpoint}`, config);
+            
+            if (res.status === 401 || res.status === 403) {
+                logout();
+                showToast('Oturum suresi doldu', 'error');
+                throw new Error('Unauthorized');
+            }
+            
+            return res;
+        }
+
+        // Load All Data
+        function loadAllData() {
+            loadHealth();
+            loadUsers();
+            loadFacilitators();
+            loadSponsors();
+            loadWorkshops();
+            setInterval(loadHealth, 30000);
+        }
+
+        async function loadHealth() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                const json = await res.json();
+                
+                // Status
+                const healthDot = document.getElementById('healthDot');
+                const statusText = document.getElementById('healthStatus');
+                if (json.status === 'healthy') {
+                    healthDot.className = 'w-2.5 h-2.5 rounded-full bg-green-500';
+                    statusText.textContent = 'Saglikli';
+                } else {
+                    healthDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
+                    statusText.textContent = 'Sorunlu';
+                }
+                
+                // Health data is inside "data" key
+                const data = json.data || {};
+                
+                document.getElementById('healthUptime').textContent = `Uptime: ${data.app_uptime || '-'}`;
+                
+                // CPU
+                const cpuPercent = data.cpu_usage_percent || 0;
+                document.getElementById('cpuUsage').textContent = `${cpuPercent.toFixed(1)}%`;
+                document.getElementById('cpuBar').style.width = `${Math.min(cpuPercent, 100)}%`;
+                
+                // RAM
+                const memMB = data.ram_used_mb || 0;
+                const memTotal = data.ram_total_mb || 1;
+                const memPercent = data.ram_usage_percent || 0;
+                document.getElementById('memUsage').textContent = `${memMB} MB`;
+                document.getElementById('memBar').style.width = `${Math.min(memPercent, 100)}%`;
+                
+                // Goroutines
+                document.getElementById('goroutines').textContent = data.goroutine_count || '-';
+                
+                // DB Status - check db_connection_stats
+                const dbStats = data.db_connection_stats || {};
+                const dbDot = document.getElementById('dbDot');
+                if (dbStats.max_open_conns > 0 || dbStats.open_conns > 0) {
+                    dbDot.className = 'w-2.5 h-2.5 rounded-full bg-green-500';
+                    document.getElementById('dbStatus').textContent = 'Bagli';
+                    document.getElementById('dbLatency').textContent = `Acik: ${dbStats.open_conns || 0} / Max: ${dbStats.max_open_conns || 0}`;
+                } else {
+                    dbDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
+                    document.getElementById('dbStatus').textContent = 'Bagli Degil';
+                    document.getElementById('dbLatency').textContent = 'Baglanti yok';
+                }
+                
+                // WebSocket
+                document.getElementById('wsConnections').textContent = data.active_websockets || 0;
+                
+                // Metrics
+                const metrics = json.metrics || {};
+                document.getElementById('totalRequests').textContent = metrics.total_requests || 0;
+                const successRate = metrics.total_requests > 0 
+                    ? ((metrics.successful_requests / metrics.total_requests) * 100).toFixed(1) 
+                    : 0;
+                document.getElementById('successRate').textContent = `Basari: ${successRate}%`;
+            } catch (err) {
+                console.error('Health load error:', err);
+            }
+        }
+
+        // Users
+        async function loadUsers() {
+            try {
+                const res = await apiRequest('/admin/users');
+                const users = await res.json();
+                
+                const tbody = document.getElementById('usersBody');
+                const list = Array.isArray(users) ? users : (users.users || []);
+                
+                if (!list || list.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-gray-500">Kullanici bulunamadi</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = list.map(user => `
+                    <tr class="border-b border-border/50 hover:bg-white/5 transition">
+                        <td class="py-3 text-gray-400">#${user.user_id}</td>
+                        <td class="py-3 font-medium">${user.username}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-1 text-xs rounded-full ${user.role === 'admin' ? 'bg-primary/20 text-primary' : 'bg-gray-500/20 text-gray-400'}">
+                                ${user.role || 'user'}
+                            </span>
+                        </td>
+                        <td class="py-3 text-gray-400">${new Date(user.created_at).toLocaleDateString('tr-TR')}</td>
+                        <td class="py-3 text-right">
+                            <button onclick="editUser(${user.user_id}, '${user.role || 'user'}')" class="p-2 hover:bg-white/10 rounded-lg transition">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </button>
+                            <button onclick="deleteUser(${user.user_id})" class="p-2 hover:bg-red-500/20 rounded-lg transition">
+                                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error('Users load error:', err);
+            }
+        }
+
+        function editUser(id, role) {
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editUserRole').value = role;
+            openModal('userEditModal');
+        }
+
+        document.getElementById('userEditForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const userId = formData.get('user_id');
+            const body = {};
+            if (formData.get('password')) body.password = formData.get('password');
+            if (formData.get('role')) body.role = formData.get('role');
+            
+            try {
+                const res = await apiRequest(`/admin/users/${userId}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(body)
+                });
+                
+                if (res.ok) {
+                    showToast('Kullanici guncellendi', 'success');
+                    closeModal('userEditModal');
+                    loadUsers();
+                } else {
+                    showToast('Guncelleme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        });
+
+        async function deleteUser(id) {
+            if (!confirm('Bu kullaniciyi silmek istediginize emin misiniz?')) return;
+            
+            try {
+                const res = await apiRequest(`/admin/users/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Kullanici silindi', 'success');
+                    loadUsers();
+                } else {
+                    showToast('Silme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        // Facilitators
+        async function loadFacilitators() {
+            try {
+                const res = await fetch(`${API_BASE}/faciliator`);
+                const data = await res.json();
+                
+                const list = Array.isArray(data) ? data : (data.faciliators || []);
+                facilitatorsCache = list;
+                
+                const container = document.getElementById('facilitatorsList');
+                if (!list || list.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-sm">Konusmaci bulunamadi</p>';
+                    return;
+                }
+                
+                container.innerHTML = list.map(f => `
+                    <div class="flex items-center justify-between p-3 bg-surface rounded-xl group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 font-semibold overflow-hidden">
+                                ${f.photograph ? `<img src="${f.photograph}" class="w-full h-full object-cover" onerror="this.outerHTML='${f.name?.charAt(0) || '?'}'">` : (f.name?.charAt(0) || '?')}
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">${f.name}</p>
+                                <p class="text-xs text-gray-400">${f.title || ''} - ${f.topic || ''}</p>
+                            </div>
+                        </div>
+                        <button onclick="deleteFacilitator(${f.faciliator_id})" class="p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-500/20 rounded-lg transition">
+                            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                `).join('');
+                
+                // Update facilitator select in slot modal
+                updateFacilitatorSelect();
+            } catch (err) {
+                console.error('Facilitators load error:', err);
+            }
+        }
+
+        function updateFacilitatorSelect() {
+            const select = document.getElementById('slotFacilitatorSelect');
+            if (select) {
+                select.innerHTML = '<option value="">Secin...</option>' + 
+                    facilitatorsCache.map(f => `<option value="${f.faciliator_id}">${f.name} - ${f.topic || ''}</option>`).join('');
+            }
+        }
+
+        document.getElementById('facilitatorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const body = {
+                name: formData.get('name'),
+                title: formData.get('title'),
+                topic: formData.get('topic'),
+                topic_details: formData.get('topic_details') || '',
+                photograph: formData.get('photograph')
+            };
+            
+            try {
+                const res = await apiRequest('/admin/create/faciliator', {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+                
+                if (res.ok) {
+                    showToast('Konusmaci eklendi', 'success');
+                    closeModal('facilitatorModal');
+                    e.target.reset();
+                    loadFacilitators();
+                } else {
+                    const err = await res.json();
+                    showToast(err.error || 'Ekleme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        });
+
+        async function deleteFacilitator(id) {
+            if (!confirm('Bu konusmaciyi silmek istediginize emin misiniz?')) return;
+            
+            try {
+                const res = await apiRequest(`/admin/faciliator/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Konusmaci silindi', 'success');
+                    loadFacilitators();
+                } else {
+                    showToast('Silme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        // Sponsors
+        async function loadSponsors() {
+            try {
+                const res = await fetch(`${API_BASE}/sponsors`);
+                const data = await res.json();
+                
+                const list = Array.isArray(data) ? data : (data.sponsors || []);
+                
+                const container = document.getElementById('sponsorsList');
+                if (!list || list.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-sm">Sponsor bulunamadi</p>';
+                    return;
+                }
+                
+                container.innerHTML = list.map(s => {
+                    const tierClass = getTierClass(s.sponsor_tier);
+                    return `
+                    <div class="flex items-center justify-between p-3 bg-surface rounded-xl group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center overflow-hidden">
+                                ${s.logo ? `<img src="${s.logo}" class="w-full h-full object-contain" onerror="this.outerHTML='<span class=\\'text-accent font-semibold\\'>${s.sponsor_name?.charAt(0) || '?'}</span>'">` : `<span class="text-accent font-semibold">${s.sponsor_name?.charAt(0) || '?'}</span>`}
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">${s.sponsor_name}</p>
+                                <span class="text-xs px-2 py-0.5 rounded ${tierClass}">${s.sponsor_tier || '-'}</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteSponsor(${s.sponsor_id})" class="p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-500/20 rounded-lg transition">
+                            <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                `}).join('');
+            } catch (err) {
+                console.error('Sponsors load error:', err);
+            }
+        }
+
+        function getTierClass(tier) {
+            const t = (tier || '').toLowerCase();
+            if (t === 'gold' || t === 'altin') return 'tier-gold';
+            if (t === 'silver' || t === 'gumus') return 'tier-silver';
+            if (t === 'bronze' || t === 'bronz') return 'tier-bronze';
+            return 'tier-partner';
+        }
+
+        document.getElementById('sponsorForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const body = {
+                sponsor_name: formData.get('sponsor_name'),
+                sponsor_tier: formData.get('sponsor_tier'),
+                logo: formData.get('logo'),
+                website: formData.get('website') || '',
+                advertise_video: formData.get('advertise_video') || ''
+            };
+            
+            try {
+                const res = await apiRequest('/admin/create/sponsor', {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+                
+                if (res.ok) {
+                    showToast('Sponsor eklendi', 'success');
+                    closeModal('sponsorModal');
+                    e.target.reset();
+                    loadSponsors();
+                } else {
+                    const err = await res.json();
+                    showToast(err.error || 'Ekleme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        });
+
+        async function deleteSponsor(id) {
+            if (!confirm('Bu sponsoru silmek istediginize emin misiniz?')) return;
+            
+            try {
+                const res = await apiRequest(`/admin/sponsors/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Sponsor silindi', 'success');
+                    loadSponsors();
+                } else {
+                    showToast('Silme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        async function loadWorkshops() {
+            try {
+                const res = await fetch(`${API_BASE}/workshops`);
+                const data = await res.json();
+                
+                // API returns { workshops: [], total: 0 }
+                const list = data.workshops || [];
+                
+                const container = document.getElementById('workshopsList');
+                if (!list || list.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-sm">Workshop bulunamadi</p>';
+                    return;
+                }
+                
+                container.innerHTML = list.map(w => `
+                    <div class="flex items-center justify-between p-3 bg-surface rounded-xl group cursor-pointer hover:bg-surface/80 transition" onclick="openWorkshopDetail(${w.workshop_id})">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 ${w.is_live ? 'bg-green-500/20' : 'bg-orange-500/20'} rounded-full flex items-center justify-center">
+                                ${w.is_live ? 
+                                    '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg>' : 
+                                    `<span class="text-orange-400 font-semibold">${w.workshop_name?.charAt(0) || '?'}</span>`
+                                }
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">${w.workshop_name}</p>
+                                <p class="text-xs text-gray-400">${new Date(w.workshop_date).toLocaleDateString('tr-TR')} - ${w.time_slots?.length || 0} slot</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${w.is_live ? '<span class="px-2 py-0.5 text-xs bg-green-500/20 text-green-400 rounded">CANLI</span>' : ''}
+                            <button onclick="event.stopPropagation(); deleteWorkshop(${w.workshop_id})" class="p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-500/20 rounded-lg transition">
+                                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Workshops load error:', err);
+                document.getElementById('workshopsList').innerHTML = '<p class="text-red-400 text-sm">Yuklenemedi</p>';
+            }
+        }
+
+        document.getElementById('workshopForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            // Convert date to ISO format
+            const dateStr = formData.get('workshop_date');
+            const workshopDate = new Date(dateStr + 'T00:00:00Z');
+            
+            const body = {
+                workshop_name: formData.get('workshop_name'),
+                workshop_date: workshopDate.toISOString()
+            };
+            
+            try {
+                const res = await apiRequest('/admin/workshops/create', {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+                
+                if (res.ok) {
+                    showToast('Workshop olusturuldu', 'success');
+                    closeModal('workshopModal');
+                    e.target.reset();
+                    loadWorkshops();
+                } else {
+                    const err = await res.json();
+                    showToast(err.error || 'Olusturma basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        });
+
+        async function deleteWorkshop(id) {
+            if (!confirm('Bu workshop ve tum slotlarini silmek istediginize emin misiniz?')) return;
+            
+            try {
+                const res = await apiRequest(`/admin/workshops/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Workshop silindi', 'success');
+                    loadWorkshops();
+                } else {
+                    showToast('Silme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        async function openWorkshopDetail(workshopId) {
+            document.getElementById('currentWorkshopId').value = workshopId;
+            
+            try {
+                const res = await fetch(`${API_BASE}/workshops/${workshopId}/schedule`);
+                const data = await res.json();
+                
+                document.getElementById('workshopDetailTitle').textContent = data.workshop_name || 'Workshop Detayi';
+                
+                // Live toggle
+                const toggle = document.getElementById('workshopLiveToggle');
+                const statusText = document.getElementById('workshopLiveStatus');
+                toggle.checked = data.is_live || false;
+                statusText.textContent = data.is_live ? 'Acik' : 'Kapali';
+                
+                toggle.onchange = async () => {
+                    await setWorkshopLive(workshopId, toggle.checked);
+                    statusText.textContent = toggle.checked ? 'Acik' : 'Kapali';
+                };
+                
+                // Time slots
+                renderTimeSlots(data.all_slots || []);
+                
+                openModal('workshopDetailModal');
+            } catch (err) {
+                console.error('Workshop detail error:', err);
+                showToast('Detaylar yuklenemedi', 'error');
+            }
+        }
+
+        function renderTimeSlots(slots) {
+            const container = document.getElementById('timeslotsList');
+            
+            if (!slots || slots.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm py-4 text-center">Slot bulunamadi</p>';
+                return;
+            }
+            
+            container.innerHTML = slots.map((slot, idx) => `
+                <div class="flex items-center justify-between p-4 bg-surface rounded-xl">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold text-sm">
+                            ${slot.slot_order || idx + 1}
+                        </div>
+                        <div>
+                            <p class="font-medium">${slot.faciliator?.name || 'Konusmaci yok'}</p>
+                            <p class="text-sm text-gray-400">${slot.faciliator?.topic || ''}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-medium">${formatTime(slot.slot_start)} - ${formatTime(slot.slot_end)}</p>
+                        <button onclick="deleteSlot(${slot.slot_id})" class="text-xs text-red-400 hover:text-red-300 mt-1">Sil</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatTime(isoString) {
+            if (!isoString) return '-';
+            const date = new Date(isoString);
+            return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        async function setWorkshopLive(workshopId, isLive) {
+            try {
+                const res = await apiRequest(`/admin/workshops/${workshopId}/live`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ is_live: isLive })
+                });
+                
+                if (res.ok) {
+                    showToast(isLive ? 'Workshop canli yayinda' : 'Workshop kapatildi', 'success');
+                    loadWorkshops();
+                } else {
+                    showToast('Guncelleme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        async function addDelay(minutes) {
+            const workshopId = document.getElementById('currentWorkshopId').value;
+            if (!workshopId) return;
+            
+            try {
+                const res = await apiRequest(`/admin/workshops/${workshopId}/delay`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ delay_minutes: minutes })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast(data.message || `${minutes > 0 ? '+' : ''}${minutes} dakika eklendi`, 'success');
+                    // Refresh slots
+                    openWorkshopDetail(workshopId);
+                } else {
+                    showToast(data.error || 'Gecikme eklenemedi', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        // Add Slot Form
+        document.getElementById('addSlotForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const workshopId = document.getElementById('currentWorkshopId').value;
+            if (!workshopId) return;
+            
+            const formData = new FormData(e.target);
+            
+            const body = {
+                time_slots: [{
+                    faciliator_id: parseInt(formData.get('faciliator_id')),
+                    slot_start: new Date(formData.get('slot_start')).toISOString(),
+                    slot_end: new Date(formData.get('slot_end')).toISOString()
+                }]
+            };
+            
+            try {
+                const res = await apiRequest(`/admin/workshops/${workshopId}/slots`, {
+                    method: 'POST',
+                    body: JSON.stringify(body)
+                });
+                
+                if (res.ok) {
+                    showToast('Slot eklendi', 'success');
+                    closeModal('addSlotModal');
+                    e.target.reset();
+                    openWorkshopDetail(workshopId);
+                    loadWorkshops();
+                } else {
+                    const err = await res.json();
+                    showToast(err.error || 'Slot eklenemedi', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        });
+
+        async function deleteSlot(slotId) {
+            if (!confirm('Bu slotu silmek istediginize emin misiniz?')) return;
+            
+            const workshopId = document.getElementById('currentWorkshopId').value;
+            
+            try {
+                const res = await apiRequest(`/admin/slots/${slotId}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast('Slot silindi', 'success');
+                    openWorkshopDetail(workshopId);
+                    loadWorkshops();
+                } else {
+                    showToast('Silme basarisiz', 'error');
+                }
+            } catch (err) {
+                showToast('Hata olustu', 'error');
+            }
+        }
+
+        // Modal helpers
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('flex');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
+        }
+
+        // Toast
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `fixed bottom-6 right-6 px-5 py-3 rounded-xl transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500/90' : 
+                type === 'error' ? 'bg-red-500/90' : 'bg-blue-500/90'
+            }`;
+            
+            toast.classList.remove('hidden'); // Ensure it's visible before animating
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

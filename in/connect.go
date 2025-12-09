@@ -1,8 +1,8 @@
 package in
 
 import (
+	"devtv/config" // Config paketini import et
 	"os"
-	"time"
 
 	log "github.com/jeanphorn/log4go"
 	"github.com/joho/godotenv"
@@ -12,18 +12,19 @@ import (
 
 var DB *gorm.DB
 
-func Connect() {
-	log.LoadConfiguration("./log4go.json")
-
-	err := godotenv.Load("C:/Users/poizd/Desktop/gdgbursatestleri/devtv/in/devtv.env")
+// Connect artık config verilerini parametre olarak alıyor
+func Connect(dbConf config.DatabaseConfig, envPath string) {
+	// Config'den gelen env yolunu kullanıyoruz
+	err := godotenv.Load(envPath)
 	if err != nil {
-		log.Warn(".env dosyası yüklenemedi veya bulunamadı: ", err)
+		log.Warn(".env dosyası yüklenemedi (%s): %v", envPath, err)
 	}
 
 	dsn := os.Getenv("dsn")
-
 	if dsn == "" {
-		log.Critical("DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını veya ortam değişkenlerini kontrol edin.")
+		log.Critical("DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını kontrol edin.")
+		// Kritik hata olduğu için burada panic atmak veya os.Exit yapmak düşünülebilir
+		// ancak çağıran yerin (main) akışı yönetmesine izin veriyoruz.
 		return
 	}
 
@@ -36,13 +37,15 @@ func Connect() {
 	sqlDB, err := DB.DB()
 	if err != nil {
 		log.Error("sql.DB alınamadı. ", err)
+		return
 	}
 
-	sqlDB.SetMaxIdleConns(15)
-	sqlDB.SetMaxOpenConns(50)
-	sqlDB.SetConnMaxLifetime(5 * time.Minute)
-	sqlDB.SetConnMaxIdleTime(1 * time.Minute)
+	// Config dosyasından gelen değerleri set ediyoruz
+	sqlDB.SetMaxIdleConns(dbConf.MaxIdleConns)
+	sqlDB.SetMaxOpenConns(dbConf.MaxOpenConns)
+	sqlDB.SetConnMaxLifetime(dbConf.ConnMaxLifetime)
+	sqlDB.SetConnMaxIdleTime(dbConf.ConnMaxIdleTime)
 
 	log.Fine("Veritabanına başarıyla bağlanıldı.")
-	log.Info("Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min")
+	log.Info("Connection Pooling ayarları uygulandı.")
 }

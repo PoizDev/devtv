@@ -26,7 +26,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return []byte("secret"), nil
+			return []byte("JWT_SECRET"), nil
 		})
 
 		if err != nil || !token.Valid {

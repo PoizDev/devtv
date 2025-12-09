@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevFest Bursa Dashboard 2025 - Live</title>
+    <title>DevTV</title>
 
     <style>
         /* =======================================================
@@ -41,40 +41,40 @@
         }
 
         /* =======================================================
-           2. MOBİL BAŞLIK VE ALT BİLGİ 
+           2. BAŞLIK (HEADER) - MASAÜSTÜ VE MOBİL İÇİN
            ======================================================= */
-        .mobile-header,
-        .mobile-footer {
-            display: none;
-            padding: 0 5px;
-            width: 100%;
-        }
-
-        .mobile-header {
+        .app-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: -10px;
+            gap: 15px;
+            /* Logo ve yazı arası boşluk */
+            width: 100%;
+            padding: 0 5px;
+            margin-bottom: 5px;
         }
 
-        .mobile-header-logo {
-            height: 30px;
+        .header-logo {
+            height: 35px;
+            /* Masaüstünde biraz daha büyük olabilir */
             width: auto;
             object-fit: contain;
+            display: block;
         }
 
-        .mobile-header-text {
+        .header-text {
             display: flex;
             align-items: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 500;
             color: #000;
             margin: 0;
-            gap: 5px;
+            gap: 8px;
+            line-height: 1;
+            /* Dikey hizalamayı iyileştirmek için */
         }
 
         .mobile-footer {
-            display: flex;
+            display: none;
             justify-content: center;
             padding-top: 15px;
         }
@@ -95,7 +95,8 @@
             gap: 20px;
             height: auto;
             align-items: flex-start;
-            margin-top: 20px;
+            margin-top: 0;
+            /* Header geldiği için margin'e gerek kalmayabilir */
         }
 
         /* =======================================================
@@ -108,8 +109,12 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            height: 613px;
-            max-height: 700px;
+            width: 100%;
+            /* Genişlik %100 */
+            height: auto;
+            /* Yükseklik otomatik */
+            aspect-ratio: 16 / 9;
+            /* 16:9 Oranını Koru */
             grid-column: 1 / 2;
             grid-row: 1 / 2;
         }
@@ -140,6 +145,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            /* Videoyu sığdır */
         }
 
         /* =======================================================
@@ -149,7 +155,6 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            /* Kartlar arası boşluk */
             height: auto;
             width: 100%;
             overflow: visible;
@@ -158,7 +163,6 @@
         }
 
         /* --- Animasyonlar --- */
-        /* İlk Yükleme Animasyonu */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -175,7 +179,6 @@
             }
         }
 
-        /* Liste Geçiş Animasyonları */
         .slide-out-right {
             opacity: 0;
             transform: translateX(30px);
@@ -207,7 +210,6 @@
 
         .status-header.upcoming-mode {
             color: #1a73e8;
-            /* Mavi kalabilir veya turuncu yapılabilir */
         }
 
         .status-dot {
@@ -244,9 +246,6 @@
 
         .mobile-status-dot {
             background-color: #d93025;
-        }
-
-        .mobile-header .status-dot {
             width: 6px;
             height: 6px;
         }
@@ -260,12 +259,10 @@
             min-height: 400px;
             transition: border-color 0.3s;
             overflow: hidden;
-            /* Animasyon sırasında taşmaları gizle */
         }
 
         .dynamic-sessions-box.upcoming-mode {
             border-color: #e8f0fe;
-            /* Renk sabit kalsın veya değişsin */
         }
 
         .card-divider {
@@ -274,28 +271,24 @@
             margin: 0 20px;
         }
 
-        /* Sabit Ana Sahne Kartı - BEYAZ TASARIM (Eski Stil) */
+        /* Sabit Ana Sahne Kartı - BEYAZ TASARIM */
         .main-hall-card {
-            /* Standart .card özelliklerini miras alır, ekstra border yok */
             padding: 0;
             display: flex;
             flex-direction: column;
             border: none;
-            /* Kırmızı border kaldırıldı */
         }
 
         .main-hall-header {
-            /* Başlık stili diğer kartlara benzetildi */
-            padding: 15px 20px 5px 20px;
+            padding: 15px 20px 0px 20px;
+            /* Alt boşluk azaltıldı (0px) */
             font-size: 1rem;
             font-weight: 500;
             color: #1a73e8;
-            /* Mavi ton */
             display: flex;
             align-items: center;
             gap: 8px;
             background-color: transparent;
-            /* Arka plan kaldırıldı */
             border: none;
         }
 
@@ -308,7 +301,12 @@
             width: 100%;
         }
 
-        /* Dinamik liste içindeki kartlar */
+        /* Ana Sahne içindeki side-card için özel ayar (Boşluğu kapatmak için) */
+        .main-hall-card .side-card {
+            padding-top: 5px;
+            /* Üst boşluk azaltıldı */
+        }
+
         .dynamic-sessions-box .side-card {
             box-shadow: none;
             background: transparent;
@@ -360,14 +358,19 @@
             flex-shrink: 0;
         }
 
+        /* --- PROFİL FOTOĞRAFI DÜZENLEMESİ (Kare/Orijinal PNG) --- */
         .speaker-img {
             width: 70px;
             height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            /* Daireyi kaldırdık */
+            object-fit: contain;
+            /* Resmi sığdır, kesme yapma */
+            box-shadow: none;
+            /* Gölgeyi kaldırdık */
             margin-bottom: 0;
-            background-color: #eee;
+            background-color: transparent;
+            /* Arkaplanı şeffaf yaptık */
         }
 
         .time-btn {
@@ -393,12 +396,7 @@
 
         .olive-btn {
             background-color: #9cab12;
-            /* Zeytin yeşili/Sarımsı */
         }
-
-        /* Ana Sahne butonu da mavi olsun istiyorsanız blue-btn kullanın, 
-           ayırt edici olsun derseniz farklı bir renk. */
-
 
         /* =======================================================
            6. SPONSORLAR VE ORGANİZATÖR BÖLÜMÜ
@@ -409,7 +407,8 @@
             display: grid;
             grid-template-columns: 4fr 1fr;
             gap: 20px;
-            margin-top: -26px;
+            margin-top: 0;
+            /* Çakışmayı önlemek için negatif margin kaldırıldı */
         }
 
         .sponsors-card,
@@ -435,8 +434,6 @@
             justify-content: center;
         }
 
-
-
         .slider-container {
             width: 100%;
             overflow: hidden;
@@ -447,7 +444,9 @@
             display: flex;
             width: max-content;
             gap: 40px;
-            animation: scroll 30s linear infinite;
+            /* Döngü Animasyonu */
+            animation: scroll 60s linear infinite;
+            /* Süreyi biraz uzattım daha yavaş aksın */
         }
 
         .slider-track:hover {
@@ -460,11 +459,22 @@
             justify-content: center;
         }
 
+        /* Link sarmalayıcısı için stil: Resmin ortalanmasını koru */
+        .slide a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
         .slide img {
-            height: 85px;
+            height: 50px;
+            /* Logo yüksekliği küçültüldü */
             width: auto;
+            max-width: 150px;
+            /* Çok geniş logolar için limit eklendi */
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
@@ -516,19 +526,23 @@
                 gap: 15px;
             }
 
-            .mobile-header,
             .mobile-footer {
                 display: flex;
             }
 
-            .mobile-header {
+            .app-header {
+                /* Mobilde de aynı stil korunabilir, margin ayarlanabilir */
                 margin-top: 0;
                 margin-bottom: 5px;
                 padding: 0 10px;
             }
 
-            .mobile-footer {
-                padding: 15px 10px 0 10px;
+            .header-logo {
+                height: 30px;
+            }
+
+            .header-text {
+                font-size: 1.2rem;
             }
 
             .top-section {
@@ -558,10 +572,11 @@
 <body>
     <div class="dashboard-container">
 
-        <header class="mobile-header">
-            <img src="gdg-logo.png" alt="GDG Bursa Logo" class="mobile-header-logo">
+        <!-- Header Artık Hem Masaüstü Hem Mobilde Görünür -->
+        <header class="app-header">
+            <img src="gdg-logo.png" alt="GDG Bursa Logo" class="header-logo">
 
-            <div class="mobile-header-text">
+            <div class="header-text">
                 <div class="status-dot pulse-animation mobile-status-dot"></div>
                 Etkinlik Akışı
             </div>
@@ -600,7 +615,7 @@
 
                 <!-- 2. Bölüm: Sabit Ana Sahne Kartı (Beyaz Tasarım) -->
                 <div class="card main-hall-card">
-                    <div class="main-hall-header">
+                    <div class="main-hall-header" id="mainHallHeader">
                         Ana Salon
                     </div>
                     <div id="mainHallContent">
@@ -614,8 +629,6 @@
             <div class="sponsors-group">
 
                 <div class="card sponsors-card">
-
-
                     <div class="slider-container">
                         <!-- JS ile doldurulacak -->
                         <div class="slider-track" id="sponsorTrack">
@@ -649,7 +662,8 @@
         let store = {
             activeSessions: [],
             upcomingSessions: [],
-            mainHall: null
+            mainHall: null,
+            hall5: null // ID 5 verisi için yer tutucu
         };
 
         // --- GÖRÜNÜM KONTROLÜ ---
@@ -715,9 +729,15 @@
         // Endpoint: /ws/1/current
         function handleMainHallData(data) {
             const container = document.getElementById('mainHallContent');
+            const headerTitle = document.getElementById('mainHallHeader');
             const slot = data.current_slot;
 
-            // 1. Benzersiz bir anahtar oluştur (ID'ye göre)
+            // 1. Başlığı API'den gelen veriyle güncelle
+            if (headerTitle) {
+                headerTitle.textContent = data.workshop_name || 'Ana Salon';
+            }
+
+            // 2. Benzersiz bir anahtar oluştur (ID'ye göre)
             // Böylece sadece konuşmacı/oturum değiştiğinde render işlemi yaparız.
             let currentKey = "";
             if (slot) {
@@ -731,7 +751,7 @@
                 currentKey = "empty";
             }
 
-            // 2. Eğer içerik (key) aynıysa, DOM'u güncelleme. 
+            // 3. Eğer içerik (key) aynıysa, DOM'u güncelleme. 
             // Bu sayede animasyon (fade-in) tekrar tekrar çalışmaz.
             if (currentKey === lastMainHallKey) return;
 
@@ -745,7 +765,7 @@
                 container.innerHTML = `
                     <div class="side-card fade-in">
                         <div class="card-info">
-                            <span class="meta-tag" style="color:#1a73e8;">${data.workshop_name || 'Ana Salon'}</span>
+                            <!-- Başlık yukarı taşındığı için buradan kaldırıldı -->
                             <h4>${slot.faciliator.name}</h4>
                             <p class="desc">${slot.faciliator.topic || ''}</p>
                         </div>
@@ -772,6 +792,15 @@
             } else {
                 container.innerHTML = '<div class="empty-message">Oturum bilgisi yok</div>';
             }
+        }
+
+        // ===================================================
+        // 2.1 ID 5 VERİSİNİ YÖNETME (Ekrana basmıyoruz, sadece alıyoruz)
+        // ===================================================
+        function handleHall5Data(data) {
+            // Veriyi store'a kaydediyoruz, gerekirse ilerde kullanılabilir.
+            store.hall5 = data;
+            console.log("ID 5 Data received:", data);
         }
 
         // ===================================================
@@ -810,10 +839,10 @@
 
                 if (list.length > 0) {
                     list.forEach((item, index) => {
-                        const slot = item.slot;
+                        // FİLTRELEME BURADA: ID 5 listede gösterilmeyecek
+                        if (item.workshop_id == 5) return;
 
-                        // Ana Sahne (ID: 1) zaten aşağıda sabit olduğu için listeden gizliyoruz
-                        if (item.workshop_id == 1) return;
+                        const slot = item.slot;
 
                         const html = `
                         <div class="side-card">
@@ -845,6 +874,9 @@
 
                 if (list.length > 0) {
                     list.forEach((slot, index) => {
+                        // Eğer upcoming verisinde workshop_id varsa burada da filtrelemek gerekebilir
+                        // Ancak şimdilik sadece active kısmında kesin id 1 ve 5 var.
+
                         const html = `
                         <div class="side-card">
                             <div class="card-info">
@@ -918,17 +950,30 @@
             videoQueue = [];
 
             if (data.sponsors && data.sponsors.length > 0) {
-                data.sponsors.forEach(sponsor => {
-                    const slide = document.createElement('div');
-                    slide.className = 'slide';
-                    const img = document.createElement('img');
-                    img.src = getImageUrl(sponsor.logo);
-                    slide.appendChild(img);
-                    track.appendChild(slide);
-
+                // Sponsor listesinin HTML'ini oluştur
+                const sponsorsHtml = data.sponsors.map(sponsor => {
                     if (sponsor.advertise_video) videoQueue.push(getImageUrl(sponsor.advertise_video));
-                });
-                track.innerHTML += track.innerHTML;
+
+                    let content = `<img src="${getImageUrl(sponsor.logo)}" alt="Sponsor">`;
+                    if (sponsor.website) {
+                        content = `<a href="${sponsor.website}" target="_blank">${content}</a>`;
+                    }
+
+                    return `
+                        <div class="slide">
+                            ${content}
+                        </div>
+                    `;
+                }).join('');
+
+                // Sonsuz döngü (infinite scroll) efekti için:
+                // İçeriği ekrana sığacak ve taşacak kadar ÇOK kez kopyala.
+                // 50px logo + 40px gap = ~90px. 
+                // Full HD ekran 1920px. 20 tane yeterli olur ama garanti olsun diye 12 set kopyalıyoruz.
+                // Bu sayede CSS translateX(-50%) animasyonu devreye girdiğinde asla boşluk görünmez.
+
+                const repeatCount = 12;
+                track.innerHTML = new Array(repeatCount).fill(sponsorsHtml).join('');
 
                 const player = document.getElementById('mainVideoPlayer');
                 if (player.paused && videoQueue.length > 0 && !player.getAttribute('src')) {
@@ -965,7 +1010,7 @@
             connectWebSocket('/ws/sponsors', handleSponsorsData);
             connectWebSocket('/ws/current', handleActiveData);
             connectWebSocket('/ws/upcoming', handleUpcomingData);
-            connectWebSocket('/ws/1/current', handleMainHallData);
+            connectWebSocket('/ws/5/current', handleMainHallData);
 
             // İlk verilerin gelmesi için biraz bekle, sonra rotasyonu başlat
             setTimeout(startRotationLoop, 1000);

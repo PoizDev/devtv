@@ -1,0 +1,6 @@
+[2025/12/05 13:13:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:47) Connection Pooling ayarları: Max Idle Con: 15, Max Open Con: 50, Max Con Lifetime: 5min, Max Con Idle Time: 1min
+[2025/12/05 13:13:30 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/05 13:13:30 +03] [DEFAULT] [INFO] (main.main.func3:133) Server Başlatılıyor - Port, %!(EXTRA string=:2012)
+[2025/12/05 13:13:33 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 4.0173ms
+[2025/12/05 13:13:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 0s
+[2025/12/05 18:07:52 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) GET /health ::1 200 0s

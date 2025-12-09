@@ -77,7 +77,7 @@ func Login(c *gin.Context) {
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("secret"))
+	tokenString, err := token.SignedString([]byte("JWT_SECRET"))
 	if err != nil {
 		log.Error("Token imzalanırken hata oluştu: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
@@ -101,7 +101,7 @@ func GetAllUsers(c *gin.Context) {
 	log.Info("Tüm kullanıcılar alındı talep eden kulllanıcı ID: ", c.GetUint("userID"))
 }
 
-func DeleteUsers(c *gin.Context) {
+func DeleteUser(c *gin.Context) {
 	userID := c.Param("id")
 
 	if userID == "" {
@@ -136,5 +136,49 @@ func DeleteUsers(c *gin.Context) {
 }
 
 func UpdateUser(c *gin.Context) {
-
+	userID := c.Param("id")
+	if userID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "User ID Gerekli",
+		})
+		log.Warn("User ID parametresi boş")
+		return
+	}
+	var body struct {
+		Password string `json:"password"`
+		Role     string `json:"role"`
+	}
+	if err := c.BindJSON(&body); err != nil {
+		log.Error("Json'ı eşlerken hata oluştu: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+	var user models.User
+	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Güncellenmek istenen user bulunamadı",
+		})
+		log.Warn("Güncellenmek istenen user bulunamadı - ID: ", userID)
+		return
+	}
+	if body.Password != "" {
+		hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
+		if err != nil {
+			log.Error("Şifre hashlenirken hata oluştu: ", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Şifre hashlenirken hata oluştu"})
+			return
+		}
+		user.Password = string(hash)
+	}
+	if body.Role != "" {
+		user.Role = body.Role
+	}
+	result := in.DB.Save(&user)
+	if result.Error != nil {
+		log.Error("User güncellenirken hata oluştu: ", result.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "User güncellenirken bir hata oluştu"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "User güncellendi"})
+	log.Info("User güncellendi - ID: ", userID)
 }
