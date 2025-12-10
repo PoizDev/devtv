@@ -9,6 +9,8 @@ import (
 	log "github.com/jeanphorn/log4go"
 )
 
+//! Fallback Cache Mekanizması Eklenecek Prod'a çıkmadan kesin ve net!
+
 type CircuitBreakerState int
 
 const (

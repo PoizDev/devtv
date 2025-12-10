@@ -13,7 +13,7 @@ Bu sistem Devfest Bursa 2025 için geliştirilmiş bir etkinlik akışı sistemi
 Dil: Golang Version 1.24.5
 Framework: Gin Web Framework
 DB: PostgreSQL 15+
-ORM: GORM v2
+ORM: GORM 1.31.1
 
 ## Sistem Kurulumu
 
@@ -41,6 +41,26 @@ ORM: GORM v2
 ```
     go run main.go
 ```
+
+## Ortam Değişkenleri (devtv.env)
+
+Sistem, hassas veriler ve konfigürasyonu `.env` dosyasından okur. Bu dosya **asla** git'e commit edilmemelidir.
+
+```dotenv
+# PostgreSQL Bağlantı Stringi (DSN - Data Source Name)
+dsn="user=postgres password=sifreniz dbname=devtv port=5432 sslmode=disable TimeZone=Europe/Istanbul"
+
+# JWT Token İmzalama Anahtarı
+JWT_SECRET="güvenli-anahtar-buraya-yazılır"
+```
+
+**DSN Parametreleri:**
+- **user**: PostgreSQL kullanıcı adı (varsayılan: postgres)
+- **password**: PostgreSQL şifresi
+- **dbname**: Veritabanı adı (devtv)
+- **port**: PostgreSQL dinleme portu (varsayılan: 5432)
+- **sslmode**: SSL bağlantı modu (disable = SSL yok, production'da require olmalı)
+- **TimeZone**: Zaman dilimi (Europe/Istanbul = +3 UTC)
 
 ## API Dokümantasyonu
 
@@ -80,10 +100,94 @@ Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=
 
 Frontend çıkımında admin panel ve health controller sayfasında arka planda JWT Token'ın **Cookie olarak tutulması gerekmektedir.**
 
+### Kullanıcı Yönetimi
+
+1. Kullanıcı Oluşturma (Signup)
+
+```
+POST - localhost:2012/signup
+
+JSON Body Örneği:
+{
+    "username": "admin",
+    "password": "çokgüçlüşifre",
+    "role": "admin"
+}
+
+Yanıt:
+{
+    "message": "User created successfully"
+}
+```
+
+**Roller (Role):**
+- **admin**: Tüm sisteme erişim, yönetim paneli erişimi
+- **user**: Standart kullanıcı, sadece okuma işlemleri
+- Diğer özel roller tanımlanabilir
+
+2. Kullanıcı Girişi (Login)
+
+```
+POST - localhost:2012/login
+
+JSON Body Örneği:
+{
+    "username": "admin",
+    "password": "çokgüçlüşifre"
+}
+
+Yanıt:
+{
+    "message": "Login successful"
+}
+
+Cookie'ye eklenen Token:
+Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=None
+```
+
+**Token Özellikleri:**
+- **Süre Sonu**: 30 gün (2592000 saniye)
+- **Depolama**: HttpOnly Cookie (JavaScript'ten erişilemez, güvenli)
+- **Kullanım**: Tüm /admin endpoint'lerine erişim için gerekli
+
+3. Tüm Kullanıcıları Görüntüleme (Admin)
+
+**!!Önemli: Bu istek JWT Token gerektirmektedir.**
+
+```
+GET - localhost:2012/admin/users
+
+Yanıt:
+[
+    {   
+        "user_id": 1,
+        "username": "admin",
+        "role": "admin",
+        "created_at": "2025-12-08T20:00:00+03:00"
+    }
+]
+
+Not: Şifre bilgisi geri döndürülmez, güvenlik nedeniyle.
+```
+
+4. Kullanıcı Silme (Admin)
+
+```
+DELETE - localhost:2012/admin/user/:id
+
+Yanıt:
+{
+    "message": "Kullanıcı başarıyla silindi",
+    "user_id": 2
+}
+```
+
 ### Facilitator Kontrolleri
+
 Facilitator'lar yani konuşmacıların kontrolleri için endpointler, nasıl çalıştıkları ve JSON çıktıları aşağıdaki panellerde verilmiştir
 
 1. Konuşmacıları Görüntüleme
+
 ```
 GET - localhost:2012/faciliator
 
@@ -92,40 +196,114 @@ GET - localhost:2012/faciliator
     {
         "faciliator_id": 3,
         "name": "Örnek Konuşmacı",
-        "title": "Örnek Title",
+        "title": "GDE & Flutter Developer",
         "topic": "Örnek Konu",
-        "topic_details": "Örnek Konu Detayları",
+        "topic_details": "Örnek Konu Detayları, bu oturum içinde neler öğreneceğiniz vb.",
         "photograph": "/public/faciliators/ornek.png",
         "created_at": "2025-12-08T23:18:14.266189+03:00",
         "updated_at": "2025-12-08T23:18:14.266189+03:00"
     }
 ]
 ```
-photograph parametresi string bir biçimde dosya yolunu veriyor. Bunun için devtv'nin frontunda önlemler alındı. dosya girişi de buna göre olmalı.
 
-2. Facilitator oluşturma
-**!!Önemli: Bu istek ve diğer başı bütün /admin olan istekler JWT Token gerektirmektedir. Önce Login'den Auth tokenleri alın, sonra eğer postmande çalışıyorsanız Header kısmında**
+**Facilitator Alanları:**
+- **faciliator_id**: Konuşmacının benzersiz kimliği
+- **name**: Konuşmacı adı (max 100 karakter)
+- **title**: Unvan/Pozisyon (GDE, Android Expert vb., max 100 karakter)
+- **topic**: Konu başlığı (max 200 karakter)
+- **topic_details**: Konu detayları ve açıklaması (metin alanı)
+- **photograph**: Konuşmacı fotoğrafının dosya yolu (string formatında)
+
+2. Facilitator Oluşturma (Admin)
+
+**!!Önemli: Bu istek JWT Token gerektirmektedir. Önce Login'den Auth tokenleri alın, sonra Postman Header kısmında**
 ```
-Key:Cookie
-Value: 
-Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=None
+Key: Cookie
+Value: Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=None
 ```
-**olmalıdır**
+**ekleyin.**
 
 ```
 POST - localhost:2012/admin/create/faciliator
-Örnek JSON Body:  
 
+JSON Body Örneği:
 {
-    "name":"Örnek Konuşmacı",
-    "title":"Örnek Title",
-    "topic":"Örnek Konu",
-    "topic_details":"Örnek Konu Detayları",
-    "photograph":"/public/faciliators/ornek.png"
+    "name": "Ayşe Yılmaz",
+    "title": "GDE & Flutter Developer",
+    "topic": "Flutter ile Mobil Uygulama Geliştirme",
+    "topic_details": "Bu oturumda Flutter framework'ünü kullanarak profesyonel mobil uygulamalar nasıl geliştirilir öğreneceğiz.",
+    "photograph": "/public/faciliators/ayse.png"
+}
+
+Yanıt:
+{
+    "message": "Facilitator oluşturuldu: Ayşe Yılmaz"
 }
 ```
 
-3. Facilitator silme
+3. Konuşmacıları Konuya Göre Filtreleme
+
+```
+GET - localhost:2012/faciliator/:topic
+
+Örnek:
+GET - localhost:2012/faciliator/Flutter
+
+Çıktı:
+[
+    {
+        "faciliator_id": 3,
+        "name": "Ayşe Yılmaz",
+        "title": "GDE & Flutter Developer",
+        "topic": "Flutter",
+        "topic_details": "Flutter ile Mobil Uygulama Geliştirme",
+        "photograph": "/public/faciliators/ayse.png",
+        "created_at": "2025-12-08T23:18:14.266189+03:00",
+        "updated_at": "2025-12-08T23:18:14.266189+03:00"
+    }
+]
+```
+
+4. Facilitator Silme (Admin)
+
+```
+DELETE - localhost:2012/admin/faciliator/:id
+
+Yanıt:
+{
+    "message": "Facilitator başarıyla silindi",
+    "facilitator_id": 3
+}
+```
+
+5. Facilitator Güncelleme (Admin)
+
+```
+PUT - localhost:2012/admin/faciliator/:id
+
+JSON Body Örneği (sadece güncellemek istediğiniz alanları göndermeniz yeterli):
+{
+    "name": "Dr. Ayşe Yılmaz",
+    "photograph": "/public/faciliators/ayse_updated.png"
+}
+
+Yanıt:
+{
+    "message": "Facilitator başarıyla güncellendi",
+    "faciliator": {
+        "faciliator_id": 3,
+        "name": "Dr. Ayşe Yılmaz",
+        "title": "GDE & Flutter Developer",
+        "topic": "Flutter",
+        "topic_details": "Flutter ile Mobil Uygulama Geliştirme",
+        "photograph": "/public/faciliators/ayse_updated.png",
+        "created_at": "2025-12-08T23:18:14.266189+03:00",
+        "updated_at": "2025-12-10T15:30:00+03:00"
+    }
+}
+```
+
+3. Konuşmacıları Silme (Admin)
 ```
 (:id kısmına silmek istediğimiz ID'nin inputu verilecektir)
 DELETE - localhost:2012/admin/faciliator/:id
@@ -142,4 +320,1223 @@ JSON Body Örneği:
     "photograph":"/public/faciliators/emrehizli.jpeg"
 }
 ```
+### Workshoplar ve TimeSlotlar Hk.
 
+öncelikle bu sistemin en karışık olan kısmı workshoplar ve timeslotlar arasındaki ilişki. aralarında one to many gibi bir DB ilişkisi var. üst kimlik workshoplar. time slotlar ise zamanları geldiğinde altlarına bilgileri veriyor diyebiliriz. ana mevzu timeslotlar içerisinde. timeslotlar faciliatorlara bağlı. bunlar için şöyle bir diagram verebilirim.
+
+```
+┌─────────────────────────────────────┐
+│         WORKSHOPS (Parent)          │
+│  ┌───────────────────────────────┐  │
+│  │ workshop_id (PK)              │  │
+│  │ workshop_name: "Çam Atölyesi" │  │
+│  │ workshop_date: 2025-11-27     │  │
+│  │ is_live: true                 │  │
+│  └───────────────────────────────┘  │
+└──────────────┬──────────────────────┘
+               │ One-to-Many
+               │
+               ↓
+┌──────────────────────────────────────────┐
+│    WORKSHOP_TIME_SLOTS (Children)        │
+│  ┌────────────────────────────────────┐  │
+│  │ slot_id (PK)                       │  │
+│  │ workshop_id (FK) → Workshops       │  │
+│  │ faciliator_id (FK) → Faciliators   │  │
+│  │ slot_start: 13:00                  │  │
+│  │ slot_end: 14:00                    │  │
+│  │ slot_order: 1                      │  │
+│  └────────────────────────────────────┘  │
+│  ┌────────────────────────────────────┐  │
+│  │ slot_id (PK)                       │  │
+│  │ workshop_id (FK) → Workshops       │  │
+│  │ faciliator_id (FK) → Faciliators   │  │
+│  │ slot_start: 14:00                  │  │
+│  │ slot_end: 15:00                    │  │
+│  │ slot_order: 2                      │  │
+│  └────────────────────────────────────┘  │
+└──────────────┬───────────────────────────┘
+               │ Many-to-One
+               │
+               ↓
+┌──────────────────────────────────────┐
+│      FACILIATORS (Referenced)        │
+│  ┌────────────────────────────────┐  │
+│  │ faciliator_id (PK)             │  │
+│  │ name: "Ayşe Yılmaz"            │  │
+│  │ title: "GDE & Flutter Dev."    │  │
+│  │ topic: "Flutter Development"   │  │
+│  │ topic_details: "Bu oturumda..."│  │
+│  │ photograph: "https://..."      │  │
+│  └────────────────────────────────┘  │
+└──────────────────────────────────────┘
+```
+Veri Akışı Diagramı:
+```
+┌─────────────┐
+│  Workshop   │ (ID: 1, Name: "Erol Kaftanoğlu Atölyesi")
+└──────┬──────┘
+       │
+       ├─────→ TimeSlot #1 (13:00-14:00) → Faciliator #1 (Ayşe)
+       │
+       ├─────→ TimeSlot #2 (14:00-15:00) → Faciliator #2 (Mehmet)
+       │
+       └─────→ TimeSlot #3 (15:00-16:00) → Faciliator #1 (Ayşe) ← Tekrar aynı kişiye dönebiliyor.
+```
+
+
+Endpointlerine dönecek olursak.
+
+1. Workshopları Görüntüleme
+
+```
+GET - localhost:2012/workshops
+
+Örnek JSON Çıktısı:
+{
+    "total": 1,
+    "workshops": [
+        {
+            "workshop_id": 5,
+            "workshop_name": "Örnek Ana Sahne",
+            "workshop_date": "2025-12-08T00:00:00Z",
+            "created_at": "2025-12-08T23:24:11.63826+03:00",
+            "updated_at": "2025-12-08T23:24:11.63826+03:00",
+            "time_slots": [
+                {
+                    "slot_id": 11,
+                    "workshop_id": 5,
+                    "faciliator_id": 3,
+                    "faciliator": {
+                        "faciliator_id": 3,
+                        "name": "Örnek Konuşmacı",
+                        "title": "GDE",
+                        "topic": "Örnek Konu",
+                        "topic_details": "Örnek Konu Detayları",
+                        "photograph": "/public/faciliators/ornek.png"
+                    },
+                    "slot_start": "2025-12-09T23:18:00+03:00",
+                    "slot_end": "2025-12-10T00:00:00+03:00",
+                    "slot_order": 1,
+                    "created_at": "2025-12-08T23:24:11.638878+03:00",
+                    "updated_at": "2025-12-09T23:19:00+03:00"
+                }
+            ]
+        }
+    ]
+}
+```
+
+2. Seçtiğin bir workshop'un takvimini görüntüleme
+```
+GET - http://localhost:2012/workshops/:id/schedule
+
+{
+    "workshop_id": 2,
+    "workshop_name": "Muhammet Alihan Çabuk Atölyesi",
+    "workshop_date": "2025-12-04T00:00:00Z",
+    "all_slots": [
+        {
+            "slot_id": 7,
+            "slot_start": "2025-12-09T21:00:00+03:00",
+            "slot_end": "2025-12-09T23:00:00+03:00",
+            "slot_order": 1,
+            "faciliator": {
+                "faciliator_id": 3,
+                "name": "Örnek Konuşmacı",
+                "topic": "Örnek Konu",
+                "topic_details": "Örnek Konu Detayları",
+                "photograph": "/public/faciliators/ornek.png"
+            }
+        }
+    ],
+    "total_slots": 1
+}
+```
+
+3. Aktif Workshopları Görüntüleme
+```
+GET - localhost:2012/workshops/current
+
+Örnek JSON Çıktısı
+{
+    "active_workshops": [
+        {
+            "slot": {
+                "slot_id": 10,
+                "slot_start": "2025-12-09T14:00:00+03:00",
+                "slot_end": "2025-12-10T23:00:00+03:00",
+                "slot_order": 1,
+                "faciliator": {
+                    "faciliator_id": 3,
+                    "name": "Örnek Konuşmacı",
+                    "topic": "Örnek Konu",
+                    "topic_details": "Örnek Konu Detayları",
+                    "photograph": "/public/faciliators/ornek.png"
+                }
+            },
+            "workshop_id": 4,
+            "workshop_name": "Örnek Workshop"
+        }
+    ],
+    "total": 1
+}
+```
+4. Sonraki Workshopları Görüntüleme
+```
+GET - localhost:2012/workshops/upcoming
+{
+    "total": 1,
+    "upcoming_slots": [
+        {
+            "slot_id": 11,
+            "workshop_name": "Örnek Ana Sahne",
+            "slot_start": "2025-12-10T15:00:00+03:00",
+            "slot_end": "2025-12-10T23:00:00+03:00",
+            "faciliator": {
+                "faciliator_id": 3,
+                "name": "Örnek Konuşmacı",
+                "topic": "Örnek Konu",
+                "topic_details": "Örnek Konu Detayları",
+                "photograph": "/public/faciliators/ornek.png"
+            },
+            "time_until_start": "39 dakika sonra"
+        }
+    ]
+}
+```
+
+5. Spesifik bir workshopun altındaki slotları görüntüleme
+
+```
+GET - localhost:2012/workshop/:id/slots
+
+Örnek JSON Çıktısı:
+{
+    "message": "Workshop başarıyla alındı",
+    "workshop": {
+        "workshop_id": 4,
+        "workshop_name": "Örnek Workshop",
+        "workshop_date": "2025-12-08T00:00:00Z",
+        "time_slots": [
+            {
+                "slot_id": 10,
+                "slot_start": "2025-12-09T14:00:00+03:00",
+                "slot_end": "2025-12-10T23:00:00+03:00",
+                "slot_order": 1
+            }
+        ]
+    }
+}
+```
+
+6. Workshop Oluşturma (Admin)
+
+**!!Önemli: Bu istek JWT Token gerektirmektedir.**
+
+```
+POST - localhost:2012/admin/create/workshop
+
+JSON Body Örneği:
+{
+    "workshop_name": "Başarılı Yazılım Mimarisi",
+    "workshop_date": "2025-12-15T00:00:00Z",
+    "time_slots": [
+        {
+            "faciliator_id": 3,
+            "slot_start": "2025-12-15T13:00:00Z",
+            "slot_end": "2025-12-15T14:00:00Z"
+        }
+    ]
+}
+
+Yanıt: 
+{
+    "message": "Workshop oluşturuldu: Başarılı Yazılım Mimarisi (1 slot eklendi)",
+    "workshop": {
+        "workshop_id": 6,
+        "workshop_name": "Başarılı Yazılım Mimarisi",
+        "workshop_date": "2025-12-15T00:00:00Z"
+    }
+}
+```
+
+7. Workshop'a Slot Ekleme (Admin)
+
+```
+POST - localhost:2012/admin/:id/addslots
+
+JSON Body Örneği:
+{
+    "time_slots": [
+        {
+            "faciliator_id": 2,
+            "slot_start": "2025-12-15T14:00:00Z",
+            "slot_end": "2025-12-15T15:00:00Z"
+        },
+        {
+            "faciliator_id": 3,
+            "slot_start": "2025-12-15T15:00:00Z",
+            "slot_end": "2025-12-15T16:00:00Z"
+        }
+    ]
+}
+
+Yanıt:
+{
+    "message": "Slot'lar başarıyla eklendi",
+    "added_slots": 2,
+    "slots": [...]
+}
+```
+
+8. Workshop'u Silme (Admin)
+
+```
+DELETE - localhost:2012/admin/workshop/:id
+
+Yanıt:
+{
+    "message": "Workshop ve slot'ları başarıyla silindi",
+    "workshop_id": 5,
+    "workshop_name": "Örnek Ana Sahne",
+    "deleted_slots": 2
+}
+
+Not: Bunu sildiğinde tüm slot'ları da otomatik olarak siler.
+```
+
+9. Workshop Güncelleme (Admin)
+
+```
+PUT - localhost:2012/admin/workshop/:id
+
+JSON Body Örneği:
+{
+    "workshop_name": "Yeni Workshop Adı",
+    "workshop_date": "2025-12-20T00:00:00Z"
+}
+
+Yanıt:
+{
+    "message": "Workshop başarıyla güncellendi",
+    "workshop": {
+        "workshop_id": 5,
+        "workshop_name": "Yeni Workshop Adı",
+        "workshop_date": "2025-12-20T00:00:00Z"
+    }
+}
+```
+
+10. Workshop'a Gecikme Ekleme (Admin)
+
+Eğer bir workshop'un tüm slotlarını belirli bir süre ertelemek veya erkene almak istersen bu endpoint'i kullan.
+
+```
+PUT - localhost:2012/admin/workshop/:id/delay
+
+JSON Body Örneği (5 dakika erteleme):
+{
+    "delay_minutes": 5
+}
+
+JSON Body Örneği (10 dakika erkene alma):
+{
+    "delay_minutes": -10
+}
+
+Yanıt:
+{
+    "message": "Workshop 5 dakika ertelendi. 2 slot güncellendi.",
+    "delay_minutes": 5,
+    "updated_slots": 2
+}
+```
+
+11. Slot Silme (Admin)
+
+```
+DELETE - localhost:2012/admin/slot/:id
+
+Yanıt:
+{
+    "message": "Slot başarıyla silindi",
+    "slot_id": 10
+}
+```
+
+12. Slot Güncelleme (Admin)
+
+Tek bir slot'u güncellemek için kullanılır. Sadece güncellemek istediğiniz alanları gönderin.
+
+```
+PUT - localhost:2012/admin/slot/:id
+
+JSON Body Örneği:
+{
+    "faciliator_id": 2,
+    "slot_start": "2025-12-15T16:00:00Z",
+    "slot_end": "2025-12-15T17:00:00Z",
+    "slot_order": 3
+}
+
+Yanıt:
+{
+    "message": "Slot başarıyla güncellendi",
+    "slot": {
+        "slot_id": 10,
+        "workshop_id": 5,
+        "faciliator_id": 2,
+        "slot_start": "2025-12-15T16:00:00Z",
+        "slot_end": "2025-12-15T17:00:00Z",
+        "slot_order": 3
+    }
+}
+```
+
+### Sponsor Kontrolleri
+
+1. Sponsorları Görüntüleme
+
+```
+GET - localhost:2012/sponsors
+
+Çıktı:
+[
+    {
+        "sponsor_id": 1,
+        "sponsor_name": "Google",
+        "sponsor_tier": "Partner",
+        "logo": "/public/sponsors/google.png",
+        "advertise_video": "/public/videos/google_ad.mp4",
+        "website": "https://google.com"
+    }
+]
+```
+
+2. Sponsor Oluşturma (Admin)
+
+**!!Önemli: Bu istek JWT Token gerektirmektedir.**
+
+```
+POST - localhost:2012/admin/create/sponsor
+
+JSON Body Örneği:
+{
+    "sponsor_name": "Microsoft",
+    "sponsor_tier": "Gümüş",
+    "logo": "/public/sponsors/microsoft.png",
+    "advertise_video": "/public/videos/microsoft_ad.mp4",
+    "website": "https://microsoft.com"
+}
+
+Yanıt:
+{
+    "message": "Sponsor created successfully"
+}
+```
+
+3. Sponsor Silme (Admin)
+
+```
+DELETE - localhost:2012/admin/sponsor/:id
+
+Yanıt:
+{
+    "message": "Sponsor başarıyla silindi",
+    "sponsor_id": 1
+}
+```
+
+4. Sponsor Güncelleme (Admin)
+
+```
+PUT - localhost:2012/admin/sponsor/:id
+
+Yanıt:
+{
+    "message": "Sponsor başarıyla güncellendi",
+    "sponsor_id": 1
+}
+```
+
+### WebSocket Endpoints
+
+WebSocket endpoints aracılığıyla real-time veriler alabilirsiniz. Bir WebSocket bağlantısı açtığınızda, server sizin için belirlenen aralıklarla güncel verileri gönderecektir.
+
+**WebSocket Bağlantısı Nasıl Kurulur:**
+
+JavaScript örneği:
+```javascript
+const ws = new WebSocket('ws://localhost:2012/ws/current');
+
+ws.onopen = (event) => {
+    console.log('Bağlı oldunuz!');
+};
+
+ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Yeni veri geldi:', data);
+};
+
+ws.onclose = () => {
+    console.log('Bağlantı kapandı');
+};
+
+ws.onerror = (error) => {
+    console.error('WebSocket hatası:', error);
+};
+```
+
+1. Aktif Slotlar WebSocket
+
+```
+WS - ws://localhost:2012/ws/current
+
+Gönderilen Veri Yapısı (İlk bağlantıdan ~2 saniye sonra):
+{
+    "active_workshops": [
+        {
+            "slot": {
+                "slot_id": 10,
+                "slot_start": "2025-12-09T14:00:00+03:00",
+                "slot_end": "2025-12-10T23:00:00+03:00",
+                "faciliator": {
+                    "faciliator_id": 3,
+                    "name": "Örnek Konuşmacı",
+                    "topic": "Örnek Konu"
+                }
+            },
+            "workshop_id": 4,
+            "workshop_name": "Örnek Workshop"
+        }
+    ],
+    "total": 1
+}
+
+Güncelleme Sıklığı: 2 saniyede bir
+```
+
+2. Yaklaşan Slotlar WebSocket
+
+```
+WS - ws://localhost:2012/ws/upcoming
+
+Gönderilen Veri Yapısı:
+{
+    "upcoming_slots": [
+        {
+            "slot_id": 11,
+            "workshop_name": "Örnek Ana Sahne",
+            "slot_start": "2025-12-10T15:00:00+03:00",
+            "slot_end": "2025-12-10T23:00:00+03:00",
+            "faciliator": {
+                "faciliator_id": 3,
+                "name": "Örnek Konuşmacı",
+                "topic": "Örnek Konu"
+            },
+            "time_until_start": "39 dakika sonra"
+        }
+    ],
+    "total": 1
+}
+
+Güncelleme Sıklığı: 5 saniyede bir
+Not: Sadece sonraki 5 etkinlik gösterilir.
+```
+
+3. Sponsorlar WebSocket
+
+```
+WS - ws://localhost:2012/ws/sponsors
+
+Gönderilen Veri Yapısı:
+{
+    "sponsors": [
+        {
+            "sponsor_id": 1,
+            "sponsor_name": "Google",
+            "sponsor_logo": "/public/sponsors/google.png",
+            "sponsor_link": "https://google.com"
+        }
+    ],
+    "total": 1
+}
+
+Güncelleme Sıklığı: 10 saniyede bir
+```
+
+4. Spesifik Workshop'un Takvimi WebSocket
+
+```
+WS - ws://localhost:2012/ws/workshop/:id/schedule
+
+Gönderilen Veri Yapısı:
+{
+    "workshop_id": 2,
+    "workshop_name": "Muhammet Alihan Çabuk Atölyesi",
+    "workshop_date": "2025-12-04T00:00:00Z",
+    "all_slots": [
+        {
+            "slot_id": 7,
+            "slot_start": "2025-12-09T21:00:00+03:00",
+            "slot_end": "2025-12-09T23:00:00+03:00",
+            "slot_order": 1,
+            "faciliator": {
+                "faciliator_id": 3,
+                "name": "Örnek Konuşmacı",
+                "topic": "Örnek Konu"
+            }
+        }
+    ],
+    "total_slots": 1
+}
+
+Güncelleme Sıklığı: 5 saniyede bir
+```
+
+5. Spesifik Workshop'un Aktif Slotu WebSocket
+
+```
+WS - ws://localhost:2012/ws/:id/current
+
+Gönderilen Veri Yapısı:
+{
+    "slot": {
+        "slot_id": 10,
+        "slot_start": "2025-12-09T14:00:00+03:00",
+        "slot_end": "2025-12-10T23:00:00+03:00",
+        "slot_order": 1,
+        "faciliator": {
+            "faciliator_id": 3,
+            "name": "Örnek Konuşmacı",
+            "topic": "Örnek Konu"
+        }
+    },
+    "workshop_id": 4,
+    "workshop_name": "Örnek Workshop"
+}
+
+Güncelleme Sıklığı: 2 saniyede bir
+Not: Eğer aktif slot yoksa null döner.
+```
+
+## Middlewares ve Sistem Bileşenleri
+
+### Health Checker - Sistem Sağlığı Monitoring
+
+Sistem sağlığı hakkında gerçek zamanlı bilgi almak için `/health` endpoint'ini kullanabilirsiniz.
+
+```
+GET - localhost:2012/health
+
+Çıktı:
+{
+    "app_uptime": "2 saat 15 dakika",
+    "system_uptime_seconds": 8100,
+    "cpu_usage_percent": 15.5,
+    "ram_total_mb": 16384,
+    "ram_used_mb": 8192,
+    "ram_usage_percent": 50.0,
+    "net_bytes_received_total": 104857600,
+    "net_bytes_sent_total": 52428800,
+    "disk_usages": [
+        {
+            "path": "/",
+            "total_mb": 500000,
+            "used_mb": 250000,
+            "usage_percent": 50.0
+        }
+    ],
+    "db_connection_stats": {
+        "max_open_conns": 10,
+        "open_conns": 5,
+        "in_use": 2,
+        "idle": 3
+    },
+    "active_websockets": 3,
+    "goroutine_count": 25
+}
+```
+
+**Sistem Sağlığı Parametreleri:**
+- **app_uptime**: Uygulamanın çalışma süresi (İnsan tarafından okunabilir format)
+- **system_uptime_seconds**: İşletim sisteminin çalışma süresi (saniye cinsinden)
+- **cpu_usage_percent**: İşlemci kullanım yüzdesi
+- **ram_total_mb**: Toplam RAM (MB cinsinden)
+- **ram_used_mb**: Kullanılan RAM (MB cinsinden)
+- **ram_usage_percent**: RAM kullanım yüzdesi
+- **net_bytes_received_total**: Ağdan alınan toplam byte
+- **net_bytes_sent_total**: Ağa gönderilen toplam byte
+- **disk_usages**: Tüm disklerin kullanım bilgileri (path, total_mb, used_mb, usage_percent)
+- **db_connection_stats**: PostgreSQL bağlantı havuzu istatistikleri
+  - **max_open_conns**: Maksimum açık bağlantı sayısı
+  - **open_conns**: Aktif açık bağlantı sayısı
+  - **in_use**: Kullanımdaki bağlantı sayısı
+  - **idle**: Boşta duran bağlantı sayısı
+- **active_websockets**: Aktif WebSocket bağlantı sayısı
+- **goroutine_count**: Çalışan Go rutinleri sayısı
+
+**Güncelleme Sıklığı:** 30 saniyede bir
+
+### Circuit Breaker - Hata Toleransı
+
+Circuit Breaker, sistem hatalarını algılayarak otomatik olarak istekleri engelleyen bir mekanizmadır. Bu, cascade hataları (domino etkisi) önler.
+
+```
+GET - localhost:2012/circuitbreaker
+
+Çıktı (CLOSED durumu):
+{
+    "state": "CLOSED",
+    "failures": 0,
+    "threshold": 5,
+    "timeout": "30s"
+}
+
+Çıktı (OPEN durumu):
+{
+    "state": "OPEN",
+    "failures": 8,
+    "threshold": 5,
+    "timeout": "30s",
+    "message": "Sistem hatalarını algıladığı için istek kabul etmiyor"
+}
+
+Çıktı (HALF_OPEN durumu):
+{
+    "state": "HALF_OPEN",
+    "failures": 5,
+    "threshold": 5,
+    "timeout": "30s",
+    "message": "Sistem iyileşiyor, sınırlı sayıda istek kabul ediliyor"
+}
+```
+
+**Circuit Breaker Durumları:**
+- **CLOSED**: Normal çalışma, tüm istekler kabul edilir
+- **OPEN**: Hata sayısı eşiği aştığında, istekler reddedilir
+- **HALF_OPEN**: OPEN durumdan çıkış deneniyor, sınırlı istekler kabul edilir
+
+### Rate Limiting - DDoS Koruması
+
+Sistemin her IP adresine karşı rate limiting uygulanır. Belirli sayıda isteğin üzerine çıkılırsa, o IP'den gelen istekler geçici olarak reddedilir.
+
+```
+Headers Konfigürasyonu (conf.yaml):
+RateLimit:
+  Limit: 100        # Saniye başına 100 istek
+  Burst: 50         # Ani pik için 50 ekstra istek
+```
+
+**Rate Limit Aşıldığında:**
+```
+HTTP Status: 429 Too Many Requests
+
+Yanıt:
+{
+    "error": "Çok fazla istek gönderdiniz. Lütfen bir dakika bekleyin."
+}
+```
+
+### Timeout Middleware - İstek Zaman Aşımı
+
+Tüm HTTP istekleri belirli bir timeout'a sahiptir. Eğer istek bu süre içinde tamamlanmazsa otomatik olarak iptal edilir.
+
+```
+Headers Konfigürasyonu (conf.yaml):
+Middleware:
+  RequestTimeout: 30s    # 30 saniye timeout
+```
+
+**Timeout Aşıldığında:**
+```
+HTTP Status: 504 Gateway Timeout
+
+Yanıt:
+{
+    "error": "İstek zaman aşımına uğradı"
+}
+```
+
+## Hata Kodları ve Anlamları
+
+| HTTP Kodu | Anlamı | Açıklama |
+|-----------|--------|----------|
+| 200 | OK | İstek başarıyla tamamlandı |
+| 201 | Created | Yeni kayıt oluşturuldu |
+| 400 | Bad Request | Gönderilen veriler yanlış veya eksik |
+| 401 | Unauthorized | JWT Token bulunamadı veya geçersiz |
+| 403 | Forbidden | Yetkisiz erişim (Admin yetkisi gerekli) |
+| 404 | Not Found | İstenen kayıt bulunamadı |
+| 429 | Too Many Requests | Rate limit aşıldı, istek reddedildi |
+| 503 | Service Unavailable | Circuit Breaker AÇIK, servis kullanılamıyor |
+| 504 | Gateway Timeout | İstek timeout'a uğradı |
+
+## Sistem Konfigürasyonu ve Mimari
+
+### Konfigürasyon Dosyası (conf.yaml)
+
+Sistem tüm ayarlarını `conf.yaml` dosyasından okur. Bu dosya production ve development ortamları için özelleştirilebilir.
+
+```yaml
+server: 
+  port: ":2012"                          # Sunucunun dinleyeceği port
+  shutdown_timeout: 30s                  # Graceful shutdown süresi
+  log_config_path: "./log4go.json"      # Log konfigürasyon dosyasının yolu
+  env_path: "./in/devtv.env"            # Ortam değişkenleri dosyasının yolu
+
+database:
+  max_idle_conns: 15                    # Maksimum boşta bağlantı sayısı (Connection Pool)
+  max_open_conns: 50                    # Maksimum açık bağlantı sayısı (Connection Pool)
+  conn_max_lifetime: 5m                 # Bağlantının maksimum açık kalma süresi
+  conn_max_idle_time: 1m                # Bağlantının maksimum boşta kalma süresi
+
+middleware:
+  circuit_breaker:
+    threshold: 15                       # Circuit Breaker açılacağı hata eşiği
+    timeout: 30s                        # OPEN durumda ne kadar bekleneceği
+  rate_limit:
+    burst: 5                            # Ani pik kapasitesi (istek/saniye)
+    limit: 10                           # Normal istek hızı (istek/saniye)
+  request_timeout: 5m                   # İsteklerin maksimum işlenme süresi
+
+cors:
+  allow-origins:                        # İzin verilen domainler
+    - "https://api.devfestbursa.com"
+    - "https://www.api.devfestbursa.com"
+  allowed_methods:                      # İzin verilen HTTP metotları
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "PATCH"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:                      # İzin verilen request header'ları
+    - "Origin"
+    - "Content-Type"
+    - "Authorization"
+    - "Accept"
+  expose_headers:                       # İstemciye görüntülenen response header'ları
+    - "Content-Length"
+    - "Set-Cookie"
+  allow_credentials: true               # Credentials (Cookie, Auth Header) izni
+  max_age: 12h                         # CORS preflight cache süresi
+```
+
+### Connection Pooling - Veritabanı Bağlantı Havuzu
+
+DevTV, PostgreSQL bağlantılarını verimli kullanmak için **Connection Pooling** mekanizması kullanır.
+
+```
+Connection Pool Yapısı:
+
+┌─────────────────────────────────────────────┐
+│     GORM Connection Pool (50 max)           │
+├─────────────────────────────────────────────┤
+│                                             │
+│  [Conn 1] ─► READY                         │
+│  [Conn 2] ─► IN USE (Query çalışıyor)     │
+│  [Conn 3] ─► IN USE (Transaction açık)    │
+│  ...                                       │
+│  [Conn 15] ─► IDLE (1 dakikadır boşta)   │
+│                                             │
+└─────────────────────────────────────────────┘
+
+Pool Yönetimi:
+- max_idle_conns: 15     → En fazla 15 boşta bağlantı tutulur
+- max_open_conns: 50     → En fazla 50 açık bağlantı
+- conn_max_lifetime: 5m  → Her bağlantı maksimum 5 dakika açık kalabilir
+- conn_max_idle_time: 1m → 1 dakikadan fazla boşta bağlantı kapatılır
+```
+
+**Connection Pooling Faydaları:**
+- ✅ **Performans**: Yeni bağlantı oluşturmak yerine mevcut havuzdan kullanılır (3-Way Handshake önemlenmez)
+- ✅ **Kaynak Yönetimi**: Veritabanı sunucusundaki bağlantı sayısı kontrol edilir
+- ✅ **Ölçeklenebilirlik**: Çok sayıda istek aynı anda işlenebilir
+- ✅ **Stabilitesi**: Açık bağlantılar otomatik temizlenir
+
+**Monitorlama:**
+```
+GET /health endpoint'inden pool istatistikleri:
+
+{
+    "db_connection_stats": {
+        "max_open_conns": 50,      # Maksimum açık bağlantı
+        "open_conns": 8,           # Şu anda açık bağlantı sayısı
+        "in_use": 3,               # İşlemde olan bağlantılar
+        "idle": 5                  # Boşta duran bağlantılar
+    }
+}
+```
+
+### Circuit Breaker Pattern - Kaskad Hata Önleme
+
+Circuit Breaker, bir elektrik devresi gibi çalışan **hata toleransı desenidir**. Sistem hatalarını algılayarak otomatik olarak istekleri engeller ve servisin tamamen çökmesini önler.
+
+```
+Circuit Breaker Durumları:
+
+1. CLOSED (Normal Çalışma) ───[Hata sayısı eşiğe ulaştı]──→ OPEN
+   │
+   └─ Tüm istekler işlenir
+   └─ Hata sayacı tutulur
+   └─ Başarılı istekler hata sayacını sıfırlar
+
+
+2. OPEN (Servis Hataları Algılandı) ───[Timeout geçti]──→ HALF-OPEN
+   │
+   └─ Tüm istekler reddedilir
+   └─ Yanıt: "HTTP 503 Service Unavailable"
+   └─ Servisin iyileşmesini beklenir (timeout: 30s)
+
+
+3. HALF-OPEN (Test Modu) ───[1 istek başarılı]──→ CLOSED
+                         └──[1 istek başarısız]──→ OPEN
+   │
+   └─ Sınırlı sayıda istek denetilebilir
+   └─ Servis iyileşip iyileşmediği test edilir
+   └─ Başarılı sonuç → CLOSED, başarısız → OPEN
+```
+
+**Config'deki Circuit Breaker Ayarları:**
+```yaml
+circuit_breaker:
+  threshold: 15      # 15 hatadan sonra OPEN olur
+  timeout: 30s       # 30 saniye sonra HALF-OPEN'a geç
+```
+
+**Monitorlama:**
+```
+GET /circuitbreaker endpoint'i:
+
+CLOSED durumu (Normal):
+{
+    "state": "CLOSED",
+    "failures": 2,
+    "threshold": 15,
+    "timeout": "30s"
+}
+
+OPEN durumu (Hata):
+{
+    "state": "OPEN",
+    "failures": 16,
+    "threshold": 15,
+    "timeout": "30s",
+    "message": "Sistem hatalarını algıladığı için istek kabul etmiyor"
+}
+```
+
+**Circuit Breaker'ın Avantajları:**
+- ✅ **Cascade Failure Önleme**: Bir serviste sorun varsa, tüm sisteme yayılmaz
+- ✅ **Hızlı Başarısızlık**: Sorunlu servise istek gönderilmeye çalışılmaz
+- ✅ **Otomatik İyileşme**: HALF-OPEN modu ile servisteki sorun çözüldüğünde otomatik devam eder
+- ✅ **Sistem Direnci**: İçsel hataların dış etkilere yansımasını engeller
+
+### Rate Limiting - DDoS ve Overload Koruması
+
+Rate Limiting, her IP adresinin yapabileceği istek sayısını sınırlandırır. Bu, sistem overload'ından ve DDoS saldırılarından korur.
+
+```
+Rate Limiter Mekanizması (Token Bucket Algoritması):
+
+IP: 192.168.1.100
+┌──────────────────────────────────────┐
+│        Token Bucket (Kapasite: 10)   │
+├──────────────────────────────────────┤
+│  Burst Capacity: 5 (ani yoğunluk)    │
+│  Rate: 10 istek/saniye               │
+│                                      │
+│  Şu anki Tokenlar: ●●●●● (5/10)      │
+│                                      │
+└──────────────────────────────────────┘
+        │
+        ├─ Her istek 1 token tüketir
+        ├─ Token boşsa → İstek reddedilir (429)
+        └─ Her saniye 10 token eklenir
+```
+
+**Config'deki Rate Limit Ayarları:**
+```yaml
+rate_limit:
+  burst: 5    # Bir anda 5 ekstra istek yapılabilir (ani pik)
+  limit: 10   # Ortalama 10 istek/saniye
+```
+
+**Mekanizma Detayları:**
+- **Limit**: Normal hız (10 istek/saniye)
+- **Burst**: Ani artışlar için ekstra kapasite (5 istek)
+- **Token Bucket**: Tokenler akar gibi hızda eklenir
+
+**Limit Aşıldığında:**
+```
+HTTP 429 Too Many Requests
+
+{
+    "error": "Çok fazla istek",
+    "message": "Lütfen bir süre bekleyip tekrar deneyin",
+    "retry_after": "1 saniye"
+}
+```
+
+**Rate Limiting Faydaları:**
+- ✅ **DDoS Koruması**: Saldırı trafiğini sınırlandırır
+- ✅ **Adil Kaynak Dağılımı**: Bir istemcinin sistemi tekellemesini engeller
+- ✅ **API Stabilizesi**: Ani trafik artışlarından korunur
+- ✅ **IP Bazlı**: Her IP için ayrı limiter (spoof'lanmayı zorlaştırır)
+
+### Request Timeout - İstek İşleme Süresi Limiti
+
+Tüm HTTP istekleri belirli bir süre içinde tamamlanmalıdır. Aşılırsa otomatik olarak iptal edilir.
+
+```
+Request Lifecycle:
+
+t=0s        ┌─────────────────────────────────────┐
+            │ Request başlangıcı                  │
+            │ Timeout counter başlar              │
+            │                                     │
+t=1s        │ [Processing...]                     │
+            │ Database query çalışıyor            │
+            │                                     │
+t=2s        │ [Processing...]                     │
+            │ Business logic çalışıyor            │
+            │                                     │
+t=5m (300s) └─────────────────────────────────────┘
+            │ TIMEOUT AŞILDI!
+            │ HTTP 504 Gateway Timeout
+            │ Response gönderilir
+```
+
+**Config'deki Timeout Ayarı:**
+```yaml
+request_timeout: 5m  # 5 dakika = 300 saniye
+```
+
+**Timeout Aşıldığında:**
+```
+HTTP 504 Gateway Timeout
+
+{
+    "error": "İstek zaman aşımına uğradı"
+}
+```
+
+### Metrics & Monitoring - Sistem Performans İstatistikleri
+
+Sistem tüm istekleri takip eder ve performans metriklerini toplaya.
+
+```
+Toplanan Metrikler:
+
+1. İstek Sayıları
+   - TotalRequests: 15,243 (toplam)
+   - RequestsByMethod: {
+       "GET": 8,500,
+       "POST": 4,200,
+       "PUT": 1,800,
+       "DELETE": 743
+     }
+
+2. Performans Verileri
+   - TotalResponseTimeMs: 4,521,000ms
+   - AvgResponseTime: 297ms (ortalama)
+   - SlowRequests: 42 (>500ms)
+
+3. Hata İstatistikleri
+   - TotalErrors: 245
+   - ErrorRate: 1.60%
+   - SuccessRate: 98.40%
+```
+
+**Metrikleri Thread-Safe Toplama:**
+
+Sistem atomic operasyonlar kullanarak metrikleri güvenli şekilde toplar (lock olmadan):
+
+```go
+// Atomic - Lock yok, çok hızlı ✅
+atomic.AddInt64(&TotalRequests, 1)
+atomic.LoadInt64(&TotalRequests)
+
+// vs. Mutex - Lock var, yavaş ❌
+mutex.Lock()
+requests++
+mutex.Unlock()
+```
+
+**Metriklerin Faydaları:**
+- ✅ **Performans Monitoring**: Ortalama response time takip
+- ✅ **Hata Tespiti**: Hata oranı yüksekse alert
+- ✅ **Yavaş Request Tespit**: 500ms+ istekler loglanır
+- ✅ **Kapasite Planlama**: Method'lara göre trafik analizi
+
+## Request Lifecycle - İstek İçinden Geçtiği Aşamalar
+
+Bir HTTP isteği sistemde şu aşamaları takip eder:
+
+```
+┌──────────────┐
+│  Client      │ (Tarayıcı, Postman, Mobile App)
+└──────┬───────┘
+       │
+       │ HTTP Request
+       ↓
+┌──────────────────────────────────────────┐
+│  CORS Middleware                         │
+│  ✓ Origin kontrolü                       │
+│  ✓ Method kontrolü                       │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Rate Limiter Middleware                 │
+│  ✓ IP bazlı limit kontrolü               │
+│  ✗ Aşıldıysa 429 + Abort                │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Circuit Breaker Middleware              │
+│  ✓ Sistem durumu kontrolü                │
+│  ✗ OPEN ise 503 + Abort                 │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Timeout Middleware                      │
+│  ✓ Context deadline set (5 dakika)      │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Auth Middleware (if /admin/*/)         │
+│  ✓ JWT Token kontrolü                   │
+│  ✓ Admin role kontrolü                  │
+│  ✗ Yoksa 401/403 + Abort                │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Metrics Middleware                      │
+│  ✓ İstek sayısı artır (atomic)         │
+│  ✓ İstek zamanı kaydet                 │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Request Logger Middleware               │
+│  ✓ Tüm istek detaylarını logla          │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Handler (Controller)                    │
+│  ✓ Business Logic Çalışır                │
+│  • Database sorgusu                      │
+│  • Veri işlemesi                        │
+│  • Response hazırlanması                │
+└──────┬───────────────────────────────────┘
+       │
+       ↓
+┌──────────────────────────────────────────┐
+│  Response                                │
+│  ✓ JSON + HTTP Status Code              │
+│  ✓ Circuit Breaker'a durumu bildir     │
+│  ✓ Metrikleri güncelle                 │
+└──────┬───────────────────────────────────┘
+       │
+       │ HTTP Response
+       ↓
+┌──────────────┐
+│  Client      │
+└──────────────┘
+```
+
+### Graceful Shutdown - Güvenli Kapatma
+
+Sistem kapatılırken tüm açık istekleri tamamlamak için **Graceful Shutdown** mekanizması kullanılır.
+
+```
+Normal Shutdown Süreci:
+
+t=0s    ┌─────────────────────────────────┐
+        │ SIGTERM / SIGINT alındı         │
+        │ (Ctrl+C veya sistem sinyali)   │
+        │                                 │
+        │ Server yeni istekleri kabul     │
+        │ etmeyi durdurur                │
+        └──────────────┬──────────────────┘
+                       │
+t=0.1s  ┌──────────────▼──────────────────┐
+        │ Açık istekler işlemeye devam    │
+        │ • Query'ler tamamlanır         │
+        │ • Response'lar gönderilir      │
+        │ • WebSocket bağlantıları kapat │
+        └──────────────┬──────────────────┘
+                       │
+t=30s   ┌──────────────▼──────────────────┐
+        │ Shutdown timeout (30s) tamamlandı
+        │ Kalan istekler iptal edilir    │
+        │                                 │
+        │ Veritabanı bağlantıları kapat  │
+        │ Log dosyaları flush edilir     │
+        │ Sistem kapatılır               │
+        └─────────────────────────────────┘
+```
+
+**Config'deki Shutdown Ayarı:**
+```yaml
+server:
+  shutdown_timeout: 30s  
+```
+
+**Faydaları:**
+- ✅ **Veri Kaybı Önleme**: Açık transactionlar tamamlanır
+- ✅ **Bağlantı Kapatma**: Tüm bağlantılar düzgün kapatılır
+- ✅ **Temiz Çıkış**: Log ve cache'ler düzgün kapatılır
+
+## Dosya Yükleme (Frontend Asset'leri)
+
+Fotoğraflar ve diğer dosyalar aşağıdaki klasörlere yerleştirilmelidir:
+
+```
+public/
+├── faciliators/        # Konuşmacı fotoğrafları
+│   ├── ornek.png
+│   └── emrehizli.jpeg
+├── sponsors/           # Sponsor logoları
+│   ├── google.png
+│   └── microsoft.png
+└── videos/             # Video dosyaları
+    └── workshop1.mp4
+```
+
+Veritabanında dosya yolunu şu şekilde belirtmelisiniz:
+```
+/public/faciliators/ornek.png
+/public/sponsors/google.png
+```
+
+## Hata Kodları ve Anlamları
+
+| HTTP Kodu | Anlamı | Açıklama |
+|-----------|--------|----------|
+| 200 | OK | İstek başarıyla tamamlandı |
+| 201 | Created | Yeni kayıt oluşturuldu |
+| 400 | Bad Request | Gönderilen veriler yanlış veya eksik |
+| 401 | Unauthorized | JWT Token bulunamadı veya geçersiz |
+| 403 | Forbidden | Yetkisiz erişim (Admin yetkisi gerekli) |
+| 404 | Not Found | İstenen kayıt bulunamadı |
+| 429 | Too Many Requests | Rate limit aşıldı, istek reddedildi |
+| 503 | Service Unavailable | Circuit Breaker AÇIK, servis kullanılamıyor |
+| 504 | Gateway Timeout | İstek timeout'a uğradı |
+
+## İletişim ve Destek
+
+Sistemle ilgili sorularınız veya bulduğunuz hatalar için lütfen GitHub Issues'de bir issue açınız.
+
+GitHub: https://github.com/poizdev/devtv
+Mail: musa@gdgbursa.com 
+
+**Son Güncelleme:** Aralık 10, 2025

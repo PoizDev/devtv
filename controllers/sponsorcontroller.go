@@ -72,3 +72,43 @@ func DeleteSponsors(c *gin.Context) {
 		"sponsor_id": sponsorID,
 	})
 }
+
+func UpdateSponsor(c *gin.Context) {
+	sponsorID := c.Param("id")
+
+	if sponsorID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Sponsor ID gereklidir",
+		})
+		log.Warn("Sponsor ID alanı boş")
+		return
+	}
+
+	var sponsor models.Sponsors
+	if err := in.DB.First(&sponsor, "sponsor_id = ?", sponsorID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Sponsor bulunamadı",
+		})
+		log.Warn("Sponsor bulunamadı")
+		return
+	}
+	if err := c.BindJSON(&sponsor); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Geçersiz istek verisi",
+		})
+		log.Error("Geçersiz istek verisi: ", err)
+		return
+	}
+	result := in.DB.Save(&sponsor)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Sponsor'u güncellerken bir hata oluştu, " + result.Error.Error(),
+		})
+		log.Error("Sponsor'u güncellerken bir hata oluştu, ", result.Error)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message":    "Sponsor başarıyla güncellendi",
+		"sponsor_id": sponsorID,
+	})
+}

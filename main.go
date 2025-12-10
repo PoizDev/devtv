@@ -111,14 +111,6 @@ func main() {
 		})
 	})
 
-	r.LoadHTMLGlob("static/admin/*")
-
-	r.GET("/panel", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "admin.html", gin.H{
-			"Title": "DevTV Kontrol Paneli",
-		})
-	})
-
 	//'Admin Accessi
 	admin := r.Group("/admin")
 	admin.Use(middlewares.AuthMiddleware())
@@ -132,8 +124,9 @@ func main() {
 		admin.DELETE("faciliator/:id", controllers.DeleteFacilitator)
 
 		admin.POST("sponsors/add", controllers.CreateSponsor)
-		admin.DELETE("sponsors/id", controllers.DeleteSponsors)
-		admin.POST("/create/sponsor", controllers.CreateSponsor)
+		admin.DELETE("sponsors/:id", controllers.DeleteSponsors)
+		admin.POST("/create/sponsors", controllers.CreateSponsor)
+		admin.PUT("/sponsors/:id", controllers.UpdateSponsor)
 
 		admin.POST("/workshops/create", controllers.CreateWorkshopWithSlots)
 		admin.POST("/workshops/:id/slots", controllers.AddSlotsToWorkshop)
