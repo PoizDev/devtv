@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"fmt"
+	"strings"
 	"sync/atomic"
 	"time"
 
@@ -31,6 +32,12 @@ func MetricsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// İstek başlangıcı
 		start := time.Now()
+		path := c.Request.URL.Path
+
+		if strings.HasPrefix(path, "/health") || strings.HasPrefix(path, "/health/check") {
+			c.Next()
+			return
+		}
 
 		// İstek sayısını artır (atomic - thread-safe)
 		atomic.AddInt64(&TotalRequests, 1)

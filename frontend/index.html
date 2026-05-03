@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevTV</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.73 9.25"><defs><style>.cls-1{fill:%23f1a820;}.cls-2{fill:%23141414;}.cls-3{fill:%23e84535;}.cls-4{fill:%2335a64d;}.cls-5{fill:%23547ec0;}</style></defs><g><rect class="cls-3" x="-.3" y="1.49" width="8.2" height="3.54" rx="1.77" ry="1.77" transform="translate(-1.19 2.83) rotate(-35.7)"/><path class="cls-2" d="M1.91,6.53c-.59,0-1.18-.28-1.55-.79-.61-.85-.42-2.05.44-2.66L4.58.36c.85-.61,2.05-.42,2.66.44h0c.3.41.42.92.33,1.42-.08.5-.36.94-.77,1.24l-3.78,2.72c-.34.24-.72.36-1.11.36ZM5.68.27c-.33,0-.66.1-.95.31L.95,3.29c-.73.53-.9,1.55-.37,2.28.53.73,1.55.9,2.28.37l3.78-2.72c.35-.26.59-.63.66-1.06.07-.43-.03-.86-.29-1.22h0c-.32-.44-.82-.68-1.33-.68Z"/><rect class="cls-5" x="2.03" y="1.88" width="3.54" height="8.2" rx="1.77" ry="1.77" transform="translate(-3.28 5.57) rotate(-54.3)"/><path class="cls-2" d="M5.68,9.25c-.39,0-.77-.12-1.11-.36L.79,6.17C-.06,5.56-.26,4.36.36,3.51H.36c.61-.85,1.81-1.05,2.66-.44l3.78,2.72c.41.3.69.74.77,1.24.08.5-.04,1.01-.33,1.42-.37.52-.96.79-1.55.79ZM.58,3.67h0c-.53.73-.36,1.76.37,2.28l3.78,2.72c.73.53,1.76.36,2.28-.37.26-.35.36-.79.29-1.22s-.3-.81-.66-1.06l-3.78-2.72c-.73-.53-1.76-.36-2.28.37Z"/><rect class="cls-1" x="8.84" y="4.21" width="8.2" height="3.54" rx="1.77" ry="1.77" transform="translate(-1.06 8.67) rotate(-35.7)"/><path class="cls-2" d="M11.05,9.25c-.59,0-1.18-.28-1.55-.79-.3-.41-.42-.92-.33-1.42.08-.5.36-.94.77-1.24l3.78-2.72c.41-.3.92-.42,1.42-.33.5.08.94.36,1.24.77.61.85.42,2.05-.44,2.66l-3.78,2.72c-.34.24-.72.36-1.11.36ZM14.82,2.99c-.34,0-.67.11-.95.31l-3.78,2.72c-.35.26-.59.63-.66,1.06s.03.86.29,1.22c.53.73,1.55.9,2.28.37l3.78-2.72c.73-.53.9-1.55.37-2.28h0c-.26-.35-.63-.59-1.06-.66-.09-.01-.18-.02-.27-.02Z"/><rect class="cls-4" x="11.17" y="-.84" width="3.54" height="8.2" rx="1.77" ry="1.77" transform="translate(2.74 11.86) rotate(-54.3)"/><path class="cls-2" d="M14.82,6.53c-.4,0-.78-.12-1.11-.36l-3.78-2.72c-.41-.3-.69-.74-.77-1.24-.08.5.04-1.01.33-1.42h0c.61-.85,1.81-1.05,2.66-.44l3.78,2.72c.85.61,1.05,1.81.44,2.66-.3.41-.74.69-1.24.77-.1.02-.21.03-.31.03ZM9.72.95c-.26.35-.36.79-.29,1.22s.3.81.66,1.06l3.78,2.72c.35.26.79.36,1.22.29.43-.07.81-.3,1.06-.66.53-.73.36-1.76-.37-2.28l-3.78-2.72c-.73-.53-1.76-.36-2.28.37h0Z"/></g></svg>'>
 
     <style>
         /* =======================================================
@@ -156,6 +157,7 @@
             flex-direction: column;
             gap: 15px;
             height: auto;
+            /* İÇERİK KADAR UZASIN */
             width: 100%;
             overflow: visible;
             grid-row: 1 / 3;
@@ -215,12 +217,12 @@
         .status-dot {
             width: 8px;
             height: 8px;
-            background-color: #1a73e8;
+            background-color: #e74435;
             border-radius: 50%;
         }
 
         .status-dot.upcoming-dot {
-            background-color: #e37400;
+            background-color: #368cdc;
         }
 
         .pulse-animation {
@@ -257,8 +259,12 @@
             flex-direction: column;
             border: 2px solid #e8f0fe;
             min-height: 400px;
+            /* Minimum yükseklik korunur */
+            height: auto;
+            /* İÇERİK ARTARSA UZASIN */
             transition: border-color 0.3s;
-            overflow: hidden;
+            overflow: visible;
+            /* TAŞMAYA İZİN VER (GİZLEME) */
         }
 
         .dynamic-sessions-box.upcoming-mode {
@@ -277,6 +283,8 @@
             display: flex;
             flex-direction: column;
             border: none;
+            margin-top: auto;
+            /* Eğer üstteki kutu kısaysa bile bunu aşağı itmez, ama esnek yapıda çalışır */
         }
 
         .main-hall-header {
@@ -340,14 +348,19 @@
             line-height: 1.3;
         }
 
+        /* GÜNCELLEME: Konu başlığı kısıtlaması kaldırıldı.
+           Artık 2 satırla sınırlı değil, ne kadar uzunsa o kadar yer kaplayacak.
+        */
         .desc {
             font-size: 0.85rem;
             color: #666;
             margin-bottom: 5px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            
+            /* KISITLAMA İPTAL EDİLDİ */
+            /* display: -webkit-box; */
+            /* -webkit-line-clamp: 2; */
+            /* -webkit-box-orient: vertical; */
+            /* overflow: hidden; */
         }
 
         .speaker-area {
@@ -358,19 +371,25 @@
             flex-shrink: 0;
         }
 
-        /* --- PROFİL FOTOĞRAFI DÜZENLEMESİ (Kare/Orijinal PNG) --- */
+        /* --- PROFİL FOTOĞRAFI DÜZENLEMESİ --- */
         .speaker-img {
             width: 70px;
             height: 70px;
-            border-radius: 0;
-            /* Daireyi kaldırdık */
-            object-fit: contain;
+            border-radius: 50%;
+            /* Kare varsayılan */
+            object-fit: cover;
             /* Resmi sığdır, kesme yapma */
             box-shadow: none;
             /* Gölgeyi kaldırdık */
             margin-bottom: 0;
             background-color: transparent;
             /* Arkaplanı şeffaf yaptık */
+
+            /* --- İSTEDİĞİNDE YUVARLAK YAPMAK İÇİN AŞAĞIDAKİ YORUMU KALDIRIP KULLANABİLİRSİN --- */
+            /*
+            border-radius: 50%;
+            object-fit: cover;
+            */
         }
 
         .time-btn {
@@ -556,10 +575,21 @@
                 display: none;
             }
 
+            /* Sidebar - GÜNCELLENMİŞ */
             .sidebar {
-                grid-row: auto;
-                grid-column: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                /* height: auto; diyerek içeriği kadar yer kaplamasını sağlıyoruz */
+                height: auto;
+
                 width: 100%;
+                grid-row: 1 / 3;
+                grid-column: 2 / 3;
+
+                /* Grid içinde içeriğin dikeyde hizalanması için */
+                align-self: start;
             }
 
             .sponsors-group {
@@ -578,7 +608,7 @@
 
             <div class="header-text">
                 <div class="status-dot pulse-animation mobile-status-dot"></div>
-                Etkinlik Akışı
+                Canlı Etkinlik Akışı
             </div>
         </header>
 
@@ -668,7 +698,7 @@
 
         // --- GÖRÜNÜM KONTROLÜ ---
         let rotationState = 'active';
-        const ROTATION_INTERVAL = 30000; // 30 Saniye
+        const ROTATION_INTERVAL = 10000; // 30 Saniye
 
         function getImageUrl(path) {
             if (!path) return 'https://via.placeholder.com/150?text=GDG+Bursa';
@@ -835,7 +865,10 @@
                 headerTitle.classList.remove('upcoming-mode');
                 headerTitle.innerHTML = `Devam Ediyor <div class="status-dot pulse-animation"></div>`;
 
-                const list = store.activeSessions.slice(0, 4);
+                // --- DEĞİŞİKLİK BURADA: LIMIT KALDIRILDI ---
+                // Eskiden: const list = store.activeSessions.slice(0, 4);
+                // Şimdi: Limit yok, hepsi gelsin.
+                const list = store.activeSessions;
 
                 if (list.length > 0) {
                     list.forEach((item, index) => {
@@ -870,7 +903,10 @@
                 headerTitle.classList.add('upcoming-mode');
                 headerTitle.innerHTML = `Sıradaki Oturumlar <div class="status-dot upcoming-dot"></div>`;
 
-                const list = store.upcomingSessions.slice(0, 4);
+                // --- DEĞİŞİKLİK BURADA: LIMIT KALDIRILDI (VEYA ARTIRILDI) ---
+                // Eskiden: const list = store.upcomingSessions.slice(0, 4);
+                // Şimdi: Maksimum 20 göster (neredeyse limitsiz)
+                const list = store.upcomingSessions.slice(0, 20);
 
                 if (list.length > 0) {
                     list.forEach((slot, index) => {

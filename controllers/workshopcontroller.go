@@ -538,7 +538,6 @@ func UpdateWorkshops(c *gin.Context) {
 	})
 }
 
-// UpdateTimeSlot - Tek bir slot'u güncelle
 func UpdateTimeSlot(c *gin.Context) {
 	slotID := c.Param("id")
 
@@ -572,11 +571,39 @@ func UpdateTimeSlot(c *gin.Context) {
 		return
 	}
 
-	// 4. Güncelleme map'i oluştur (sadece gönderilen alanlar)
+	targetStart := slot.SlotStart
+	if req.SlotStart != nil {
+		targetStart = *req.SlotStart
+	}
+
+	targetEnd := slot.SlotEnd
+	if req.SlotEnd != nil {
+		targetEnd = *req.SlotEnd
+	}
+
+	if req.SlotStart != nil || req.SlotEnd != nil {
+		var conflictCount int64
+		err := in.DB.Model(&models.WorkshopTimeSlot{}).
+			Where("workshop_id = ? AND slot_id <> ? AND slot_start = ? AND slot_end = ?",
+				slot.WorkshopID, slot.SlotID, targetStart, targetEnd).
+			Count(&conflictCount).Error
+
+		if err != nil {
+			log.Error("Çakışma kontrolü sırasında DB hatası: ", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Sistem hatası"})
+			return
+		}
+
+		if conflictCount > 0 {
+			log.Warn("Slot çakışması engellendi. WorkshopID: %d, Start: %v", slot.WorkshopID, targetStart)
+			c.JSON(http.StatusConflict, gin.H{"error": "Bu zaman aralığında bu workshop için zaten bir slot mevcut. Güncelleme reddedildi."})
+			return
+		}
+	}
+
 	updates := make(map[string]interface{})
 
 	if req.FaciliatorID != nil {
-		// Faciliator var mı kontrol et
 		var faciliator models.Faciliators
 		if err := in.DB.First(&faciliator, *req.FaciliatorID).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Konuşmacı bulunamadı"})
@@ -597,13 +624,11 @@ func UpdateTimeSlot(c *gin.Context) {
 		updates["slot_order"] = *req.SlotOrder
 	}
 
-	// 5. Hiçbir alan gönderilmemişse
 	if len(updates) == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Güncellenecek alan bulunamadı"})
 		return
 	}
 
-	// 6. Zamanları kontrol et
 	if req.SlotStart != nil && req.SlotEnd != nil {
 		if req.SlotEnd.Before(*req.SlotStart) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Bitiş zamanı başlangıçtan önce olamaz"})
@@ -611,14 +636,12 @@ func UpdateTimeSlot(c *gin.Context) {
 		}
 	}
 
-	// 7. Güncelle
 	if err := in.DB.Model(&slot).Updates(updates).Error; err != nil {
 		log.Error("Slot güncellenirken hata: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot güncellenemedi"})
 		return
 	}
 
-	// 8. Güncel veriyi al
 	if err := in.DB.Preload("Faciliator").Preload("Workshop").First(&slot, slotID).Error; err != nil {
 		log.Error("Güncel slot alınamadı: ", err)
 	}

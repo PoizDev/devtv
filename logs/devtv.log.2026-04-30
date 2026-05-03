@@ -1,0 +1,3 @@
+[2026/04/30 23:47:06 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2026/04/30 23:47:08 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2026/04/30 23:47:08 +03] [DEFAULT] [INFO] (main.main.func3:162) Server Başlatılıyor - Port: :2012

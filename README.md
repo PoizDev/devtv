@@ -15,7 +15,7 @@ Framework: Gin Web Framework
 DB: PostgreSQL 15+
 ORM: GORM 1.31.1
 
-## Sistem Kurulumu
+## Standart Sistem Kurulumu
 
 1. Repoyu Klonlayın 
 ```
@@ -61,6 +61,54 @@ JWT_SECRET="güvenli-anahtar-buraya-yazılır"
 - **port**: PostgreSQL dinleme portu (varsayılan: 5432)
 - **sslmode**: SSL bağlantı modu (disable = SSL yok, production'da require olmalı)
 - **TimeZone**: Zaman dilimi (Europe/Istanbul = +3 UTC)
+
+## Docker ile Kurulum (Önerilen)
+
+Projeyi ayağa kaldırmanın en kolay ve production ortamına en uygun yolu Docker kullanmaktır. Projede distroless (güvenli ve hafif) imaj tabanlı hazır bir `Dockerfile` ve `compose.yaml` dosyası bulunmaktadır.
+
+### 1. Gerekli Konfigürasyon Dosyalarını Hazırlayın
+
+Proje ana dizininde bir `.env` dosyası oluşturun (Docker Compose ortam değişkenleri için):
+```dotenv
+POSTGRES_USER=devtv
+POSTGRES_PASSWORD=cok_guclu_db_sifreniz
+POSTGRES_DB=devtv
+API_PORT=2012
+```
+
+`in/devtv.env` dosyasını oluşturun (JWT sırrı vb. için):
+```dotenv
+JWT_SECRET="gizli-jwt-keyiniz"
+```
+*(Not: `compose.yaml` kullanıldığında veritabanı DSN bilgisi otomatik olarak ortam değişkenlerinden oluşturulur, `in/devtv.env` dosyasında tekrar belirtmenize gerek yoktur.)*
+
+### 2. Uygulamayı Başlatın
+
+Uygulamayı ve veritabanını arka planda ayağa kaldırmak için:
+```bash
+docker compose up -d
+```
+
+Sadece veritabanını ayağa kaldırmak isterseniz:
+```bash
+docker compose up -d db
+```
+
+Logları anlık takip etmek için:
+```bash
+docker compose logs -f api
+```
+
+### 3. Sistemi Durdurmak İçin
+```bash
+docker compose down
+```
+
+### Docker Yapısının Özellikleri ve Avantajları
+- **Güvenlik (Distroless Image):** API konteyneri `gcr.io/distroless/static-debian12:nonroot` imajı kullanır. İçerisinde shell (`sh`, `bash`) veya gereksiz araçlar barındırmaz, böylece potansiyel saldırı yüzeyi minimuma indirilir ve izole edilmiş `nonroot` kullanıcısı ile çalışır.
+- **Otomatik Sağlık Kontrolü (Healthcheck):** API konteyneri veritabanının `healthcheck` sürecinin tamamlanmasını bekler (`depends_on: condition: service_healthy`), böylece veritabanı tam hazır olmadan API başlatılmaz.
+- **Kalıcı Veri (Volumes):** Veritabanı verileri ve uygulama logları Docker Volume'leri (`pgdata` ve `devtv-logs`) kullanılarak konteyner silinse bile kalıcı hale getirilir.
+- **Optimize Derleme (Multi-Stage Build):** Go uygulaması derlenirken gereksiz semboller temizlenir (`-ldflags="-s -w" -trimpath`) ve uygulamanız son derece küçük ve optimize edilmiş bir konteyner haline gelir.
 
 ## API Dokümantasyonu
 
@@ -331,7 +379,6 @@ JSON Body Örneği:
 │  │ workshop_id (PK)              │  │
 │  │ workshop_name: "Çam Atölyesi" │  │
 │  │ workshop_date: 2025-11-27     │  │
-│  │ is_live: true                 │  │
 │  └───────────────────────────────┘  │
 └──────────────┬──────────────────────┘
                │ One-to-Many
@@ -921,41 +968,70 @@ Güncelleme Sıklığı: 2 saniyede bir
 Not: Eğer aktif slot yoksa null döner.
 ```
 
+||
+
 ## Middlewares ve Sistem Bileşenleri
 
 ### Health Checker - Sistem Sağlığı Monitoring
 
-Sistem sağlığı hakkında gerçek zamanlı bilgi almak için `/health` endpoint'ini kullanabilirsiniz.
+Sistem sağlığı altyapı olarak Protobuf temelli *gRPC* sistemi kullanılmıştır. bundan ötürü direkt health endpointine istek atmanız binary bir veri döndürür. Örneğin;
+
 
 ```
 GET - localhost:2012/health
 
 Çıktı:
+"\b\u0004\u0011uB\u001f?\u0018\\ \u0005)(n\u0012O\u0018@0\u00018\u0001B\u0013\n\u0001/\u0010>\u0018T!\n\u0014?P\u000bZ\u0006\bd\u0010\u0001 \u0001b\b1 secondj\u000b\b\u0006\u0010^r\f\b\"\u0010˗\u0003"
+```
+
+biraz tuhaf... di'mi...
+
+Onun yerine atadığımız ```format`` parametresini kullanarak JSON formatında çıktı alabiliyoruz. Örneğin:
+
+```
+GET - localhost:2012/health?format=json
+
+Çıktı:
+```
 {
-    "app_uptime": "2 saat 15 dakika",
-    "system_uptime_seconds": 8100,
-    "cpu_usage_percent": 15.5,
-    "ram_total_mb": 16384,
-    "ram_used_mb": 8192,
-    "ram_usage_percent": 50.0,
-    "net_bytes_received_total": 104857600,
-    "net_bytes_sent_total": 52428800,
-    "disk_usages": [
-        {
-            "path": "/",
-            "total_mb": 500000,
-            "used_mb": 250000,
-            "usage_percent": 50.0
-        }
-    ],
-    "db_connection_stats": {
-        "max_open_conns": 10,
-        "open_conns": 5,
-        "in_use": 2,
-        "idle": 3
-    },
-    "active_websockets": 3,
-    "goroutine_count": 25
+  "systemUptimeSecs": "1262",
+  "ramTotalMb": "11847",
+  "ramUsedMb": "752",
+  "ramUsagePercent": 6.3529525808560745,
+  "netBytesReceivedTotal": "22944",
+  "netBytesSentTotal": "21749",
+  "diskUsages": [
+    {
+      "path": "/",
+      "totalMb": "1031018",
+      "usedMb": "10877",
+      "usagePercent": 1.1116039672362894
+    }
+  ],
+  "goroutineCount": 13,
+  "dbStats": {
+    "maxOpenConns": 100,
+    "openConns": 5,
+    "inUse": 3,
+    "idle": 2
+  },
+  "appUptime": "11 minutes",
+  "timestamp": "2026-05-02T22:00:48.096520535Z",
+  "cacheAge": "30.007800308s",
+  "apiMetrics": {
+    "totalRequests": 126,
+    "totalErrors": 3,
+    "errorRatePercent": 2.38,
+    "successRatePercent": 97.62,
+    "avgResponseTimeMs": 48.5,
+    "requestsByMethod": {
+      "GET": 95,
+      "POST": 12,
+      "PUT": 4,
+      "DELETE": 2,
+      "OPTIONS": 10
+    }
+  }
 }
 ```
 
@@ -976,8 +1052,16 @@ GET - localhost:2012/health
   - **idle**: Boşta duran bağlantı sayısı
 - **active_websockets**: Aktif WebSocket bağlantı sayısı
 - **goroutine_count**: Çalışan Go rutinleri sayısı
+- **api_metrics**: API istatistikleri
+  - **total_requests**: Toplam istek sayısı
+  - **total_errors**: Toplam hata sayısı
+  - **error_rate_percent**: Hata oranı (yüzde olarak)
+  - **success_rate_percent**: Başarı oranı (yüzde olarak)
+  - **avg_response_time_ms**: Ortalama yanıt süresi (milisecond olarak)
+  - **requests_by_method**: Metoda göre istek sayısı (GET, POST, PUT, DELETE, OPTIONS)
 
-**Güncelleme Sıklığı:** 30 saniyede bir
+**Güncelleme Sıklığı:** 1 saniyede bir
+**! Not:** Health endpointleri için loglar hem Gin'in içinden hem kendi log configlerim içinden **dışında tutulmuştur**. *Ayrıca API metriklerini de **etkilememektedir.** 
 
 ### Circuit Breaker - Hata Toleransı
 
@@ -1058,20 +1142,6 @@ Yanıt:
     "error": "İstek zaman aşımına uğradı"
 }
 ```
-
-## Hata Kodları ve Anlamları
-
-| HTTP Kodu | Anlamı | Açıklama |
-|-----------|--------|----------|
-| 200 | OK | İstek başarıyla tamamlandı |
-| 201 | Created | Yeni kayıt oluşturuldu |
-| 400 | Bad Request | Gönderilen veriler yanlış veya eksik |
-| 401 | Unauthorized | JWT Token bulunamadı veya geçersiz |
-| 403 | Forbidden | Yetkisiz erişim (Admin yetkisi gerekli) |
-| 404 | Not Found | İstenen kayıt bulunamadı |
-| 429 | Too Many Requests | Rate limit aşıldı, istek reddedildi |
-| 503 | Service Unavailable | Circuit Breaker AÇIK, servis kullanılamıyor |
-| 504 | Gateway Timeout | İstek timeout'a uğradı |
 
 ## Sistem Konfigürasyonu ve Mimari
 
@@ -1537,6 +1607,7 @@ Veritabanında dosya yolunu şu şekilde belirtmelisiniz:
 Sistemle ilgili sorularınız veya bulduğunuz hatalar için lütfen GitHub Issues'de bir issue açınız.
 
 GitHub: https://github.com/poizdev/devtv
+
 Mail: musa@gdgbursa.com 
 
-**Son Güncelleme:** Aralık 10, 2025
+**Son Güncelleme:** Mayıs 03, 2026

@@ -1,0 +1,72 @@
+[2026/05/02 15:06:08 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 15:06:09 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2026/05/02 15:06:09 +03] [DEFAULT] [INFO] (main.main.func3:162) Server Başlatılıyor - Port: :2012
+[2026/05/02 15:06:21 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health ::1 200 509.2µs
+[2026/05/02 15:06:37 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllWorkshops:376) Tüm workshop'lar alındı - Toplam: %!(EXTRA int=5)
+[2026/05/02 15:06:37 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /workshops ::1 200 8.4132ms
+[2026/05/02 15:06:46 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /facilitators ::1 404 0s
+[2026/05/02 15:06:51 +03] [DEFAULT] [INFO] (devtv/controllers.GetAllFaciliators:38) Tüm faciliatorlar alındı
+[2026/05/02 15:06:51 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /facilitator ::1 200 1.5538ms
+[2026/05/02 16:58:37 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 16:58:38 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2026/05/02 16:58:38 +03] [DEFAULT] [INFO] (main.main.func3:162) Server Başlatılıyor - Port: :2012
+[2026/05/02 17:01:13 +03] [DEFAULT] [EROR] (devtv/controllers.Signup:45) Kullanacı oluşturulurken hata oluştu: %!(EXTRA *pgconn.PgError=ERROR: duplicate key value violates unique constraint "uni_users_username" (SQLSTATE 23505))
+[2026/05/02 17:01:13 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /signup ::1 500 117.2862ms
+[2026/05/02 17:01:19 +03] [DEFAULT] [INFO] (devtv/controllers.Login:64) Json başarıyla eşlendi
+[2026/05/02 17:01:19 +03] [DEFAULT] [EROR] (devtv/controllers.Login:74) Şifre doğrulanamadı: %!(EXTRA *errors.errorString=crypto/bcrypt: hashedPassword is not the hash of the given password)
+[2026/05/02 17:01:19 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /login ::1 401 139.8939ms
+[2026/05/02 17:01:25 +03] [DEFAULT] [INFO] (devtv/controllers.Login:64) Json başarıyla eşlendi
+[2026/05/02 17:01:25 +03] [DEFAULT] [EROR] (devtv/controllers.Login:74) Şifre doğrulanamadı: %!(EXTRA *errors.errorString=crypto/bcrypt: hashedPassword is not the hash of the given password)
+[2026/05/02 17:01:25 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /login ::1 401 84.222ms
+[2026/05/02 17:01:27 +03] [DEFAULT] [EROR] (devtv/controllers.Signup:45) Kullanacı oluşturulurken hata oluştu: %!(EXTRA *pgconn.PgError=ERROR: duplicate key value violates unique constraint "uni_users_username" (SQLSTATE 23505))
+[2026/05/02 17:01:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /signup ::1 500 114.1449ms
+[2026/05/02 17:01:43 +03] [DEFAULT] [INFO] (devtv/controllers.Login:64) Json başarıyla eşlendi
+[2026/05/02 17:01:43 +03] [DEFAULT] [EROR] (devtv/controllers.Login:74) Şifre doğrulanamadı: %!(EXTRA *errors.errorString=crypto/bcrypt: hashedPassword is not the hash of the given password)
+[2026/05/02 17:01:43 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /login ::1 401 206.5352ms
+[2026/05/02 17:02:28 +03] [DEFAULT] [EROR] (devtv/controllers.Signup:45) Kullanacı oluşturulurken hata oluştu: %!(EXTRA *pgconn.PgError=ERROR: duplicate key value violates unique constraint "uni_users_username" (SQLSTATE 23505))
+[2026/05/02 17:02:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /signup ::1 500 158.7935ms
+[2026/05/02 17:02:33 +03] [DEFAULT] [INFO] (devtv/controllers.Login:64) Json başarıyla eşlendi
+[2026/05/02 17:02:34 +03] [DEFAULT] [INFO] (devtv/controllers.Login:92) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2026/05/02 17:02:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /login ::1 200 220.3232ms
+[2026/05/02 17:02:54 +03] [DEFAULT] [INFO] (devtv/controllers.Login:64) Json başarıyla eşlendi
+[2026/05/02 17:02:54 +03] [DEFAULT] [INFO] (devtv/controllers.Login:92) Kullanıcı giriş yaptı: %!(EXTRA string=poizdev)
+[2026/05/02 17:02:54 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) POST /login ::1 200 66.6375ms
+[2026/05/02 17:03:31 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health ::1 200 1.4016ms
+[2026/05/02 17:13:01 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 17:13:03 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:50) Health collector başlatıldı - Güncelleme: 30 saniye (JSON + Proto)
+[2026/05/02 17:13:03 +03] [DEFAULT] [INFO] (main.main.func3:166) Server Başlatılıyor - Port: :2012
+[2026/05/02 17:13:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:13:34 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 507.3µs
+[2026/05/02 17:18:08 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 17:18:10 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:50) Health collector başlatıldı - Güncelleme: 30 saniye (JSON + Proto)
+[2026/05/02 17:18:10 +03] [DEFAULT] [INFO] (main.main.func3:166) Server Başlatılıyor - Port: :2012
+[2026/05/02 17:18:28 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 1.0136ms
+[2026/05/02 17:18:35 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/health ::1 404 0s
+[2026/05/02 17:18:49 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/health/proto ::1 404 0s
+[2026/05/02 17:19:09 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:20:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:22:49 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 504.8µs
+[2026/05/02 17:22:57 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health ::1 200 0s
+[2026/05/02 17:23:18 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 544µs
+[2026/05/02 17:25:28 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 17:25:30 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:50) Health collector başlatıldı - Güncelleme: 30 saniye (JSON + Proto)
+[2026/05/02 17:25:31 +03] [DEFAULT] [INFO] (main.main.func3:166) Server Başlatılıyor - Port: :2012
+[2026/05/02 17:26:40 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 542.4µs
+[2026/05/02 17:27:48 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 17:27:50 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:50) Health collector başlatıldı - Güncelleme: 30 saniye (JSON + Proto)
+[2026/05/02 17:27:50 +03] [DEFAULT] [INFO] (main.main.func3:166) Server Başlatılıyor - Port: :2012
+[2026/05/02 17:28:10 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:28:27 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:31:05 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 56.8719ms
+[2026/05/02 17:32:24 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 50.4051ms
+[2026/05/02 17:32:42 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 979.7µs
+[2026/05/02 17:35:14 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:38:01 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 17:38:26 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/check ::1 200 55.6343ms
+[2026/05/02 17:42:22 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 845.4µs
+[2026/05/02 18:30:34 +03] [DEFAULT] [INFO] (devtv/in.Connect:51) Connection Pooling ayarları uygulandı.
+[2026/05/02 18:30:36 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:50) Health collector başlatıldı - Güncelleme: 30 saniye (JSON + Proto)
+[2026/05/02 18:30:36 +03] [DEFAULT] [INFO] (main.main.func3:166) Server Başlatılıyor - Port: :2012
+[2026/05/02 18:33:29 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 18:33:37 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s
+[2026/05/02 18:36:54 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:90) GET /health/proto ::1 200 0s

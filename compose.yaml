@@ -1,0 +1,57 @@
+#'Kullanım:
+#'  Geliştirme : docker compose up -d
+#'  Production : docker compose --profile prod up -d
+#'  Sadece DB  : docker compose up -d db
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: devtv-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-devtv}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD gerekli}
+      POSTGRES_DB: ${POSTGRES_DB:-devtv}
+    ports:
+      - "5432:5432" #' PostgreSQL'in default portları bırakılmıştır. Hosts Port - Containers Port şeklindedir.
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-devtv} -d ${POSTGRES_DB:-devtv}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    networks:
+      - devtv-net
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devtv-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${API_PORT:-2012}:2012"
+    environment:
+      dsn: "host=db user=${POSTGRES_USER:-devtv} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB:-devtv} port=5432 sslmode=disable"
+    volumes:
+      - ./in/devtv.env:/in/devtv.env:ro
+      - ./conf.yaml:/conf.yaml:ro
+      - ./log4go.json:/log4go.json:ro
+      - devtv-logs:/logs
+    networks:
+      - devtv-net
+
+volumes:
+  pgdata:
+    driver: local
+  devtv-logs:
+    driver: local
+
+networks:
+  devtv-net:
+    driver: bridge

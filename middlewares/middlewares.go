@@ -6,6 +6,7 @@ import (
 	"devtv/models"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -13,6 +14,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	log "github.com/jeanphorn/log4go"
 )
+
+var secret = os.Getenv("JWT_TOKEN")
 
 // AuthMiddleware - Token kontrol et
 func AuthMiddleware() gin.HandlerFunc {
@@ -26,7 +29,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return []byte("JWT_SECRET"), nil
+			return []byte(secret), nil
 		})
 
 		if err != nil || !token.Valid {
@@ -80,6 +83,12 @@ func TimeoutMiddleware(timeout time.Duration) func(*gin.Context) {
 func RequestLoggerMiddleWare() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
+
+		//'Health' url'leri için loglamayı atla
+		if c.Request.URL.Path == "/health" || c.Request.URL.Path == "/health/check" {
+			c.Next()
+			return
+		}
 
 		c.Next()
 

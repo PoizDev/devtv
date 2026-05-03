@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"devtv/config" // Config paketi
+	"devtv/config"
 	"devtv/controllers"
 	"devtv/in"
 	"devtv/middlewares"
@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -39,8 +38,32 @@ func initialize() {
 func main() {
 	initialize()
 
-	r := gin.Default()
-	r.Use(cors.Default())
+	r := gin.New()
+	r.Use(gin.Recovery())
+
+	//'Health istekleri loglanmaz
+	r.Use(gin.LoggerWithConfig(gin.LoggerConfig{
+		SkipPaths: []string{
+			"/health",
+			"/health/check",
+		},
+	}))
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{
+		"http://localhost:3000",
+		"http://127.0.0.1:5500",
+		"http://localhost:5500", // Bunu ekleyin
+		"http://127.0.0.1:5500/frontend/index.html",
+		"http://localhost", // Bunu da ekleyin
+		"http://127.0.0.1", // Bunu da
+	}
+
+	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
+	config.AllowHeaders = []string{"Origin", "Content-Type", "Authorization", "Accept"}
+	config.AllowCredentials = true
+	config.AllowWebSockets = true
+	r.Use(cors.New(config))
 
 	middlewares.StartHealthCollector()
 
@@ -83,7 +106,7 @@ func main() {
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
 	//'Konuşmacılar / Atölye tayfa
-	r.GET("/faciliator", controllers.GetAllFaciliators)
+	r.GET("/facilitator", controllers.GetAllFaciliators)
 	//'Sponsorluk görüntüleme
 	r.GET("/sponsors", controllers.GetSponsors)
 	//'WebSocketler
@@ -100,16 +123,9 @@ func main() {
 	r.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
 	r.GET("/workshop/:id/slots", controllers.GetCurrentSlotInWorkshop)
 
-	r.GET("/health", func(c *gin.Context) {
-		health := middlewares.GetCachedHealthData()
-		metrics := middlewares.GetMetrics()
-		c.JSON(http.StatusOK, gin.H{
-			"status":    "healthy",
-			"timestamp": time.Now(),
-			"data":      health,
-			"metrics":   metrics,
-		})
-	})
+	//' Protobuf health endpoint'leri — daha küçük payload, daha hızlı serialize
+	r.GET("/health", middlewares.ProtoHealthHandler)
+	r.GET("/health/check", middlewares.ProtoHealthCheckHandler)
 
 	//'Admin Accessi
 	admin := r.Group("/admin")
@@ -119,9 +135,9 @@ func main() {
 		admin.DELETE("/users/:id", controllers.DeleteUser)
 		admin.PUT("/users/:id", controllers.UpdateUser)
 
-		admin.POST("/create/faciliator", controllers.CreateFaciliator)
-		admin.PUT("/faciliator/:id", controllers.UpdateFaciliator)
-		admin.DELETE("faciliator/:id", controllers.DeleteFacilitator)
+		admin.POST("/create/facilitator", controllers.CreateFaciliator)
+		admin.PUT("/facilitator/:id", controllers.UpdateFaciliator)
+		admin.DELETE("facilitator/:id", controllers.DeleteFacilitator)
 
 		admin.POST("sponsors/add", controllers.CreateSponsor)
 		admin.DELETE("sponsors/:id", controllers.DeleteSponsors)

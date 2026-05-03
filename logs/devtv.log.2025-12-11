@@ -1,0 +1,16 @@
+[2025/12/11 21:23:43 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/11 21:23:45 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/11 21:23:45 +03] [DEFAULT] [INFO] (main.main.func3:148) Server Başlatılıyor - Port: :2012
+[2025/12/11 21:23:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/11 21:23:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/11 21:23:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/11 21:23:47 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/11 21:34:01 +03] [DEFAULT] [INFO] (devtv/in.Connect:50) Connection Pooling ayarları uygulandı.
+[2025/12/11 21:34:02 +03] [DEFAULT] [INFO] (devtv/middlewares.StartHealthCollector:48) Health collector başlatıldı - Güncelleme: 30 saniye
+[2025/12/11 21:34:02 +03] [DEFAULT] [INFO] (main.main.func3:148) Server Başlatılıyor - Port: :2012
+[2025/12/11 21:34:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetSponsorsWS:134) Yeni WebSocket bağlantısı: GetSponsors
+[2025/12/11 21:34:03 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotsWS:106) Yeni WebSocket bağlantısı: GetCurrentSlots
+[2025/12/11 21:34:06 +03] [DEFAULT] [INFO] (devtv/controllers.GetUpcomingSlotsWS:121) Yeni WebSocket bağlantısı: GetUpcomingSlots
+[2025/12/11 21:34:07 +03] [DEFAULT] [INFO] (devtv/controllers.GetCurrentSlotInWorkshopWS:594) Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: 5
+[2025/12/11 21:34:32 +03] [DEFAULT] [INFO] (devtv/controllers.UpdateTimeSlot:626) Slot güncellendi - ID: %!(EXTRA string=11)
+[2025/12/11 21:34:32 +03] [DEFAULT] [INFO] (main.main.RequestLoggerMiddleWare.func8:87) PUT /admin/slots/11 ::1 200 18.6055ms

@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"devtv/in"
-	"devtv/models"
+	healthpb "devtv/middlewares/proto"
 	"net/http"
 	"runtime"
 	"sync"
@@ -16,15 +16,19 @@ import (
 	"github.com/shirou/gopsutil/v3/host"
 	"github.com/shirou/gopsutil/v3/mem"
 	"github.com/shirou/gopsutil/v3/net"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/durationpb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var AppStartTime = time.Now()
 var ActiveWebSockets int32 = 0
 
 var (
-	cachedHealthData models.HealthData
 	healthCacheMu    sync.RWMutex
 	lastUpdateTime   time.Time
+	cachedProtoBytes []byte
 )
 
 func IncreaseWS() {
@@ -35,25 +39,81 @@ func DecreaseWS() {
 	atomic.AddInt32(&ActiveWebSockets, -1)
 }
 
-func StartHealthCollector() {
-	updateHealthData()
+func safeGet(arr []float64) float64 {
+	if len(arr) == 0 {
+		return 0
+	}
+	return arr[0]
+}
 
-	ticker := time.NewTicker(30 * time.Second)
+func StartHealthCollector() {
+	UpdateProtoCache()
+
+	ticker := time.NewTicker(1 * time.Second)
 	go func() {
 		for range ticker.C {
-			updateHealthData()
+			UpdateProtoCache()
 		}
 	}()
 
-	log.Info("Health collector başlatıldı - Güncelleme: 30 saniye")
+	log.Info("Health collector başlatıldı - Güncelleme: 1 saniye")
 }
 
-func updateHealthData() {
+func collectSystemMetricsProto() *healthpb.SystemMetricsResponse {
 	uptime, _ := host.Uptime()
-
-	cpuPercent, _ := cpu.Percent(time.Second, false)
-
+	cpuPercent, _ := cpu.Percent(0, false)
 	vm, _ := mem.VirtualMemory()
+
+	httpMetrics := GetMetrics()
+
+	getInt64 := func(key string) int64 {
+		if val, ok := httpMetrics[key]; ok {
+			switch v := val.(type) {
+			case int:
+				return int64(v)
+			case int64:
+				return v
+			case float64:
+				return int64(v)
+			}
+		}
+		return 0
+	}
+
+	getFloat64 := func(key string) float64 {
+		if val, ok := httpMetrics[key]; ok {
+			switch v := val.(type) {
+			case float64:
+				return v
+			case int:
+				return float64(v)
+			}
+		}
+		return 0
+	}
+
+	getString := func(key string) string {
+		if val, ok := httpMetrics[key].(string); ok {
+			return val
+		}
+		return "0"
+	}
+
+	protoMethodStats := make(map[string]int64)
+	if rbm, ok := httpMetrics["requests_by_method"].(map[string]int); ok {
+		for method, count := range rbm {
+			protoMethodStats[method] = int64(count)
+		}
+	} else if rbm, ok := httpMetrics["requests_by_method"].(map[string]interface{}); ok {
+		for method, count := range rbm {
+			switch v := count.(type) {
+			case int:
+				protoMethodStats[method] = int64(v)
+			case float64:
+				protoMethodStats[method] = int64(v)
+			}
+		}
+	}
 
 	netStats, _ := net.IOCounters(false)
 	var bytesRecv, bytesSent uint64
@@ -63,114 +123,137 @@ func updateHealthData() {
 	}
 
 	paths := []string{"/", "C:\\"}
-	var allDisks []models.DiskUsage
-
+	var diskUsages []*healthpb.DiskUsage
 	for _, p := range paths {
 		du, err := disk.Usage(p)
 		if err == nil {
-			allDisks = append(allDisks, models.DiskUsage{
+			diskUsages = append(diskUsages, &healthpb.DiskUsage{
 				Path:         p,
-				TotalMB:      du.Total / (1024 * 1024),
-				UsedMB:       du.Used / (1024 * 1024),
+				TotalMb:      du.Total / (1024 * 1024),
+				UsedMb:       du.Used / (1024 * 1024),
 				UsagePercent: du.UsedPercent,
 			})
 		}
 	}
 
 	sqlDB, _ := in.DB.DB()
-	dbStats := sqlDB.Stats()
-	db := models.DBStats{
-		MaxOpenConns: dbStats.MaxOpenConnections,
-		OpenConns:    dbStats.OpenConnections,
-		InUse:        dbStats.InUse,
-		Idle:         dbStats.Idle,
-	}
-
-	goroutines := runtime.NumGoroutine()
-
-	appUptime := FormatUptime(time.Since(AppStartTime))
-
-	healthCacheMu.Lock()
-	cachedHealthData = models.HealthData{
-		Uptime:          uptime,
-		CPUUsagePercent: safeGet(cpuPercent),
-		RAMTotalMB:      vm.Total / (1024 * 1024),
-		RAMUsedMB:       vm.Used / (1024 * 1024),
-		RAMUsagePercent: vm.UsedPercent,
-		NetBytesRecv:    bytesRecv,
-		NetBytesSent:    bytesSent,
-		DiskUsages:      allDisks,
-
-		ActiveWebSockets:  int(atomic.LoadInt32(&ActiveWebSockets)),
-		GoRoutinesCount:   goroutines,
-		DBConnectionStats: db,
-		AppUptime:         appUptime,
-	}
-	lastUpdateTime = time.Now()
-	healthCacheMu.Unlock()
-
-	log.Fine("Health data güncellendi")
-}
-
-func GetCachedHealthData() models.HealthData {
-	healthCacheMu.RLock()
-	defer healthCacheMu.RUnlock()
-
-	data := cachedHealthData
-	data.ActiveWebSockets = int(atomic.LoadInt32(&ActiveWebSockets))
-	data.GoRoutinesCount = runtime.NumGoroutine()
-	data.AppUptime = FormatUptime(time.Since(AppStartTime))
-
-	sqlDB, _ := in.DB.DB()
+	var dbStats *healthpb.DBStats
 	if sqlDB != nil {
-		dbStats := sqlDB.Stats()
-		data.DBConnectionStats = models.DBStats{
-			MaxOpenConns: dbStats.MaxOpenConnections,
-			OpenConns:    dbStats.OpenConnections,
-			InUse:        dbStats.InUse,
-			Idle:         dbStats.Idle,
+		stats := sqlDB.Stats()
+		dbStats = &healthpb.DBStats{
+			MaxOpenConns: int32(stats.MaxOpenConnections),
+			OpenConns:    int32(stats.OpenConnections),
+			InUse:        int32(stats.InUse),
+			Idle:         int32(stats.Idle),
 		}
 	}
 
-	return data
-}
-
-func HealthMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Cache'den oku (< 1ms)
-		health := GetCachedHealthData()
-		c.Set("health_data", health)
-		c.Next()
+	return &healthpb.SystemMetricsResponse{
+		SystemUptimeSecs:      uptime,
+		CpuUsagePercent:       safeGet(cpuPercent),
+		RamTotalMb:            vm.Total / (1024 * 1024),
+		RamUsedMb:             vm.Used / (1024 * 1024),
+		RamUsagePercent:       vm.UsedPercent,
+		NetBytesReceivedTotal: bytesRecv,
+		NetBytesSentTotal:     bytesSent,
+		DiskUsages:            diskUsages,
+		ActiveWebsockets:      atomic.LoadInt32(&ActiveWebSockets),
+		GoroutineCount:        int32(runtime.NumGoroutine()),
+		DbStats:               dbStats,
+		AppUptime:             FormatUptime(time.Since(AppStartTime)),
+		Timestamp:             timestamppb.Now(),
+		CacheAge:              durationpb.New(time.Since(lastUpdateTime)),
+		ApiMetrics: &healthpb.ApiMetrics{
+			TotalRequests:      getInt64("total_requests"),
+			TotalErrors:        getInt64("total_errors"),
+			ErrorRatePercent:   getString("error_rate_percent"),
+			SuccessRatePercent: getString("success_rate_percent"),
+			AvgResponseTimeMs:  getFloat64("avg_response_time_ms"),
+			RequestsByMethod:   protoMethodStats,
+		},
 	}
 }
 
-func safeGet(arr []float64) float64 {
-	if len(arr) == 0 {
-		return 0
-	}
-	return arr[0]
-}
+func UpdateProtoCache() {
+	resp := collectSystemMetricsProto()
 
-func GetHealth(c *gin.Context) {
-	data, exists := c.Get("health_data")
-	if !exists {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Health data bulunamadı",
-		})
+	data, err := proto.Marshal(resp)
+	if err != nil {
+		log.Error("Proto health marshal hatası: %s", err)
 		return
 	}
 
-	healthData := data.(models.HealthData)
-	metrics := GetMetrics()
+	healthCacheMu.Lock()
+	cachedProtoBytes = data
+	lastUpdateTime = time.Now()
+	healthCacheMu.Unlock()
+}
 
-	// Metadata ekle
-	response := gin.H{
-		"status":    "healthy",
-		"timestamp": time.Now(),
-		"cache_age": time.Since(lastUpdateTime).String(),
-		"data":      healthData,
-		"metrics":   metrics,
+func GetHealthProto() []byte {
+	healthCacheMu.RLock()
+	defer healthCacheMu.RUnlock()
+	return cachedProtoBytes
+}
+
+func CheckHealthProto() *healthpb.HealthCheckResponse {
+	sqlDB, err := in.DB.DB()
+	if err != nil || sqlDB.Ping() != nil {
+		return &healthpb.HealthCheckResponse{
+			Status: healthpb.HealthCheckResponse_NOT_SERVING,
+		}
 	}
 
-	c.JSON(http.StatusOK, response)
+	return &healthpb.HealthCheckResponse{
+		Status: healthpb.HealthCheckResponse_SERVING,
+	}
+}
+
+func ProtoHealthHandler(c *gin.Context) {
+	if c.Query("format") == "json" {
+		raw := GetHealthProto()
+		if raw == nil {
+			c.Status(http.StatusServiceUnavailable)
+			return
+		}
+		resp := &healthpb.SystemMetricsResponse{}
+		if err := proto.Unmarshal(raw, resp); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Proto unmarshal hatası"})
+			return
+		}
+		jsonBytes, err := protojson.MarshalOptions{Indent: "  "}.Marshal(resp)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "JSON marshal hatası"})
+			return
+		}
+		c.Data(http.StatusOK, "application/json", jsonBytes)
+		return
+	}
+
+	data := GetHealthProto()
+	if data == nil {
+		c.Status(http.StatusServiceUnavailable)
+		return
+	}
+	c.Data(http.StatusOK, "application/x-protobuf", data)
+}
+
+func ProtoHealthCheckHandler(c *gin.Context) {
+	resp := CheckHealthProto()
+
+	if c.Query("format") == "json" {
+		jsonBytes, err := protojson.MarshalOptions{Indent: "  "}.Marshal(resp)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "JSON marshal hatası"})
+			return
+		}
+		c.Data(http.StatusOK, "application/json", jsonBytes)
+		return
+	}
+
+	data, err := proto.Marshal(resp)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Proto marshal hatası"})
+		return
+	}
+	c.Data(http.StatusOK, "application/x-protobuf", data)
 }

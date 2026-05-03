@@ -1,1 +1,79 @@
 syntax = "proto3";
+
+package grpc.health.v1;
+
+option go_package = "devtv/middlewares/proto/healthpb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+message HealthCheckRequest {
+    string service = 1;
+}
+
+message HealthCheckResponse {
+    enum ServingStatus {
+        UNKNOWN = 0;
+        SERVING = 1;
+        NOT_SERVING = 2;
+        SERVICE_UNKNOWN = 3;
+    }
+    ServingStatus status = 1;
+}
+
+message SystemMetricsRequest {
+    bool include_disk = 1;
+    bool include_network = 2;
+}
+
+message DiskUsage {
+    string path = 1;
+    uint64 total_mb = 2;
+    uint64 used_mb = 3;
+    double usage_percent = 4;
+}
+
+message DBStats {
+    int32 max_open_conns = 1;
+    int32 open_conns = 2;
+    int32 in_use = 3;
+    int32 idle = 4;
+}
+
+message ApiMetrics {
+    int64 total_requests = 1;
+    int64 total_errors = 2;
+    string error_rate_percent = 3;
+    string success_rate_percent = 4;
+    double avg_response_time_ms = 5;
+    map<string, int64> requests_by_method = 6;
+}
+
+message SystemMetricsResponse {
+    uint64 system_uptime_secs = 1;
+    double cpu_usage_percent = 2;
+    uint64 ram_total_mb = 3;
+    uint64 ram_used_mb = 4;
+    double ram_usage_percent = 5;
+    uint64 net_bytes_received_total = 6;
+    uint64 net_bytes_sent_total = 7;
+    repeated DiskUsage disk_usages = 8;
+
+    int32 active_websockets = 9;
+    int32 goroutine_count = 10;
+    DBStats db_stats = 11;
+    string app_uptime = 12;
+
+
+    google.protobuf.Timestamp timestamp = 13;
+    google.protobuf.Duration cache_age = 14;
+    ApiMetrics api_metrics = 15;
+}
+
+service Health {
+    rpc Check(HealthCheckRequest) returns (HealthCheckResponse);
+    rpc Watch(HealthCheckRequest) returns (stream HealthCheckResponse);
+
+    rpc GetSystemMetrics(SystemMetricsRequest) returns (SystemMetricsResponse);
+    rpc WatchSystemMetrics(SystemMetricsRequest) returns (stream SystemMetricsResponse);
+}

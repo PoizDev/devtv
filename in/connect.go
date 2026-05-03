@@ -18,6 +18,7 @@ func Connect(dbConf config.DatabaseConfig, envPath string) {
 	err := godotenv.Load(envPath)
 	if err != nil {
 		log.Warn(".env dosyası yüklenemedi (%s): %v", envPath, err)
+		return
 	}
 
 	dsn := os.Getenv("dsn")

@@ -4,6 +4,7 @@ import (
 	"devtv/in"
 	"devtv/models"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,8 @@ import (
 	log "github.com/jeanphorn/log4go"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var secret = os.Getenv("JWT_TOKEN")
 
 func Signup(c *gin.Context) {
 	var body struct {
@@ -77,13 +80,13 @@ func Login(c *gin.Context) {
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("JWT_SECRET"))
+	tokenString, err := token.SignedString([]byte(secret))
 	if err != nil {
 		log.Error("Token imzalanırken hata oluştu: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
 	}
-	c.SetSameSite(http.SameSiteNoneMode)
+	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Auth", tokenString, 3600*24*30, "/", "localhost", false, true) // Canlıya çıkarken Secure true yapılacak
 	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
 	log.Info("Kullanıcı giriş yaptı: ", user.Username)

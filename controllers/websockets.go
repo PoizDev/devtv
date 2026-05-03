@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"context"
 	"devtv/in"
 	"devtv/models"
-	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -14,128 +14,241 @@ import (
 	"gorm.io/gorm"
 )
 
-// --- WebSocket Altyapısı ---
-
+// --- WebSocket Configuration ---
 var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+	ReadBufferSize:  4096,
+	WriteBufferSize: 4096,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
+	// Handshake timeout ekle
+	HandshakeTimeout: 10 * time.Second,
 }
 
-var (
-	workshopCurrentSlotManagers = make(map[string]*ClientManager)
-	workshopCurrentSlotLock     sync.RWMutex
-)
-
-// ClientManager - Bağlantıları güvenli bir şekilde yönetmek için
+// --- Client Manager - Optimize edilmiş ---
 type ClientManager struct {
-	clients map[*websocket.Conn]bool
-	lock    sync.RWMutex
+	clients    map[*websocket.Conn]bool
+	register   chan *websocket.Conn
+	unregister chan *websocket.Conn
+	broadcast  chan interface{}
+	lock       sync.RWMutex
+	ctx        context.Context
+	cancel     context.CancelFunc
 }
 
-func (cm *ClientManager) Add(conn *websocket.Conn) {
-	cm.lock.Lock()
-	defer cm.lock.Unlock()
-	cm.clients[conn] = true
-}
-
-func (cm *ClientManager) Remove(conn *websocket.Conn) {
-	cm.lock.Lock()
-	defer cm.lock.Unlock()
-	if _, ok := cm.clients[conn]; ok {
-		delete(cm.clients, conn)
-		conn.Close()
+func NewClientManager() *ClientManager {
+	ctx, cancel := context.WithCancel(context.Background())
+	cm := &ClientManager{
+		clients:    make(map[*websocket.Conn]bool),
+		register:   make(chan *websocket.Conn, 100), // Buffer ekledik
+		unregister: make(chan *websocket.Conn, 100), // Buffer ekledik
+		broadcast:  make(chan interface{}, 1000),    // Büyük buffer
+		ctx:        ctx,
+		cancel:     cancel,
 	}
+	go cm.run()
+	return cm
 }
 
-// Güvenli bir şekilde tüm istemcilere mesaj gönderir
-func (cm *ClientManager) Broadcast(message interface{}) {
-	cm.lock.RLock()
-	defer cm.lock.RUnlock()
+// run - Thread-safe client yönetimi (Tek goroutine)
+func (cm *ClientManager) run() {
+	ticker := time.NewTicker(30 * time.Second) // Ping ticker
+	defer ticker.Stop()
 
-	for client := range cm.clients {
-		err := client.WriteJSON(message)
-		if err != nil {
-			log.Error("WebSocket yazma hatası, client siliniyor: %v", err)
-			client.Close()
-			// Not: Loop içinde map'ten silmek güvenli olmadığından
-			// burada sadece close ediyoruz, clean-up goroutine veya
-			// bir sonraki cycle'da silinebilir. Ancak basitlik adına
-			// burada go routine ile silme tetiklenebilir.
-			go func(c *websocket.Conn) {
-				cm.lock.Lock()
-				delete(cm.clients, c)
-				cm.lock.Unlock()
-			}(client)
+	for {
+		select {
+		case <-cm.ctx.Done():
+			return
+
+		case client := <-cm.register:
+			cm.lock.Lock()
+			cm.clients[client] = true
+			cm.lock.Unlock()
+
+		case client := <-cm.unregister:
+			cm.lock.Lock()
+			if _, ok := cm.clients[client]; ok {
+				delete(cm.clients, client)
+				client.Close()
+			}
+			cm.lock.Unlock()
+
+		case message := <-cm.broadcast:
+			cm.lock.RLock()
+			clients := make([]*websocket.Conn, 0, len(cm.clients))
+			for client := range cm.clients {
+				clients = append(clients, client)
+			}
+			cm.lock.RUnlock()
+
+			// Paralel gönderim (Goroutine pool kullanarak)
+			var wg sync.WaitGroup
+			for _, client := range clients {
+				wg.Add(1)
+				go func(c *websocket.Conn) {
+					defer wg.Done()
+
+					// Yazma timeout ekle
+					c.SetWriteDeadline(time.Now().Add(5 * time.Second))
+
+					if err := c.WriteJSON(message); err != nil {
+						// Hata durumunda client'ı kaldır
+						cm.unregister <- c
+					}
+				}(client)
+			}
+			wg.Wait()
+
+		case <-ticker.C:
+			// Ping gönder (connection health check)
+			cm.lock.RLock()
+			for client := range cm.clients {
+				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
+				if err := client.WriteMessage(websocket.PingMessage, nil); err != nil {
+					cm.unregister <- client
+				}
+			}
+			cm.lock.RUnlock()
 		}
 	}
 }
 
-// Her servis için ayrı bir Manager oluşturuyoruz
-var (
-	currentSlotsManager  = ClientManager{clients: make(map[*websocket.Conn]bool)}
-	upcomingSlotsManager = ClientManager{clients: make(map[*websocket.Conn]bool)}
-	sponsorsManager      = ClientManager{clients: make(map[*websocket.Conn]bool)}
-	// ID bazlı workshoplar için map içinde manager (WorkshopID -> Manager)
-	workshopSchedManagers = make(map[string]*ClientManager)
-	workshopSchedLock     sync.RWMutex
-)
-
-// --- Başlatıcı (Main.go içinde çağrılmalı veya init ile otomatik başlar) ---
-
-func init() {
-	// Arka plan işlerini başlat
-	go startCurrentSlotsBroadcaster()
-	go startUpcomingSlotsBroadcaster()
-	go startSponsorsBroadcaster()
+func (cm *ClientManager) Add(conn *websocket.Conn) {
+	cm.register <- conn
 }
 
-// --- Controller Fonksiyonları ---
+func (cm *ClientManager) Remove(conn *websocket.Conn) {
+	cm.unregister <- conn
+}
 
-// GetCurrentSlotsWS - Sadece kullanıcıyı havuza ekler, sorgu yapmaz
+func (cm *ClientManager) Broadcast(message interface{}) {
+	// Non-blocking send
+	select {
+	case cm.broadcast <- message:
+	default:
+		// Buffer dolu, eski mesajları at
+		log.Warn("Broadcast buffer full, dropping message")
+	}
+}
+
+func (cm *ClientManager) Count() int {
+	cm.lock.RLock()
+	defer cm.lock.RUnlock()
+	return len(cm.clients)
+}
+
+func (cm *ClientManager) Shutdown() {
+	cm.cancel()
+}
+
+// --- Global Managers ---
+var (
+	currentSlotsManager  *ClientManager
+	upcomingSlotsManager *ClientManager
+	sponsorsManager      *ClientManager
+
+	workshopSchedManagers = make(map[string]*ClientManager)
+	workshopSchedLock     sync.RWMutex
+
+	workshopCurrentSlotManagers = make(map[string]*ClientManager)
+	workshopCurrentSlotLock     sync.RWMutex
+
+	initOnce sync.Once
+)
+
+func init() {
+	initOnce.Do(func() {
+		currentSlotsManager = NewClientManager()
+		upcomingSlotsManager = NewClientManager()
+		sponsorsManager = NewClientManager()
+
+		// Broadcasters'ı başlat
+		go startCurrentSlotsBroadcaster()
+		go startUpcomingSlotsBroadcaster()
+		go startSponsorsBroadcaster()
+	})
+}
+
+// --- Controller Functions ---
+
 func GetCurrentSlotsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WebSocket upgrade hatası: ", err)
+		// Log'u azalttık (sadece error)
+		log.Error("WS upgrade error: ", err)
 		return
 	}
 
-	currentSlotsManager.Add(ws)
-	log.Info("Yeni WebSocket bağlantısı: GetCurrentSlots")
+	// Pong handler
+	ws.SetPongHandler(func(string) error {
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		return nil
+	})
 
-	// Bağlantı kopana kadar dinle (Ping/Pong için)
-	reader(ws, &currentSlotsManager)
+	currentSlotsManager.Add(ws)
+
+	// Okuma döngüsü - basitleştirilmiş
+	go func() {
+		defer currentSlotsManager.Remove(ws)
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				break
+			}
+		}
+	}()
 }
 
-// GetUpcomingSlotsWS
 func GetUpcomingSlotsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WebSocket upgrade hatası: ", err)
+		log.Error("WS upgrade error: ", err)
 		return
 	}
 
+	ws.SetPongHandler(func(string) error {
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		return nil
+	})
+
 	upcomingSlotsManager.Add(ws)
-	log.Info("Yeni WebSocket bağlantısı: GetUpcomingSlots")
-	reader(ws, &upcomingSlotsManager)
+
+	go func() {
+		defer upcomingSlotsManager.Remove(ws)
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				break
+			}
+		}
+	}()
 }
 
-// GetSponsorsWS
 func GetSponsorsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WebSocket upgrade hatası: ", err)
+		log.Error("WS upgrade error: ", err)
 		return
 	}
 
+	ws.SetPongHandler(func(string) error {
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		return nil
+	})
+
 	sponsorsManager.Add(ws)
-	log.Info("Yeni WebSocket bağlantısı: GetSponsors")
-	reader(ws, &sponsorsManager)
+
+	go func() {
+		defer sponsorsManager.Remove(ws)
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				break
+			}
+		}
+	}()
 }
 
-// GetWorkshopScheduleWS
 func GetWorkshopScheduleWS(c *gin.Context) {
 	workshopID := c.Param("id")
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
@@ -143,76 +256,124 @@ func GetWorkshopScheduleWS(c *gin.Context) {
 		return
 	}
 
-	// İlgili workshop için manager var mı? Yoksa yarat.
+	ws.SetPongHandler(func(string) error {
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		return nil
+	})
+
+	// Manager kontrolü - thread-safe
 	workshopSchedLock.Lock()
-	if _, exists := workshopSchedManagers[workshopID]; !exists {
-		workshopSchedManagers[workshopID] = &ClientManager{clients: make(map[*websocket.Conn]bool)}
-		// Bu ID için özel yayıncı başlat
-		go startSpecificWorkshopBroadcaster(workshopID)
+	manager, exists := workshopSchedManagers[workshopID]
+	if !exists {
+		manager = NewClientManager()
+		workshopSchedManagers[workshopID] = manager
+		go startSpecificWorkshopBroadcaster(workshopID, manager)
 	}
-	manager := workshopSchedManagers[workshopID]
 	workshopSchedLock.Unlock()
 
 	manager.Add(ws)
-	log.Info("Yeni WS: GetWorkshopSchedule - ID: ", workshopID)
-	reader(ws, manager)
-}
 
-// GetCurrentSlotInWorkshopWS (Eski kodunuzda vardı, buraya da ekledim)
-// Not: Bu fonksiyon da GetWorkshopScheduleWS mantığıyla ID bazlı çalışmalı.
-// Basitlik adına yukarıdaki yapıyı kullanabilirsiniz.
-
-// --- Helper: Okuma Döngüsü ---
-func reader(ws *websocket.Conn, cm *ClientManager) {
-	defer cm.Remove(ws)
-	for {
-		if _, _, err := ws.ReadMessage(); err != nil {
-			break
+	go func() {
+		defer manager.Remove(ws)
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				break
+			}
 		}
-	}
+	}()
 }
 
-// --- ARKA PLAN YAYINCILARI (BROADCASTERS) ---
-// Bu fonksiyonlar veritabanını sadece 1 kez sorgular ve binlerce kişiye dağıtır.
+func GetCurrentSlotInWorkshopWS(c *gin.Context) {
+	workshopID := c.Param("id")
+	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		log.Error("WS upgrade error: ", err)
+		return
+	}
+
+	ws.SetPongHandler(func(string) error {
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		return nil
+	})
+
+	workshopCurrentSlotLock.Lock()
+	manager, exists := workshopCurrentSlotManagers[workshopID]
+	if !exists {
+		manager = NewClientManager()
+		workshopCurrentSlotManagers[workshopID] = manager
+		go startWorkshopCurrentSlotBroadcaster(workshopID, manager)
+	}
+	workshopCurrentSlotLock.Unlock()
+
+	manager.Add(ws)
+
+	go func() {
+		defer manager.Remove(ws)
+		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
+		for {
+			if _, _, err := ws.ReadMessage(); err != nil {
+				break
+			}
+		}
+	}()
+}
+
+// --- BROADCASTERS - Optimize edilmiş ---
 
 func startCurrentSlotsBroadcaster() {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(2 * time.Second) // 5s'den 2s'ye düşürdük
+	defer ticker.Stop()
+
+	var cachedData gin.H
+	var cacheTime time.Time
+	cacheDuration := 1 * time.Second // Cache süresi
+
 	for range ticker.C {
-		// Eğer hiç client yoksa sorgu yapma (Performans tasarrufu)
-		currentSlotsManager.lock.RLock()
-		count := len(currentSlotsManager.clients)
-		currentSlotsManager.lock.RUnlock()
-		if count == 0 {
+		// Client yoksa işlem yapma
+		if currentSlotsManager.Count() == 0 {
 			continue
 		}
 
+		// Cache kontrolü
+		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
+			currentSlotsManager.Broadcast(cachedData)
+			continue
+		}
+
+		// DB Query - optimize edilmiş
 		now := time.Now()
 		var slots []models.WorkshopTimeSlot
-		// DB Sorgusu (Tek sefer çalışır)
-		err := in.DB.
+
+		// Context ile timeout
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		err := in.DB.WithContext(ctx).
 			Preload("Faciliator").
 			Preload("Workshop").
 			Where("slot_start <= ? AND slot_end >= ?", now, now).
 			Find(&slots).Error
+		cancel()
 
 		if err != nil {
-			log.Error("Broadcaster DB Error: ", err)
+			// Log'u azalttık
 			continue
 		}
 
-		// Veriyi hazırla
+		// Response hazırla
 		var data gin.H
 		if len(slots) == 0 {
 			data = gin.H{
 				"message":   "Şu anda aktif slot yok",
 				"slots":     []models.TimeSlotResponse{},
 				"total":     0,
-				"timestamp": time.Now(),
+				"timestamp": now,
 			}
 		} else {
-			var response []models.TimeSlotResponse
+			response := make([]models.TimeSlotResponse, 0, len(slots))
+			workshopInfo := make([]gin.H, 0, len(slots))
+
 			for _, slot := range slots {
-				response = append(response, models.TimeSlotResponse{
+				slotResp := models.TimeSlotResponse{
 					SlotID:    slot.SlotID,
 					SlotStart: slot.SlotStart,
 					SlotEnd:   slot.SlotEnd,
@@ -224,66 +385,79 @@ func startCurrentSlotsBroadcaster() {
 						TopicDetails: slot.Faciliator.TopicDetails,
 						Photograph:   slot.Faciliator.Photograph,
 					},
-				})
-			}
+				}
+				response = append(response, slotResp)
 
-			var workshopInfo []gin.H
-			for i, slot := range slots {
 				workshopInfo = append(workshopInfo, gin.H{
 					"workshop_id":   slot.Workshop.WorkshopID,
 					"workshop_name": slot.Workshop.WorkshopName,
-					"slot":          response[i],
+					"slot":          slotResp,
 				})
 			}
+
 			data = gin.H{
 				"active_workshops": workshopInfo,
 				"total":            len(workshopInfo),
-				"timestamp":        time.Now(),
+				"timestamp":        now,
 			}
 		}
 
-		// Herkese gönder
+		// Cache'e kaydet
+		cachedData = data
+		cacheTime = now
+
+		// Broadcast
 		currentSlotsManager.Broadcast(data)
 	}
 }
 
 func startUpcomingSlotsBroadcaster() {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(3 * time.Second)
+	defer ticker.Stop()
+
+	var cachedData gin.H
+	var cacheTime time.Time
+	cacheDuration := 2 * time.Second
+
 	for range ticker.C {
-		upcomingSlotsManager.lock.RLock()
-		if len(upcomingSlotsManager.clients) == 0 {
-			upcomingSlotsManager.lock.RUnlock()
+		if upcomingSlotsManager.Count() == 0 {
 			continue
 		}
-		upcomingSlotsManager.lock.RUnlock()
+
+		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
+			upcomingSlotsManager.Broadcast(cachedData)
+			continue
+		}
 
 		now := time.Now()
 		var slots []models.WorkshopTimeSlot
-		err := in.DB.
+
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		err := in.DB.WithContext(ctx).
 			Preload("Faciliator").
 			Preload("Workshop").
 			Where("slot_start > ?", now).
-			Order("slot_start").
+			Order("slot_start ASC").
 			Find(&slots).Error
+		cancel()
 
 		if err != nil {
-			log.Error("Upcoming DB Error: ", err)
 			continue
 		}
 
 		var data gin.H
 		if len(slots) == 0 {
 			data = gin.H{
-				"message":        "Gelecekte bir workshop görünmüyor",
+				"message":        "Gelecekte workshop yok",
 				"upcoming_slots": []models.UpcomingSlotResponse{},
 				"total":          0,
-				"timestamp":      time.Now(),
+				"timestamp":      now,
 			}
 		} else {
-			var response []models.UpcomingSlotResponse
+			response := make([]models.UpcomingSlotResponse, 0, len(slots))
+
 			for _, slot := range slots {
 				timeUntil := slot.SlotStart.Sub(now)
-				// formatDuration fonksiyonunun tanımlı olduğunu varsayıyorum
 				timeText := formatDuration(timeUntil)
 
 				response = append(response, models.UpcomingSlotResponse{
@@ -301,28 +475,44 @@ func startUpcomingSlotsBroadcaster() {
 					TimeUntilStart: timeText,
 				})
 			}
+
 			data = gin.H{
 				"upcoming_slots": response,
 				"total":          len(response),
-				"timestamp":      time.Now(),
+				"timestamp":      now,
 			}
 		}
+
+		cachedData = data
+		cacheTime = now
 		upcomingSlotsManager.Broadcast(data)
 	}
 }
 
 func startSponsorsBroadcaster() {
-	ticker := time.NewTicker(10 * time.Second) // Sponsorlar az değişir, süreyi artırdım
+	ticker := time.NewTicker(10 * time.Second)
+	defer ticker.Stop()
+
+	var cachedData gin.H
+	var cacheTime time.Time
+	cacheDuration := 5 * time.Second
+
 	for range ticker.C {
-		sponsorsManager.lock.RLock()
-		if len(sponsorsManager.clients) == 0 {
-			sponsorsManager.lock.RUnlock()
+		if sponsorsManager.Count() == 0 {
 			continue
 		}
-		sponsorsManager.lock.RUnlock()
+
+		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
+			sponsorsManager.Broadcast(cachedData)
+			continue
+		}
 
 		var sponsors []models.Sponsors
-		err := in.DB.Find(&sponsors).Error
+
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		err := in.DB.WithContext(ctx).Find(&sponsors).Error
+		cancel()
+
 		if err != nil {
 			continue
 		}
@@ -332,46 +522,45 @@ func startSponsorsBroadcaster() {
 			"total":     len(sponsors),
 			"timestamp": time.Now(),
 		}
+
+		cachedData = data
+		cacheTime = time.Now()
 		sponsorsManager.Broadcast(data)
 	}
 }
 
-// Belirli bir ID için çalışan özel broadcaster
-func startSpecificWorkshopBroadcaster(workshopID string) {
-	ticker := time.NewTicker(5 * time.Second)
+func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager) {
+	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
 
-	// Manager'a erişim için pointer al
-	workshopSchedLock.RLock()
-	manager, exists := workshopSchedManagers[workshopID]
-	workshopSchedLock.RUnlock()
-
-	if !exists {
-		return
-	}
+	var cachedResponse models.WorkshopScheduleResponse
+	var cacheTime time.Time
+	cacheDuration := 2 * time.Second
 
 	for range ticker.C {
-		manager.lock.RLock()
-		count := len(manager.clients)
-		manager.lock.RUnlock()
-
-		// Eğer kimse bu odayı dinlemiyorsa döngüden çık ve goroutine'i öldür (Memory leak önleme)
-		if count == 0 {
+		if manager.Count() == 0 {
+			// Kimse yoksa cleanup
 			workshopSchedLock.Lock()
 			delete(workshopSchedManagers, workshopID)
 			workshopSchedLock.Unlock()
-			log.Info("Broadcaster kapatılıyor: ", workshopID)
+			manager.Shutdown()
 			return
 		}
 
-		// --- DB Mantığı (Eski koddan alındı) ---
+		if time.Since(cacheTime) < cacheDuration {
+			manager.Broadcast(cachedResponse)
+			continue
+		}
+
 		var workshop models.Workshops
-		err := in.DB.
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		err := in.DB.WithContext(ctx).
 			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 				return db.Order("slot_order ASC")
 			}).
 			Preload("TimeSlots.Faciliator").
 			First(&workshop, workshopID).Error
+		cancel()
 
 		if err != nil {
 			manager.Broadcast(gin.H{"error": "Workshop bulunamadı"})
@@ -380,7 +569,7 @@ func startSpecificWorkshopBroadcaster(workshopID string) {
 
 		now := time.Now()
 		var currentSlot *models.TimeSlotResponse
-		var allSlots []models.TimeSlotResponse
+		allSlots := make([]models.TimeSlotResponse, 0, len(workshop.TimeSlots))
 
 		for _, slot := range workshop.TimeSlots {
 			slotResponse := models.TimeSlotResponse{
@@ -412,72 +601,55 @@ func startSpecificWorkshopBroadcaster(workshopID string) {
 			TotalSlots:   len(allSlots),
 		}
 
+		cachedResponse = response
+		cacheTime = now
 		manager.Broadcast(response)
 	}
 }
 
-// Helper function (eğer başka dosyada yoksa buraya ekleyin)
-func FormatDuration(d time.Duration) string {
-	d = d.Round(time.Minute)
-	h := d / time.Hour
-	d -= h * time.Hour
-	m := d / time.Minute
-	if h > 0 {
-		return fmt.Sprintf("%d saat %d dk", h, m)
-	}
-	return fmt.Sprintf("%d dk", m)
-}
-
-func startWorkshopCurrentSlotBroadcaster(workshopID string) {
-	ticker := time.NewTicker(5 * time.Second)
+func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManager) {
+	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
-	// Manager'a referans al
-	workshopCurrentSlotLock.RLock()
-	manager, exists := workshopCurrentSlotManagers[workshopID]
-	workshopCurrentSlotLock.RUnlock()
-
-	if !exists {
-		return
-	}
+	var cachedResponse gin.H
+	var cacheTime time.Time
+	cacheDuration := 1 * time.Second
 
 	for range ticker.C {
-		// Dinleyen kimse yoksa döngüyü ve goroutine'i kapat (Memory Leak önlemi)
-		manager.lock.RLock()
-		count := len(manager.clients)
-		manager.lock.RUnlock()
-
-		if count == 0 {
+		if manager.Count() == 0 {
 			workshopCurrentSlotLock.Lock()
 			delete(workshopCurrentSlotManagers, workshopID)
 			workshopCurrentSlotLock.Unlock()
-			log.Info("Workshop Current Slot yayını kapatıldı (kimse yok): ", workshopID)
+			manager.Shutdown()
 			return
 		}
 
-		// --- Veritabanı ve Mantık İşlemleri ---
+		if time.Since(cacheTime) < cacheDuration && cachedResponse != nil {
+			manager.Broadcast(cachedResponse)
+			continue
+		}
+
 		now := time.Now()
 		var workshop models.Workshops
 
-		// DB sorgusu optimize edildi
-		err := in.DB.
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		err := in.DB.WithContext(ctx).
 			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 				return db.Order("slot_order ASC")
 			}).
 			Preload("TimeSlots.Faciliator").
 			First(&workshop, workshopID).Error
+		cancel()
 
 		if err != nil {
 			manager.Broadcast(gin.H{"error": "Workshop bulunamadı"})
 			continue
 		}
 
-		// Şu anki ve sonraki slotu bul
 		var currentSlot *models.TimeSlotResponse
 		var nextSlot *models.TimeSlotResponse
 
 		for i, slot := range workshop.TimeSlots {
-			// Aktif slot mu?
 			if now.After(slot.SlotStart) && now.Before(slot.SlotEnd) {
 				currentSlot = &models.TimeSlotResponse{
 					SlotID:    slot.SlotID,
@@ -493,7 +665,6 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string) {
 					},
 				}
 
-				// Sonraki slotu al
 				if i+1 < len(workshop.TimeSlots) {
 					nxt := workshop.TimeSlots[i+1]
 					nextSlot = &models.TimeSlotResponse{
@@ -514,7 +685,6 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string) {
 			}
 		}
 
-		// Eğer aktif slot bulunamadıysa, gelecekteki en yakın slotu "next" olarak ayarla
 		if currentSlot == nil {
 			for _, slot := range workshop.TimeSlots {
 				if now.Before(slot.SlotStart) {
@@ -536,7 +706,6 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string) {
 			}
 		}
 
-		// Response Hazırla
 		response := gin.H{
 			"workshop_id":   workshop.WorkshopID,
 			"workshop_name": workshop.WorkshopName,
@@ -561,38 +730,10 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string) {
 			response["time_until_next"] = formatDuration(timeUntilStart)
 		} else {
 			response["next_slot"] = nil
-			response["message"] = "Sırada slot yok"
 		}
 
-		// Bu odaya bağlı tüm kullanıcılara tek seferde gönder
+		cachedResponse = response
+		cacheTime = now
 		manager.Broadcast(response)
 	}
-}
-
-// GetCurrentSlotInWorkshopWS - Belirli bir workshop'un anlık durumunu stream eder
-func GetCurrentSlotInWorkshopWS(c *gin.Context) {
-	workshopID := c.Param("id")
-
-	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
-	if err != nil {
-		log.Error("WebSocket upgrade hatası: ", err)
-		return
-	}
-
-	// Bu workshop ID için bir yayıncı (broadcaster) var mı kontrol et
-	workshopCurrentSlotLock.Lock()
-	if _, exists := workshopCurrentSlotManagers[workshopID]; !exists {
-		// Yoksa yeni bir kanal oluştur ve yayıncıyı başlat
-		workshopCurrentSlotManagers[workshopID] = &ClientManager{clients: make(map[*websocket.Conn]bool)}
-		go startWorkshopCurrentSlotBroadcaster(workshopID)
-	}
-	manager := workshopCurrentSlotManagers[workshopID]
-	workshopCurrentSlotLock.Unlock()
-
-	// Kullanıcıyı havuza ekle
-	manager.Add(ws)
-	log.Info(fmt.Sprintf("Yeni WS Bağlantısı: GetCurrentSlotInWorkshopWS - Workshop ID: %s", workshopID))
-
-	// Bağlantı kopana kadar dinle
-	reader(ws, manager)
 }
