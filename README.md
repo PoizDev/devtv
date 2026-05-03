@@ -992,7 +992,6 @@ Onun yerine atadığımız ```format`` parametresini kullanarak JSON formatında
 GET - localhost:2012/health?format=json
 
 Çıktı:
-```
 {
   "systemUptimeSecs": "1262",
   "ramTotalMb": "11847",
