@@ -29,6 +29,7 @@ var (
 	healthCacheMu    sync.RWMutex
 	lastUpdateTime   time.Time
 	cachedProtoBytes []byte
+	cachedJSONBytes  []byte
 )
 
 func IncreaseWS() {
@@ -183,8 +184,15 @@ func UpdateProtoCache() {
 		return
 	}
 
+	jsonData, err := protojson.Marshal(resp)
+	if err != nil {
+		log.Error("JSON health marshal hatası: %s", err)
+		return
+	}
+
 	healthCacheMu.Lock()
 	cachedProtoBytes = data
+	cachedJSONBytes = jsonData
 	lastUpdateTime = time.Now()
 	healthCacheMu.Unlock()
 }
@@ -193,6 +201,12 @@ func GetHealthProto() []byte {
 	healthCacheMu.RLock()
 	defer healthCacheMu.RUnlock()
 	return cachedProtoBytes
+}
+
+func GetHealthJSON() []byte {
+	healthCacheMu.RLock()
+	defer healthCacheMu.RUnlock()
+	return cachedJSONBytes
 }
 
 func CheckHealthProto() *healthpb.HealthCheckResponse {
@@ -210,19 +224,9 @@ func CheckHealthProto() *healthpb.HealthCheckResponse {
 
 func ProtoHealthHandler(c *gin.Context) {
 	if c.Query("format") == "json" {
-		raw := GetHealthProto()
-		if raw == nil {
+		jsonBytes := GetHealthJSON()
+		if jsonBytes == nil {
 			c.Status(http.StatusServiceUnavailable)
-			return
-		}
-		resp := &healthpb.SystemMetricsResponse{}
-		if err := proto.Unmarshal(raw, resp); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Proto unmarshal hatası"})
-			return
-		}
-		jsonBytes, err := protojson.MarshalOptions{Indent: "  "}.Marshal(resp)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "JSON marshal hatası"})
 			return
 		}
 		c.Data(http.StatusOK, "application/json", jsonBytes)
