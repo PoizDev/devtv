@@ -4,6 +4,7 @@ import (
 	"context"
 	"devtv/in"
 	"devtv/models"
+	"encoding/json"
 	"net/http"
 	"sync"
 	"time"
@@ -21,30 +22,31 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
-	// Handshake timeout ekle
 	HandshakeTimeout: 10 * time.Second,
 }
 
-// --- Client Manager - Optimize edilmiş ---
+// --- Client Manager ---
 type ClientManager struct {
-	clients    map[*websocket.Conn]bool
-	register   chan *websocket.Conn
-	unregister chan *websocket.Conn
-	broadcast  chan interface{}
-	lock       sync.RWMutex
-	ctx        context.Context
-	cancel     context.CancelFunc
+	clients      map[*websocket.Conn]bool
+	register     chan *websocket.Conn
+	unregister   chan *websocket.Conn
+	broadcast    chan interface{}
+	broadcastRaw chan []byte
+	lock         sync.RWMutex
+	ctx          context.Context
+	cancel       context.CancelFunc
 }
 
 func NewClientManager() *ClientManager {
 	ctx, cancel := context.WithCancel(context.Background())
 	cm := &ClientManager{
-		clients:    make(map[*websocket.Conn]bool),
-		register:   make(chan *websocket.Conn, 100), // Buffer ekledik
-		unregister: make(chan *websocket.Conn, 100), // Buffer ekledik
-		broadcast:  make(chan interface{}, 1000),    // Büyük buffer
-		ctx:        ctx,
-		cancel:     cancel,
+		clients:      make(map[*websocket.Conn]bool),
+		register:     make(chan *websocket.Conn, 100),
+		unregister:   make(chan *websocket.Conn, 100),
+		broadcast:    make(chan interface{}, 1000),
+		broadcastRaw: make(chan []byte, 1000),
+		ctx:          ctx,
+		cancel:       cancel,
 	}
 	go cm.run()
 	return cm
@@ -52,7 +54,7 @@ func NewClientManager() *ClientManager {
 
 // run - Thread-safe client yönetimi (Tek goroutine)
 func (cm *ClientManager) run() {
-	ticker := time.NewTicker(30 * time.Second) // Ping ticker
+	ticker := time.NewTicker(30 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -73,39 +75,45 @@ func (cm *ClientManager) run() {
 			}
 			cm.lock.Unlock()
 
-		case message := <-cm.broadcast:
+		// Raw broadcast: tek serialize edilmiş []byte, tüm client'lara doğrudan yaz.
+		// wg.Wait() yok → run() loop bloklanmıyor.
+		case raw := <-cm.broadcastRaw:
 			cm.lock.RLock()
-			clients := make([]*websocket.Conn, 0, len(cm.clients))
 			for client := range cm.clients {
-				clients = append(clients, client)
+				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
+				if err := client.WriteMessage(websocket.TextMessage, raw); err != nil {
+					// Non-blocking unregister
+					select {
+					case cm.unregister <- client:
+					default:
+					}
+				}
 			}
 			cm.lock.RUnlock()
 
-			// Paralel gönderim (Goroutine pool kullanarak)
-			var wg sync.WaitGroup
-			for _, client := range clients {
-				wg.Add(1)
-				go func(c *websocket.Conn) {
-					defer wg.Done()
-
-					// Yazma timeout ekle
-					c.SetWriteDeadline(time.Now().Add(5 * time.Second))
-
-					if err := c.WriteJSON(message); err != nil {
-						// Hata durumunda client'ı kaldır
-						cm.unregister <- c
+		// Fallback broadcast (hata mesajları gibi nadir durumlar için)
+		case message := <-cm.broadcast:
+			cm.lock.RLock()
+			for client := range cm.clients {
+				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
+				if err := client.WriteJSON(message); err != nil {
+					select {
+					case cm.unregister <- client:
+					default:
 					}
-				}(client)
+				}
 			}
-			wg.Wait()
+			cm.lock.RUnlock()
 
 		case <-ticker.C:
-			// Ping gönder (connection health check)
 			cm.lock.RLock()
 			for client := range cm.clients {
 				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
 				if err := client.WriteMessage(websocket.PingMessage, nil); err != nil {
-					cm.unregister <- client
+					select {
+					case cm.unregister <- client:
+					default:
+					}
 				}
 			}
 			cm.lock.RUnlock()
@@ -121,12 +129,18 @@ func (cm *ClientManager) Remove(conn *websocket.Conn) {
 	cm.unregister <- conn
 }
 
+func (cm *ClientManager) BroadcastRaw(data []byte) {
+	select {
+	case cm.broadcastRaw <- data:
+	default:
+		log.Warn("BroadcastRaw buffer full, dropping message")
+	}
+}
+
 func (cm *ClientManager) Broadcast(message interface{}) {
-	// Non-blocking send
 	select {
 	case cm.broadcast <- message:
 	default:
-		// Buffer dolu, eski mesajları at
 		log.Warn("Broadcast buffer full, dropping message")
 	}
 }
@@ -139,6 +153,15 @@ func (cm *ClientManager) Count() int {
 
 func (cm *ClientManager) Shutdown() {
 	cm.cancel()
+}
+
+func marshalOrLog(v interface{}) []byte {
+	raw, err := json.Marshal(v)
+	if err != nil {
+		log.Error("JSON marshal error: ", err)
+		return nil
+	}
+	return raw
 }
 
 // --- Global Managers ---
@@ -162,7 +185,6 @@ func init() {
 		upcomingSlotsManager = NewClientManager()
 		sponsorsManager = NewClientManager()
 
-		// Broadcasters'ı başlat
 		go startCurrentSlotsBroadcaster()
 		go startUpcomingSlotsBroadcaster()
 		go startSponsorsBroadcaster()
@@ -174,20 +196,14 @@ func init() {
 func GetCurrentSlotsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		// Log'u azalttık (sadece error)
 		log.Error("WS upgrade error: ", err)
 		return
 	}
-
-	// Pong handler
 	ws.SetPongHandler(func(string) error {
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		return nil
 	})
-
 	currentSlotsManager.Add(ws)
-
-	// Okuma döngüsü - basitleştirilmiş
 	go func() {
 		defer currentSlotsManager.Remove(ws)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
@@ -205,14 +221,11 @@ func GetUpcomingSlotsWS(c *gin.Context) {
 		log.Error("WS upgrade error: ", err)
 		return
 	}
-
 	ws.SetPongHandler(func(string) error {
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		return nil
 	})
-
 	upcomingSlotsManager.Add(ws)
-
 	go func() {
 		defer upcomingSlotsManager.Remove(ws)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
@@ -230,14 +243,11 @@ func GetSponsorsWS(c *gin.Context) {
 		log.Error("WS upgrade error: ", err)
 		return
 	}
-
 	ws.SetPongHandler(func(string) error {
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		return nil
 	})
-
 	sponsorsManager.Add(ws)
-
 	go func() {
 		defer sponsorsManager.Remove(ws)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
@@ -255,13 +265,10 @@ func GetWorkshopScheduleWS(c *gin.Context) {
 	if err != nil {
 		return
 	}
-
 	ws.SetPongHandler(func(string) error {
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		return nil
 	})
-
-	// Manager kontrolü - thread-safe
 	workshopSchedLock.Lock()
 	manager, exists := workshopSchedManagers[workshopID]
 	if !exists {
@@ -270,9 +277,7 @@ func GetWorkshopScheduleWS(c *gin.Context) {
 		go startSpecificWorkshopBroadcaster(workshopID, manager)
 	}
 	workshopSchedLock.Unlock()
-
 	manager.Add(ws)
-
 	go func() {
 		defer manager.Remove(ws)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
@@ -291,12 +296,10 @@ func GetCurrentSlotInWorkshopWS(c *gin.Context) {
 		log.Error("WS upgrade error: ", err)
 		return
 	}
-
 	ws.SetPongHandler(func(string) error {
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		return nil
 	})
-
 	workshopCurrentSlotLock.Lock()
 	manager, exists := workshopCurrentSlotManagers[workshopID]
 	if !exists {
@@ -305,9 +308,7 @@ func GetCurrentSlotInWorkshopWS(c *gin.Context) {
 		go startWorkshopCurrentSlotBroadcaster(workshopID, manager)
 	}
 	workshopCurrentSlotLock.Unlock()
-
 	manager.Add(ws)
-
 	go func() {
 		defer manager.Remove(ws)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
@@ -319,33 +320,29 @@ func GetCurrentSlotInWorkshopWS(c *gin.Context) {
 	}()
 }
 
-// --- BROADCASTERS - Optimize edilmiş ---
+// --- BROADCASTERS ---
 
 func startCurrentSlotsBroadcaster() {
-	ticker := time.NewTicker(2 * time.Second) // 5s'den 2s'ye düşürdük
+	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
-	var cachedData gin.H
+	var cachedJSON []byte
 	var cacheTime time.Time
-	cacheDuration := 1 * time.Second // Cache süresi
+	cacheDuration := 3 * time.Second
 
 	for range ticker.C {
-		// Client yoksa işlem yapma
 		if currentSlotsManager.Count() == 0 {
 			continue
 		}
 
-		// Cache kontrolü
-		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
-			currentSlotsManager.Broadcast(cachedData)
+		if cachedJSON != nil && time.Since(cacheTime) < cacheDuration {
+			currentSlotsManager.BroadcastRaw(cachedJSON)
 			continue
 		}
 
-		// DB Query - optimize edilmiş
 		now := time.Now()
 		var slots []models.WorkshopTimeSlot
 
-		// Context ile timeout
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		err := in.DB.WithContext(ctx).
 			Preload("Faciliator").
@@ -355,11 +352,9 @@ func startCurrentSlotsBroadcaster() {
 		cancel()
 
 		if err != nil {
-			// Log'u azalttık
 			continue
 		}
 
-		// Response hazırla
 		var data gin.H
 		if len(slots) == 0 {
 			data = gin.H{
@@ -369,9 +364,7 @@ func startCurrentSlotsBroadcaster() {
 				"timestamp": now,
 			}
 		} else {
-			response := make([]models.TimeSlotResponse, 0, len(slots))
 			workshopInfo := make([]gin.H, 0, len(slots))
-
 			for _, slot := range slots {
 				slotResp := models.TimeSlotResponse{
 					SlotID:    slot.SlotID,
@@ -386,15 +379,12 @@ func startCurrentSlotsBroadcaster() {
 						Photograph:   slot.Faciliator.Photograph,
 					},
 				}
-				response = append(response, slotResp)
-
 				workshopInfo = append(workshopInfo, gin.H{
 					"workshop_id":   slot.Workshop.WorkshopID,
 					"workshop_name": slot.Workshop.WorkshopName,
 					"slot":          slotResp,
 				})
 			}
-
 			data = gin.H{
 				"active_workshops": workshopInfo,
 				"total":            len(workshopInfo),
@@ -402,12 +392,13 @@ func startCurrentSlotsBroadcaster() {
 			}
 		}
 
-		// Cache'e kaydet
-		cachedData = data
+		raw := marshalOrLog(data)
+		if raw == nil {
+			continue
+		}
+		cachedJSON = raw
 		cacheTime = now
-
-		// Broadcast
-		currentSlotsManager.Broadcast(data)
+		currentSlotsManager.BroadcastRaw(cachedJSON)
 	}
 }
 
@@ -415,17 +406,17 @@ func startUpcomingSlotsBroadcaster() {
 	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
 
-	var cachedData gin.H
+	var cachedJSON []byte
 	var cacheTime time.Time
-	cacheDuration := 2 * time.Second
+	cacheDuration := 4 * time.Second
 
 	for range ticker.C {
 		if upcomingSlotsManager.Count() == 0 {
 			continue
 		}
 
-		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
-			upcomingSlotsManager.Broadcast(cachedData)
+		if cachedJSON != nil && time.Since(cacheTime) < cacheDuration {
+			upcomingSlotsManager.BroadcastRaw(cachedJSON)
 			continue
 		}
 
@@ -455,11 +446,7 @@ func startUpcomingSlotsBroadcaster() {
 			}
 		} else {
 			response := make([]models.UpcomingSlotResponse, 0, len(slots))
-
 			for _, slot := range slots {
-				timeUntil := slot.SlotStart.Sub(now)
-				timeText := formatDuration(timeUntil)
-
 				response = append(response, models.UpcomingSlotResponse{
 					SlotID:       slot.SlotID,
 					WorkshopName: slot.Workshop.WorkshopName,
@@ -472,10 +459,9 @@ func startUpcomingSlotsBroadcaster() {
 						TopicDetails: slot.Faciliator.TopicDetails,
 						Photograph:   slot.Faciliator.Photograph,
 					},
-					TimeUntilStart: timeText,
+					TimeUntilStart: formatDuration(slot.SlotStart.Sub(now)),
 				})
 			}
-
 			data = gin.H{
 				"upcoming_slots": response,
 				"total":          len(response),
@@ -483,9 +469,13 @@ func startUpcomingSlotsBroadcaster() {
 			}
 		}
 
-		cachedData = data
+		raw := marshalOrLog(data)
+		if raw == nil {
+			continue
+		}
+		cachedJSON = raw
 		cacheTime = now
-		upcomingSlotsManager.Broadcast(data)
+		upcomingSlotsManager.BroadcastRaw(cachedJSON)
 	}
 }
 
@@ -493,22 +483,21 @@ func startSponsorsBroadcaster() {
 	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 
-	var cachedData gin.H
+	var cachedJSON []byte
 	var cacheTime time.Time
-	cacheDuration := 5 * time.Second
+	cacheDuration := 15 * time.Second
 
 	for range ticker.C {
 		if sponsorsManager.Count() == 0 {
 			continue
 		}
 
-		if time.Since(cacheTime) < cacheDuration && cachedData != nil {
-			sponsorsManager.Broadcast(cachedData)
+		if cachedJSON != nil && time.Since(cacheTime) < cacheDuration {
+			sponsorsManager.BroadcastRaw(cachedJSON)
 			continue
 		}
 
 		var sponsors []models.Sponsors
-
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		err := in.DB.WithContext(ctx).Find(&sponsors).Error
 		cancel()
@@ -523,23 +512,27 @@ func startSponsorsBroadcaster() {
 			"timestamp": time.Now(),
 		}
 
-		cachedData = data
+		raw := marshalOrLog(data)
+		if raw == nil {
+			continue
+		}
+		cachedJSON = raw
 		cacheTime = time.Now()
-		sponsorsManager.Broadcast(data)
+		sponsorsManager.BroadcastRaw(cachedJSON)
 	}
 }
 
 func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager) {
+	// ticker=3s, cacheDuration=4s
 	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
 
-	var cachedResponse models.WorkshopScheduleResponse
+	var cachedJSON []byte
 	var cacheTime time.Time
-	cacheDuration := 2 * time.Second
+	cacheDuration := 4 * time.Second
 
 	for range ticker.C {
 		if manager.Count() == 0 {
-			// Kimse yoksa cleanup
 			workshopSchedLock.Lock()
 			delete(workshopSchedManagers, workshopID)
 			workshopSchedLock.Unlock()
@@ -547,8 +540,8 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 			return
 		}
 
-		if time.Since(cacheTime) < cacheDuration {
-			manager.Broadcast(cachedResponse)
+		if cachedJSON != nil && time.Since(cacheTime) < cacheDuration {
+			manager.BroadcastRaw(cachedJSON)
 			continue
 		}
 
@@ -585,7 +578,6 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 					Photograph:   slot.Faciliator.Photograph,
 				},
 			}
-
 			if now.After(slot.SlotStart) && now.Before(slot.SlotEnd) {
 				currentSlot = &slotResponse
 			}
@@ -601,19 +593,24 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 			TotalSlots:   len(allSlots),
 		}
 
-		cachedResponse = response
+		raw := marshalOrLog(response)
+		if raw == nil {
+			continue
+		}
+		cachedJSON = raw
 		cacheTime = now
-		manager.Broadcast(response)
+		manager.BroadcastRaw(cachedJSON)
 	}
 }
 
 func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManager) {
+	// ticker=2s, cacheDuration=3s
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
-	var cachedResponse gin.H
+	var cachedJSON []byte
 	var cacheTime time.Time
-	cacheDuration := 1 * time.Second
+	cacheDuration := 3 * time.Second
 
 	for range ticker.C {
 		if manager.Count() == 0 {
@@ -624,8 +621,8 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 			return
 		}
 
-		if time.Since(cacheTime) < cacheDuration && cachedResponse != nil {
-			manager.Broadcast(cachedResponse)
+		if cachedJSON != nil && time.Since(cacheTime) < cacheDuration {
+			manager.BroadcastRaw(cachedJSON)
 			continue
 		}
 
@@ -664,7 +661,6 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 						Photograph:   slot.Faciliator.Photograph,
 					},
 				}
-
 				if i+1 < len(workshop.TimeSlots) {
 					nxt := workshop.TimeSlots[i+1]
 					nextSlot = &models.TimeSlotResponse{
@@ -725,15 +721,18 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		}
 
 		if nextSlot != nil {
-			timeUntilStart := nextSlot.SlotStart.Sub(now)
 			response["next_slot"] = nextSlot
-			response["time_until_next"] = formatDuration(timeUntilStart)
+			response["time_until_next"] = formatDuration(nextSlot.SlotStart.Sub(now))
 		} else {
 			response["next_slot"] = nil
 		}
 
-		cachedResponse = response
+		raw := marshalOrLog(response)
+		if raw == nil {
+			continue
+		}
+		cachedJSON = raw
 		cacheTime = now
-		manager.Broadcast(response)
+		manager.BroadcastRaw(cachedJSON)
 	}
 }
