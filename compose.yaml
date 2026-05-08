@@ -2,7 +2,7 @@
 #'  Geliştirme : docker compose up -d
 #'  Production : docker compose --profile prod up -d
 #'  Sadece DB  : docker compose up -d db
-
+#'  Logları görüntülemek için : docker logs -d api
 services:
   db:
     image: postgres:17-alpine
@@ -25,6 +25,21 @@ services:
     networks:
       - devtv-net
 
+  # YENİ: Redis Servisi
+  redis:
+    image: redis:alpine
+    container_name: devtv-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - devtv-net
+
   api:
     build:
       context: .
@@ -33,6 +48,9 @@ services:
     restart: unless-stopped
     depends_on:
       db:
+        condition: service_healthy
+      # YENİ: Go API artık Redis'in de hazır olmasını bekleyecek
+      redis:
         condition: service_healthy
     ports:
       - "${API_PORT:-2012}:2012"

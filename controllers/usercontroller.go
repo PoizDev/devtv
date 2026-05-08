@@ -4,7 +4,7 @@ import (
 	"devtv/in"
 	"devtv/models"
 	"net/http"
-	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -13,18 +13,40 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var secret = os.Getenv("JWT_TOKEN")
+// İzin verilen roller — signup'ta sadece bunlar kabul edilir
+var allowedRoles = map[string]bool{
+	"user":      true,
+	"moderator": true,
+	// "admin" burada YOK — admin rolü sadece mevcut admin tarafından atanabilir
+}
 
 func Signup(c *gin.Context) {
 	var body struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Username string `json:"username" binding:"required"`
+		Password string `json:"password" binding:"required"`
 		Role     string `json:"role"`
 	}
 
-	if err := c.BindJSON(&body); err != nil {
+	if err := c.ShouldBindJSON(&body); err != nil {
 		log.Error("Json'ı eşlerken hata oluştu: ", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Username ve password zorunludur"})
+		return
+	}
+
+	// Şifre uzunluk kontrolü
+	if len(body.Password) < 6 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Şifre en az 6 karakter olmalıdır"})
+		return
+	}
+
+	// Role validasyonu — boşsa "user" yap, izin verilmeyen rol gelirse reddet
+	role := strings.ToLower(strings.TrimSpace(body.Role))
+	if role == "" {
+		role = "user"
+	}
+	if !allowedRoles[role] {
+		log.Warn("Yetkisiz rol denemesi — Talep edilen: %s, Kullanıcı: %s", body.Role, body.Username)
+		c.JSON(http.StatusForbidden, gin.H{"error": "Bu rol ile kayıt olunamazsınız"})
 		return
 	}
 
@@ -38,7 +60,7 @@ func Signup(c *gin.Context) {
 	user := models.User{
 		Username: body.Username,
 		Password: string(hash),
-		Role:     body.Role,
+		Role:     role,
 	}
 	result := in.DB.Create(&user)
 	if result.Error != nil {
@@ -46,22 +68,22 @@ func Signup(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
-	log.Info("Kullanıcı başarıyla oluşturuldu: ", user.Username)
+	log.Info("Kullanıcı başarıyla oluşturuldu: %s (rol: %s)", user.Username, user.Role)
 	c.JSON(http.StatusOK, gin.H{"message": "User created successfully"})
 }
 
 func Login(c *gin.Context) {
 	var body struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Username string `json:"username" binding:"required"`
+		Password string `json:"password" binding:"required"`
 	}
 
-	if c.BindJSON(&body) != nil {
-		log.Error("Json'ı eşlerken hata oluştu")
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+	if err := c.ShouldBindJSON(&body); err != nil {
+		log.Error("Json'ı eşlerken hata oluştu: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Username ve password zorunludur"})
 		return
 	}
-	log.Info("Json başarıyla eşlendi")
+
 	var user models.User
 	result := in.DB.Where("username = ?", body.Username).First(&user)
 	if result.Error != nil {
@@ -75,19 +97,45 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
 		return
 	}
+
+	// JWT Secret kontrolü
+	jwtSecret := in.Auth.JWTSecret
+	if jwtSecret == "" {
+		log.Critical("JWT_SECRET tanımlanmamış! Login yapılamaz.")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sunucu yapılandırma hatası"})
+		return
+	}
+
+	// Token süresi config'den alınıyor
+	expiryDays := in.Auth.TokenExpiryDays
+	if expiryDays <= 0 {
+		expiryDays = 30 // Varsayılan
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": user.UserID,
-		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+		"sub":  user.UserID,
+		"role": user.Role,
+		"exp":  time.Now().Add(time.Hour * 24 * time.Duration(expiryDays)).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte(secret))
+	tokenString, err := token.SignedString([]byte(jwtSecret))
 	if err != nil {
 		log.Error("Token imzalanırken hata oluştu: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
 	}
+
+	// Cookie ayarları config'den okunuyor
 	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("Auth", tokenString, 3600*24*30, "/", "localhost", false, true) // Canlıya çıkarken Secure true yapılacak
+	c.SetCookie(
+		"Auth",
+		tokenString,
+		3600*24*expiryDays,
+		"/",
+		in.Auth.CookieDomain,
+		in.Auth.CookieSecure,
+		true, // HttpOnly — JavaScript erişemez
+	)
 	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
 	log.Info("Kullanıcı giriş yaptı: ", user.Username)
 }
@@ -130,6 +178,7 @@ func DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "User silinemedi, " + result.Error.Error(),
 		})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User silindi",

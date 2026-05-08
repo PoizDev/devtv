@@ -3,7 +3,6 @@
         "enable": true,
         "level": "FINE"
     },
-
     "files": [
         {
             "enable": true,
@@ -18,7 +17,6 @@
             "santize": true
         }
     ],
-
     "sockets": [
         {
             "enable": false,

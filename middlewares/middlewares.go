@@ -6,7 +6,6 @@ import (
 	"devtv/models"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -15,9 +14,6 @@ import (
 	log "github.com/jeanphorn/log4go"
 )
 
-var secret = os.Getenv("JWT_TOKEN")
-
-// AuthMiddleware - Token kontrol et
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("Auth")
@@ -28,8 +24,20 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		jwtSecret := in.Auth.JWTSecret
+		if jwtSecret == "" {
+			log.Critical("JWT_SECRET tanımlanmamış! Auth doğrulaması yapılamaz.")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Sunucu yapılandırma hatası"})
+			c.Abort()
+			return
+		}
+
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return []byte(secret), nil
+			// Signing method kontrolü — sadece HMAC kabul et
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("beklenmeyen signing method: %v", token.Header["alg"])
+			}
+			return []byte(jwtSecret), nil
 		})
 
 		if err != nil || !token.Valid {

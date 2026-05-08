@@ -28,7 +28,7 @@ func CreateFaciliator(c *gin.Context) {
 
 func GetAllFaciliators(c *gin.Context) {
 	var faciliators []models.Faciliators
-	result := in.DB.Find(&faciliators)
+	result := in.DB.WithContext(c.Request.Context()).Find(&faciliators)
 	if result.Error != nil {
 		log.Error("Faciliatorlar alınırken hata oluştu: ", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve faciliators"})
@@ -78,12 +78,14 @@ func DeleteFacilitator(c *gin.Context) {
 			"error": "Facilitator silinirken bir hata oluştu" + result.Error.Error(),
 		})
 		log.Error("Facilitator oluşturulurken bir hata oluştu: ", result.Error)
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message":        "Facilitator başarıyla silindi",
 		"facilitator_id": facilID,
 	})
 	log.Info("Facilitator başarıyla silindi - ID", facilID)
+
 }
 
 func UpdateFaciliator(c *gin.Context) {
@@ -94,6 +96,7 @@ func UpdateFaciliator(c *gin.Context) {
 			"error": "Faciliator ID zorunlu",
 		})
 		log.Warn("Facilitator ID Boş")
+		return
 	}
 
 	type UpdateFacilitatorReq struct {

@@ -330,6 +330,8 @@ func startCurrentSlotsBroadcaster() {
 	var cacheTime time.Time
 	cacheDuration := 3 * time.Second
 
+	redisFallbackKey := "devtv:ws_fallback:current_slots"
+
 	for range ticker.C {
 		if currentSlotsManager.Count() == 0 {
 			continue
@@ -352,6 +354,22 @@ func startCurrentSlotsBroadcaster() {
 		cancel()
 
 		if err != nil {
+			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+
+			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
+			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
+			cancelRedis()
+
+			if redisErr == nil && len(redisData) > 0 {
+				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				currentSlotsManager.BroadcastRaw(redisData)
+				continue
+			}
+
+			if cachedJSON != nil {
+				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				currentSlotsManager.BroadcastRaw(cachedJSON)
+			}
 			continue
 		}
 
@@ -396,12 +414,20 @@ func startCurrentSlotsBroadcaster() {
 		if raw == nil {
 			continue
 		}
+
 		cachedJSON = raw
 		cacheTime = now
+
+		ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 1*time.Second)
+		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
+		cancelRedis()
+		if errRedis != nil {
+			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+		}
+
 		currentSlotsManager.BroadcastRaw(cachedJSON)
 	}
 }
-
 func startUpcomingSlotsBroadcaster() {
 	ticker := time.NewTicker(3 * time.Second)
 	defer ticker.Stop()
@@ -409,6 +435,8 @@ func startUpcomingSlotsBroadcaster() {
 	var cachedJSON []byte
 	var cacheTime time.Time
 	cacheDuration := 4 * time.Second
+
+	redisFallbackKey := "devtv:ws_fallback:upcoming_slots"
 
 	for range ticker.C {
 		if upcomingSlotsManager.Count() == 0 {
@@ -433,6 +461,22 @@ func startUpcomingSlotsBroadcaster() {
 		cancel()
 
 		if err != nil {
+			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+
+			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
+			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
+			cancelRedis()
+
+			if redisErr == nil && len(redisData) > 0 {
+				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				currentSlotsManager.BroadcastRaw(redisData)
+				continue
+			}
+
+			if cachedJSON != nil {
+				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				currentSlotsManager.BroadcastRaw(cachedJSON)
+			}
 			continue
 		}
 
@@ -475,6 +519,14 @@ func startUpcomingSlotsBroadcaster() {
 		}
 		cachedJSON = raw
 		cacheTime = now
+
+		ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 1*time.Second)
+		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
+		cancelRedis()
+		if errRedis != nil {
+			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+		}
+
 		upcomingSlotsManager.BroadcastRaw(cachedJSON)
 	}
 }
@@ -486,6 +538,8 @@ func startSponsorsBroadcaster() {
 	var cachedJSON []byte
 	var cacheTime time.Time
 	cacheDuration := 15 * time.Second
+
+	redisFallbackKey := "devtv:ws_fallback:sponsors"
 
 	for range ticker.C {
 		if sponsorsManager.Count() == 0 {
@@ -503,6 +557,22 @@ func startSponsorsBroadcaster() {
 		cancel()
 
 		if err != nil {
+			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+
+			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
+			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
+			cancelRedis()
+
+			if redisErr == nil && len(redisData) > 0 {
+				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				sponsorsManager.BroadcastRaw(redisData)
+				continue
+			}
+
+			if cachedJSON != nil {
+				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				sponsorsManager.BroadcastRaw(cachedJSON)
+			}
 			continue
 		}
 
@@ -518,6 +588,14 @@ func startSponsorsBroadcaster() {
 		}
 		cachedJSON = raw
 		cacheTime = time.Now()
+
+		ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 1*time.Second)
+		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
+		cancelRedis()
+		if errRedis != nil {
+			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+		}
+
 		sponsorsManager.BroadcastRaw(cachedJSON)
 	}
 }
@@ -530,6 +608,8 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 	var cachedJSON []byte
 	var cacheTime time.Time
 	cacheDuration := 4 * time.Second
+
+	redisFallbackKey := "devtv:ws_fallback:workshop_schedule:" + workshopID
 
 	for range ticker.C {
 		if manager.Count() == 0 {
@@ -556,6 +636,22 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 		cancel()
 
 		if err != nil {
+			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+
+			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
+			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
+			cancelRedis()
+
+			if redisErr == nil && len(redisData) > 0 {
+				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				currentSlotsManager.BroadcastRaw(redisData)
+				continue
+			}
+			if cachedJSON != nil {
+				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				manager.BroadcastRaw(cachedJSON)
+				continue
+			}
 			manager.Broadcast(gin.H{"error": "Workshop bulunamadı"})
 			continue
 		}
@@ -599,6 +695,14 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 		}
 		cachedJSON = raw
 		cacheTime = now
+
+		ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 1*time.Second)
+		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
+		cancelRedis()
+		if errRedis != nil {
+			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+		}
+
 		manager.BroadcastRaw(cachedJSON)
 	}
 }
@@ -607,6 +711,8 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 	// ticker=2s, cacheDuration=3s
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
+
+	redisFallbackKey := "devtv:ws_fallback:workshop_current_slot:" + workshopID
 
 	var cachedJSON []byte
 	var cacheTime time.Time
@@ -639,6 +745,23 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		cancel()
 
 		if err != nil {
+			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+
+			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
+			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
+			cancelRedis()
+
+			if redisErr == nil && len(redisData) > 0 {
+				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				manager.BroadcastRaw(redisData)
+				continue
+			}
+
+			if cachedJSON != nil {
+				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				manager.BroadcastRaw(cachedJSON)
+				continue
+			}
 			manager.Broadcast(gin.H{"error": "Workshop bulunamadı"})
 			continue
 		}
@@ -733,6 +856,14 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		}
 		cachedJSON = raw
 		cacheTime = now
+
+		ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 1*time.Second)
+		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
+		cancelRedis()
+		if errRedis != nil {
+			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+		}
+
 		manager.BroadcastRaw(cachedJSON)
 	}
 }

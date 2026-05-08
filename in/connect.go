@@ -6,26 +6,34 @@ import (
 
 	log "github.com/jeanphorn/log4go"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
+var RDB *redis.Client
+var Auth config.AuthConfig
 
-// Connect artık config verilerini parametre olarak alıyor
-func Connect(dbConf config.DatabaseConfig, envPath string) {
-	// Config'den gelen env yolunu kullanıyoruz
+func Connect(dbConf config.DatabaseConfig, redisConf config.RedisConfig, authConf config.AuthConfig, envPath string) {
+
 	err := godotenv.Load(envPath)
 	if err != nil {
 		log.Warn(".env dosyası yüklenemedi (%s): %v", envPath, err)
 		return
 	}
 
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		log.Critical("JWT_SECRET ortam değişkeni bulunamadı! Auth sistemi çalışmayacak.")
+	}
+	authConf.JWTSecret = jwtSecret
+	Auth = authConf
+	log.Info("Auth config yüklendi — Domain: %s, Secure: %v, Token Süresi: %d gün", Auth.CookieDomain, Auth.CookieSecure, Auth.TokenExpiryDays)
+
 	dsn := os.Getenv("dsn")
 	if dsn == "" {
 		log.Critical("DSN ortam değişkeni bulunamadı! Lütfen .env dosyasını kontrol edin.")
-		// Kritik hata olduğu için burada panic atmak veya os.Exit yapmak düşünülebilir
-		// ancak çağıran yerin (main) akışı yönetmesine izin veriyoruz.
 		return
 	}
 
@@ -40,6 +48,11 @@ func Connect(dbConf config.DatabaseConfig, envPath string) {
 		log.Error("sql.DB alınamadı. ", err)
 		return
 	}
+	RDB = redis.NewClient(&redis.Options{
+		Addr:     redisConf.RedisUrl,
+		Password: redisConf.RedisPwr,
+		DB:       redisConf.Db,
+	})
 
 	// Config dosyasından gelen değerleri set ediyoruz
 	sqlDB.SetMaxIdleConns(dbConf.MaxIdleConns)

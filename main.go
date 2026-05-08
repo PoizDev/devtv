@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -30,7 +31,7 @@ func initialize() {
 
 	log.LoadConfiguration(conf.Server.LogConfigPath)
 
-	in.Connect(conf.Database, conf.Server.EnvPath)
+	in.Connect(conf.Database, conf.Redis, conf.Auth, conf.Server.EnvPath)
 
 	in.AutoMigrate()
 }
@@ -102,13 +103,23 @@ func main() {
 	r.Use(middlewares.TimeoutMiddleware(conf.Middleware.RequestTimeout))
 	r.Use(middlewares.RequestLoggerMiddleWare())
 
+	cachedRoutes := r.Group("/")
+	cachedRoutes.Use(middlewares.RedisFallbackCache(in.RDB, 5*time.Second))
+	{
+		//'Konuşmacılar / Atölye tayfa
+		cachedRoutes.GET("/facilitator", controllers.GetAllFaciliators)
+		//'Sponsorluk görüntüleme
+		cachedRoutes.GET("/sponsors", controllers.GetSponsors)
+		cachedRoutes.GET("/workshops", controllers.GetAllWorkshops)
+		cachedRoutes.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
+		cachedRoutes.GET("/workshops/current", controllers.GetCurrentSlots)
+		cachedRoutes.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
+		cachedRoutes.GET("/workshop/:id/slots", controllers.GetCurrentSlotInWorkshop)
+	}
+
 	//'Auth tayfası
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
-	//'Konuşmacılar / Atölye tayfa
-	r.GET("/facilitator", controllers.GetAllFaciliators)
-	//'Sponsorluk görüntüleme
-	r.GET("/sponsors", controllers.GetSponsors)
 	//'WebSocketler
 	r.GET("/ws/current", controllers.GetCurrentSlotsWS)
 	r.GET("/ws/:id/current", controllers.GetCurrentSlotInWorkshopWS)
@@ -117,11 +128,6 @@ func main() {
 	r.GET("/ws/sponsors", controllers.GetSponsorsWS)
 
 	//'Workshop HTTP istekleri
-	r.GET("/workshops", controllers.GetAllWorkshops)
-	r.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
-	r.GET("/workshops/current", controllers.GetCurrentSlots)
-	r.GET("/workshops/upcoming", controllers.GetUpcomingSlots)
-	r.GET("/workshop/:id/slots", controllers.GetCurrentSlotInWorkshop)
 
 	//' Protobuf health endpoint'leri — daha küçük payload, daha hızlı serialize
 	r.GET("/health", middlewares.ProtoHealthHandler)

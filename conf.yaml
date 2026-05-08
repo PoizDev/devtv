@@ -40,3 +40,13 @@ cors:
     - "Set-Cookie"
   allow_credentials: true #'Credentials'a izin veriyo muyuz
   max_age: 12h #'
+
+auth:
+  cookie_domain: "localhost" #'Production: "devfestbursa.com"
+  cookie_secure: false #'Production: true (HTTPS zorunlu)
+  token_expiry_days: 30 #'JWT tokenın geçerlilik süresi (gün)
+
+redis:
+  redis_url: "redis:6379"
+  redis_pwr: ""
+  db: 0

@@ -30,7 +30,7 @@ func CreateSponsor(c *gin.Context) {
 
 func GetSponsors(c *gin.Context) {
 	var sponsors []models.Sponsors
-	result := in.DB.Find(&sponsors)
+	result := in.DB.WithContext(c.Request.Context()).Find(&sponsors)
 	if result.Error != nil {
 		log.Error("Sponsorlar alınırken hata oluştu: ", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve sponsors"})
@@ -44,35 +44,27 @@ func DeleteSponsors(c *gin.Context) {
 	sponsorID := c.Param("id")
 
 	if sponsorID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Sponsor ID gereklidir",
-		})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Sponsor ID gereklidir"})
 		log.Warn("Sponsor ID alanı boş")
 		return
 	}
 
 	var sponsor models.Sponsors
-	if err := in.DB.Find(&sponsor, "sponsor_id = ?", sponsorID).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Sponsor bulunamadı",
-		})
-		log.Warn("Sponsor bulunamadı")
+	if err := in.DB.First(&sponsor, "sponsor_id = ?", sponsorID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Sponsor bulunamadı"})
+		log.Warn("Silinmek istenen sponsor bulunamadı: ", sponsorID)
 		return
 	}
+
 	result := in.DB.Delete(&sponsor)
-
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Sponsor'u silerken bir hata oluştu, " + result.Error.Error(),
-		})
-		log.Error("Sponsor'u silerken biğr hata oluştu, ", result.Error)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sponsor silinirken bir hata oluştu"})
+		log.Error("Sponsor silme hatası: ", result.Error)
+		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"message":    "Sponsor başarıyla silindi",
-		"sponsor_id": sponsorID,
-	})
-}
 
+	c.JSON(http.StatusOK, gin.H{"message": "Sponsor başarıyla silindi", "sponsor_id": sponsorID})
+}
 func UpdateSponsor(c *gin.Context) {
 	sponsorID := c.Param("id")
 

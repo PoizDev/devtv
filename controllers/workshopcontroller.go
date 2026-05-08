@@ -116,7 +116,7 @@ func GetWorkshopSchedule(c *gin.Context) {
 	workshopID := c.Param("id")
 
 	var workshop models.Workshops
-	err := in.DB.
+	err := in.DB.WithContext(c.Request.Context()).
 		Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 			return db.Order("slot_order ASC")
 		}).
@@ -170,7 +170,7 @@ func GetCurrentSlots(c *gin.Context) {
 	now := time.Now()
 
 	var slots []models.WorkshopTimeSlot
-	err := in.DB.
+	err := in.DB.WithContext(c.Request.Context()).
 		Preload("Faciliator").
 		Preload("Workshop").
 		Where("slot_start <= ? AND slot_end >= ?", now, now).
@@ -229,7 +229,7 @@ func GetUpcomingSlots(c *gin.Context) {
 	now := time.Now()
 
 	var slots []models.WorkshopTimeSlot
-	err := in.DB.
+	err := in.DB.WithContext(c.Request.Context()).
 		Preload("Faciliator").
 		Preload("Workshop").
 		Where("slot_start > ?", now).
@@ -347,7 +347,7 @@ func formatDuration(d time.Duration) string {
 
 func GetAllWorkshops(c *gin.Context) {
 	var workshops []models.Workshops
-	result := in.DB.
+	result := in.DB.WithContext(c.Request.Context()).
 		Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 			return db.Order("slot_order ASC")
 		}).
@@ -659,14 +659,20 @@ func GetCurrentSlotInWorkshop(c *gin.Context) {
 	if workshopID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Workshop ID'si gerekli"})
 		log.Warn("Workshop ID Parametresi boş")
+		return
 	}
+
 	var workshop models.Workshops
-	err := in.DB.Preload("WorkshopTimeSlots").Preload("Faciliators").Where("slot_start <= ? AND slot_end >= ?", time.Now(), time.Now()).First(&workshop, workshopID)
+	err := in.DB.WithContext(c.Request.Context()).Preload("TimeSlots").Preload("TimeSlots.Faciliator").
+		Where("slot_start <= ? AND slot_end >= ?", time.Now(), time.Now()).
+		First(&workshop, workshopID).Error
+
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Workshop bulunamadı veya şu an aktif bir slot yok"})
 		log.Warn("Workshop bulunamadı - ID: ", workshopID)
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "Workshop başarıyla alındı", "workshop": workshop})
 	log.Info("Workshop alındı - ID: ", workshopID)
 }

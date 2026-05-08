@@ -1,19 +1,28 @@
 # GDG Bursa - DevTV
 
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go)
+![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=for-the-badge&logo=go)
 ![Gin Framework](https://img.shields.io/badge/Gin-v1.11.0-00ADD8?style=for-the-badge&logo=go)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-316192?style=for-the-badge&logo=postgresql)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-316192?style=for-the-badge&logo=postgresql)
+![Redis](https://img.shields.io/badge/Redis-alpine-DC382D?style=for-the-badge&logo=redis)
+![Protobuf](https://img.shields.io/badge/Protobuf-Health-4285F4?style=for-the-badge&logo=google)
+![Docker](https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ## Genel Bakış
 
 Bu sistem Devfest Bursa 2025 için geliştirilmiş bir etkinlik akışı sistemidir. Bu sistem production'a hazırlık açısından pek çok önlem ve özellikle bezenmiştir.
 
-## Kullanılan Teknolojiler
-Dil: Golang Version 1.24.5
-Framework: Gin Web Framework
-DB: PostgreSQL 15+
-ORM: GORM 1.31.1
+## Kullanilan Teknolojiler
+
+| Teknoloji | Versiyon | Kullanim |
+|-----------|----------|----------|
+| Go | 1.24.5 | Ana dil |
+| Gin | 1.11.0 | HTTP framework |
+| PostgreSQL | 17+ | Veritabani |
+| Redis | alpine | Cache, fallback, WS broadcast |
+| GORM | 1.31.1 | ORM |
+| Protobuf | 1.36.11 | Health endpoint serializasyonu |
+| Docker | distroless | Container runtime |
 
 ## Standart Sistem Kurulumu
 
@@ -117,17 +126,23 @@ docker compose down
 http://localhost:2012
 ```
 
-### Kimlik Doğrulama ve Admin girişi
+### Kimlik Dogrulama ve Admin girisi
 
-DevTV sistemi, arka planda JWT Token ve Role Auth sistemlerini kullanır. Sistemi ilk açtığınızda bir Admin user'ı oluşturmanız ve o token'ı kullanmanız gerekmektedir. /admin ile korunan endpointlere o token'ı kullanarak istek gönderebilirsiniz. Bunun için örnek istek:
+DevTV sistemi, arka planda JWT Token ve Role Auth sistemlerini kullanir. Sistem guvenlik nedeniyle signup uzerinden admin rolu atanmasina izin vermez. Ilk admin kullanicisi veritabanina dogrudan eklenmeli veya mevcut bir admin tarafindan UpdateUser endpoint'i ile atanmalidir.
+
+Signup'ta izin verilen roller: `user`, `moderator`
+
+Signup'ta izin verilmeyen roller: `admin` (403 Forbidden doner)
+
+Admin tokeni aldiktan sonra /admin ile korunan endpointlere istek gonderebilirsiniz. Bunun icin ornek istek:
 
 ```
 POST - localhost:2012/signup
 
 {
-    "username":"admin",
-    "password":"çokgüçlüşifre",
-    "role":"admin
+    "username":"moderator1",
+    "password":"guclusifre123",
+    "role":"moderator"
 }
 ```
 Daha sonra token'ı almak için 
@@ -148,30 +163,35 @@ Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=
 
 Frontend çıkımında admin panel ve health controller sayfasında arka planda JWT Token'ın **Cookie olarak tutulması gerekmektedir.**
 
-### Kullanıcı Yönetimi
+### Kullanici Yonetimi
 
-1. Kullanıcı Oluşturma (Signup)
+1. Kullanici Olusturma (Signup)
 
 ```
 POST - localhost:2012/signup
 
-JSON Body Örneği:
+JSON Body Ornegi:
 {
-    "username": "admin",
-    "password": "çokgüçlüşifre",
-    "role": "admin"
+    "username": "yenikullanici",
+    "password": "guclusifre123",
+    "role": "user"
 }
 
-Yanıt:
+Yanit:
 {
     "message": "User created successfully"
 }
 ```
 
+**Validasyon Kurallari:**
+- `username` ve `password` zorunludur
+- Sifre en az 6 karakter olmalidir
+- Rol belirtilmezse otomatik olarak `user` atanir
+
 **Roller (Role):**
-- **admin**: Tüm sisteme erişim, yönetim paneli erişimi
-- **user**: Standart kullanıcı, sadece okuma işlemleri
-- Diğer özel roller tanımlanabilir
+- **user**: Standart kullanici, sadece okuma islemleri (signup ile alinabilir)
+- **moderator**: Orta yetkili kullanici (signup ile alinabilir)
+- **admin**: Tum sisteme erisim (signup ile alinamaz, sadece mevcut admin atayabilir)
 
 2. Kullanıcı Girişi (Login)
 
@@ -1150,80 +1170,98 @@ Sistem tüm ayarlarını `conf.yaml` dosyasından okur. Bu dosya production ve d
 
 ```yaml
 server: 
-  port: ":2012"                          # Sunucunun dinleyeceği port
-  shutdown_timeout: 30s                  # Graceful shutdown süresi
-  log_config_path: "./log4go.json"      # Log konfigürasyon dosyasının yolu
-  env_path: "./in/devtv.env"            # Ortam değişkenleri dosyasının yolu
+  port: ":2012"
+  shutdown_timeout: 30s
+  log_config_path: "./log4go.json"
+  env_path: "./in/devtv.env"
 
 database:
-  max_idle_conns: 15                    # Maksimum boşta bağlantı sayısı (Connection Pool)
-  max_open_conns: 50                    # Maksimum açık bağlantı sayısı (Connection Pool)
-  conn_max_lifetime: 5m                 # Bağlantının maksimum açık kalma süresi
-  conn_max_idle_time: 1m                # Bağlantının maksimum boşta kalma süresi
+  max_idle_conns: 25
+  max_open_conns: 100
+  conn_max_lifetime: 3m
+  conn_max_idle_time: 30s
 
 middleware:
   circuit_breaker:
-    threshold: 15                       # Circuit Breaker açılacağı hata eşiği
-    timeout: 30s                        # OPEN durumda ne kadar bekleneceği
+    threshold: 15
+    timeout: 30s
   rate_limit:
-    burst: 5                            # Ani pik kapasitesi (istek/saniye)
-    limit: 10                           # Normal istek hızı (istek/saniye)
-  request_timeout: 5m                   # İsteklerin maksimum işlenme süresi
+    burst: 25
+    limit: 50
+  request_timeout: 5m
+
+auth:
+  cookie_domain: "localhost"       # Production: "devfestbursa.com"
+  cookie_secure: false             # Production: true (HTTPS zorunlu)
+  token_expiry_days: 30
 
 cors:
-  allow-origins:                        # İzin verilen domainler
+  allow-origins:
     - "https://api.devfestbursa.com"
     - "https://www.api.devfestbursa.com"
-  allowed_methods:                      # İzin verilen HTTP metotları
+  allowed_methods:
     - "GET"
     - "POST"
     - "PUT"
     - "PATCH"
     - "DELETE"
     - "OPTIONS"
-  allowed_headers:                      # İzin verilen request header'ları
+  allowed_headers:
     - "Origin"
     - "Content-Type"
     - "Authorization"
     - "Accept"
-  expose_headers:                       # İstemciye görüntülenen response header'ları
+  expose_headers:
     - "Content-Length"
     - "Set-Cookie"
-  allow_credentials: true               # Credentials (Cookie, Auth Header) izni
-  max_age: 12h                         # CORS preflight cache süresi
+  allow_credentials: true
+  max_age: 12h
+
+redis:
+  redis_url: "redis:6379"
+  redis_pwr: ""
+  db: 0
 ```
 
-### Connection Pooling - Veritabanı Bağlantı Havuzu
+### Connection Pooling - Veritabani Baglanti Havuzu
 
-DevTV, PostgreSQL bağlantılarını verimli kullanmak için **Connection Pooling** mekanizması kullanır.
+DevTV, PostgreSQL baglantilerini verimli kullanmak icin **Connection Pooling** mekanizmasi kullanir.
 
 ```
-Connection Pool Yapısı:
+Connection Pool Yapisi:
 
-┌─────────────────────────────────────────────┐
-│     GORM Connection Pool (50 max)           │
-├─────────────────────────────────────────────┤
-│                                             │
-│  [Conn 1] ─► READY                         │
-│  [Conn 2] ─► IN USE (Query çalışıyor)     │
-│  [Conn 3] ─► IN USE (Transaction açık)    │
-│  ...                                       │
-│  [Conn 15] ─► IDLE (1 dakikadır boşta)   │
-│                                             │
-└─────────────────────────────────────────────┘
-
-Pool Yönetimi:
-- max_idle_conns: 15     → En fazla 15 boşta bağlantı tutulur
-- max_open_conns: 50     → En fazla 50 açık bağlantı
-- conn_max_lifetime: 5m  → Her bağlantı maksimum 5 dakika açık kalabilir
-- conn_max_idle_time: 1m → 1 dakikadan fazla boşta bağlantı kapatılır
+Pool Yonetimi:
+- max_idle_conns: 25     - En fazla 25 bosta baglanti tutulur
+- max_open_conns: 100    - En fazla 100 acik baglanti
+- conn_max_lifetime: 3m  - Her baglanti maksimum 3 dakika acik kalabilir
+- conn_max_idle_time: 30s - 30 saniyeden fazla bosta baglanti kapatilir
 ```
 
-**Connection Pooling Faydaları:**
-- ✅ **Performans**: Yeni bağlantı oluşturmak yerine mevcut havuzdan kullanılır (3-Way Handshake önemlenmez)
-- ✅ **Kaynak Yönetimi**: Veritabanı sunucusundaki bağlantı sayısı kontrol edilir
-- ✅ **Ölçeklenebilirlik**: Çok sayıda istek aynı anda işlenebilir
-- ✅ **Stabilitesi**: Açık bağlantılar otomatik temizlenir
+### Redis Fallback Cache - Yuksek Erisilebilirlik
+
+HTTP GET istekleri icin iki katmanli bir cache mekanizmasi bulunur. Bu mekanizma veritabani cokse bile stale veri sunarak sistemin ayakta kalmasini saglar.
+
+```
+Iki Katmanli Cache Stratejisi:
+
+Katman 1: devtv:cache:/endpoint   (TTL: 5 saniye)  - Taze veri
+Katman 2: devtv:fallback:/endpoint (TTL: 1 saat)    - Stale veri (DB cokme durumu)
+
+Istek Akisi:
+1. Redis cache key kontrol et (2s timeout)
+2. Cache HIT  -> Aninda don (~1ms)
+3. Cache MISS -> Controller'a git (3s DB timeout)
+4. Controller basarili -> Response + her iki key'e yaz (Pipeline)
+5. Controller basarisiz / DB timeout -> Fallback key'den stale veri sun
+6. Fallback'te de veri yok -> Controller hatasini ilet
+
+Fallback Aktif Oldugunda:
+- HTTP Status: 200 OK (istemci farki anlamaz)
+- Header: X-Cache-Fallback: true
+- Header: X-Cache-Source: redis-stale
+```
+
+Bu mekanizma `bufferedWriter` kullanarak response'u tamponlar. Controller hata donerse istemciye hicbir veri gitmeden Redis fallback devreye girer.
 
 **Monitorlama:**
 ```
@@ -1609,4 +1647,4 @@ GitHub: https://github.com/poizdev/devtv
 
 Mail: musa@gdgbursa.com 
 
-**Son Güncelleme:** Mayıs 03, 2026
+**Son Guncelleme:** Mayis 09, 2026

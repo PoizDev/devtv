@@ -11,6 +11,8 @@ type Config struct {
 	Server     ServerConfig     `yaml:"server"`
 	Database   DatabaseConfig   `yaml:"database"`
 	Middleware MiddlewareConfig `yaml:"middleware"`
+	Auth       AuthConfig       `yaml:"auth"`
+	Redis      RedisConfig      `yaml:"redis"`
 }
 
 type ServerConfig struct {
@@ -44,6 +46,19 @@ type MiddlewareConfig struct {
 		AllowCredentials bool          `yaml:"allow_credentials"`
 		MaxAge           time.Duration `yaml:"max_age"`
 	}
+}
+
+type AuthConfig struct {
+	CookieDomain  string `yaml:"cookie_domain"`
+	CookieSecure  bool   `yaml:"cookie_secure"`
+	TokenExpiryDays int  `yaml:"token_expiry_days"`
+	JWTSecret     string `yaml:"-"` // .env'den okunur, YAML'da tutulmaz
+}
+
+type RedisConfig struct {
+	RedisUrl string `yaml:"redis_url"`
+	RedisPwr string `yaml:"redis_pwr"`
+	Db       int    `yaml:"db"`
 }
 
 func LoadConfig(filename string) (*Config, error) {
