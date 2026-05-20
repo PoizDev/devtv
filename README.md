@@ -1,3 +1,24 @@
+<p align="center">
+  <img src="https://i.hizliresim.com/7ndpq83.png" alt="GDG Bursa Logo" height="64">
+</p>
+
+<h1 align="center">DevTV</h1>
+
+<p align="center">
+  <code>devtv.devfestbursa.com</code> için geliştirilmiş bir etkinlik akışı sistemidir. Bu sistem production'a hazırlık açısından pek çok önlem ve özellikle bezenmiştir.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.25-00ADD8?style=for-the-badge&logo=go" alt="Go">
+  <img src="https://img.shields.io/badge/Gin-1.12-00ADD8?style=for-the-badge&logo=go" alt="Gin">
+  <img src="https://img.shields.io/badge/PostgreSQL-15+-316192?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Redis-7 Alpine-DC382D?style=for-the-badge&logo=redis" alt="Redis">
+  <img src="https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
+</p>
+
+---
+
 # GDG Bursa - DevTV
 
 ![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=for-the-badge&logo=go)
@@ -7,10 +28,6 @@
 ![Protobuf](https://img.shields.io/badge/Protobuf-Health-4285F4?style=for-the-badge&logo=google)
 ![Docker](https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
-## Genel Bakış
-
-Bu sistem Devfest Bursa 2025 için geliştirilmiş bir etkinlik akışı sistemidir. Bu sistem production'a hazırlık açısından pek çok önlem ve özellikle bezenmiştir.
 
 ## Kullanilan Teknolojiler
 
@@ -26,27 +43,30 @@ Bu sistem Devfest Bursa 2025 için geliştirilmiş bir etkinlik akışı sistemi
 
 ## Standart Sistem Kurulumu
 
-1. Repoyu Klonlayın 
+1. Repoyu Klonlayın
+
 ```
     git clone https://github.com/poizdev/devtv.git
 ```
+
 -eğer bu aşamada bi sorunla karşılaşırsanız github üzerinden klasöre indir yapabilirsiniz-
 
-2. Bağımlılıkları Yükleyin
+1. Bağımlılıkları Yükleyin
 
 ```
     go mod download
     go mod tidy
 ```
 
-3. in/devtv.env dosyasını oluşturun (örnek ektedir.)
+1. in/devtv.env dosyasını oluşturun (örnek ektedir.)
 
 ```
     dsn="user=kullaniciadi password=sifreniz dbname=dbadi port=5432 sslmode=disable TimeZone=Europe/Istanbul"
     JWT_SECRET="gizli keyiniz"
 ```
 
-4. Uygulamayı çalıştırın
+1. Uygulamayı çalıştırın
+
 ```
     go run main.go
 ```
@@ -64,6 +84,7 @@ JWT_SECRET="güvenli-anahtar-buraya-yazılır"
 ```
 
 **DSN Parametreleri:**
+
 - **user**: PostgreSQL kullanıcı adı (varsayılan: postgres)
 - **password**: PostgreSQL şifresi
 - **dbname**: Veritabanı adı (devtv)
@@ -78,6 +99,7 @@ Projeyi ayağa kaldırmanın en kolay ve production ortamına en uygun yolu Dock
 ### 1. Gerekli Konfigürasyon Dosyalarını Hazırlayın
 
 Proje ana dizininde bir `.env` dosyası oluşturun (Docker Compose ortam değişkenleri için):
+
 ```dotenv
 POSTGRES_USER=devtv
 POSTGRES_PASSWORD=cok_guclu_db_sifreniz
@@ -86,34 +108,41 @@ API_PORT=2012
 ```
 
 `in/devtv.env` dosyasını oluşturun (JWT sırrı vb. için):
+
 ```dotenv
 JWT_SECRET="gizli-jwt-keyiniz"
 ```
+
 *(Not: `compose.yaml` kullanıldığında veritabanı DSN bilgisi otomatik olarak ortam değişkenlerinden oluşturulur, `in/devtv.env` dosyasında tekrar belirtmenize gerek yoktur.)*
 
 ### 2. Uygulamayı Başlatın
 
 Uygulamayı ve veritabanını arka planda ayağa kaldırmak için:
+
 ```bash
 docker compose up -d
 ```
 
 Sadece veritabanını ayağa kaldırmak isterseniz:
+
 ```bash
 docker compose up -d db
 ```
 
 Logları anlık takip etmek için:
+
 ```bash
 docker compose logs -f api
 ```
 
 ### 3. Sistemi Durdurmak İçin
+
 ```bash
 docker compose down
 ```
 
 ### Docker Yapısının Özellikleri ve Avantajları
+
 - **Güvenlik (Distroless Image):** API konteyneri `gcr.io/distroless/static-debian12:nonroot` imajı kullanır. İçerisinde shell (`sh`, `bash`) veya gereksiz araçlar barındırmaz, böylece potansiyel saldırı yüzeyi minimuma indirilir ve izole edilmiş `nonroot` kullanıcısı ile çalışır.
 - **Otomatik Sağlık Kontrolü (Healthcheck):** API konteyneri veritabanının `healthcheck` sürecinin tamamlanmasını bekler (`depends_on: condition: service_healthy`), böylece veritabanı tam hazır olmadan API başlatılmaz.
 - **Kalıcı Veri (Volumes):** Veritabanı verileri ve uygulama logları Docker Volume'leri (`pgdata` ve `devtv-logs`) kullanılarak konteyner silinse bile kalıcı hale getirilir.
@@ -121,7 +150,8 @@ docker compose down
 
 ## API Dokümantasyonu
 
-### Base URL:
+### Base URL
+
 ```
 http://localhost:2012
 ```
@@ -145,7 +175,8 @@ POST - localhost:2012/signup
     "role":"moderator"
 }
 ```
-Daha sonra token'ı almak için 
+
+Daha sonra token'ı almak için
 
 ```
 POST - localhost:2012/login
@@ -155,6 +186,7 @@ POST - localhost:2012/login
     "password":"çokgüçlüşifre"
 }
 ```
+
 Postman'inizin header kısmında Cookie olarak şunu göreceksiniz:
 
 ```
@@ -184,16 +216,18 @@ Yanit:
 ```
 
 **Validasyon Kurallari:**
+
 - `username` ve `password` zorunludur
 - Sifre en az 6 karakter olmalidir
 - Rol belirtilmezse otomatik olarak `user` atanir
 
 **Roller (Role):**
+
 - **user**: Standart kullanici, sadece okuma islemleri (signup ile alinabilir)
 - **moderator**: Orta yetkili kullanici (signup ile alinabilir)
 - **admin**: Tum sisteme erisim (signup ile alinamaz, sadece mevcut admin atayabilir)
 
-2. Kullanıcı Girişi (Login)
+1. Kullanıcı Girişi (Login)
 
 ```
 POST - localhost:2012/login
@@ -214,11 +248,12 @@ Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=
 ```
 
 **Token Özellikleri:**
+
 - **Süre Sonu**: 30 gün (2592000 saniye)
 - **Depolama**: HttpOnly Cookie (JavaScript'ten erişilemez, güvenli)
 - **Kullanım**: Tüm /admin endpoint'lerine erişim için gerekli
 
-3. Tüm Kullanıcıları Görüntüleme (Admin)
+1. Tüm Kullanıcıları Görüntüleme (Admin)
 
 **!!Önemli: Bu istek JWT Token gerektirmektedir.**
 
@@ -238,7 +273,7 @@ Yanıt:
 Not: Şifre bilgisi geri döndürülmez, güvenlik nedeniyle.
 ```
 
-4. Kullanıcı Silme (Admin)
+1. Kullanıcı Silme (Admin)
 
 ```
 DELETE - localhost:2012/admin/user/:id
@@ -275,6 +310,7 @@ GET - localhost:2012/faciliator
 ```
 
 **Facilitator Alanları:**
+
 - **faciliator_id**: Konuşmacının benzersiz kimliği
 - **name**: Konuşmacı adı (max 100 karakter)
 - **title**: Unvan/Pozisyon (GDE, Android Expert vb., max 100 karakter)
@@ -282,13 +318,15 @@ GET - localhost:2012/faciliator
 - **topic_details**: Konu detayları ve açıklaması (metin alanı)
 - **photograph**: Konuşmacı fotoğrafının dosya yolu (string formatında)
 
-2. Facilitator Oluşturma (Admin)
+1. Facilitator Oluşturma (Admin)
 
 **!!Önemli: Bu istek JWT Token gerektirmektedir. Önce Login'den Auth tokenleri alın, sonra Postman Header kısmında**
+
 ```
 Key: Cookie
 Value: Auth=<jwt-token>; Path=/; Domain=localhost; Max-Age=2592000; HttpOnly; SameSite=None
 ```
+
 **ekleyin.**
 
 ```
@@ -309,7 +347,7 @@ Yanıt:
 }
 ```
 
-3. Konuşmacıları Konuya Göre Filtreleme
+1. Konuşmacıları Konuya Göre Filtreleme
 
 ```
 GET - localhost:2012/faciliator/:topic
@@ -332,7 +370,7 @@ GET - localhost:2012/faciliator/Flutter
 ]
 ```
 
-4. Facilitator Silme (Admin)
+1. Facilitator Silme (Admin)
 
 ```
 DELETE - localhost:2012/admin/faciliator/:id
@@ -344,7 +382,7 @@ Yanıt:
 }
 ```
 
-5. Facilitator Güncelleme (Admin)
+1. Facilitator Güncelleme (Admin)
 
 ```
 PUT - localhost:2012/admin/faciliator/:id
@@ -371,13 +409,15 @@ Yanıt:
 }
 ```
 
-3. Konuşmacıları Silme (Admin)
+1. Konuşmacıları Silme (Admin)
+
 ```
 (:id kısmına silmek istediğimiz ID'nin inputu verilecektir)
 DELETE - localhost:2012/admin/faciliator/:id
 ```
 
-4. Facilitator güncelleme
+1. Facilitator güncelleme
+
 ```
 Not: Bütün update parametrelerinde sadece güncellemek istediğiniz parametreyi ve değeri yazmanız yeterli olur.
 PUT - localhost:2012/admin/faciliator/:id
@@ -388,7 +428,8 @@ JSON Body Örneği:
     "photograph":"/public/faciliators/emrehizli.jpeg"
 }
 ```
-### Workshoplar ve TimeSlotlar Hk.
+
+### Workshoplar ve TimeSlotlar Hk
 
 öncelikle bu sistemin en karışık olan kısmı workshoplar ve timeslotlar arasındaki ilişki. aralarında one to many gibi bir DB ilişkisi var. üst kimlik workshoplar. time slotlar ise zamanları geldiğinde altlarına bilgileri veriyor diyebiliriz. ana mevzu timeslotlar içerisinde. timeslotlar faciliatorlara bağlı. bunlar için şöyle bir diagram verebilirim.
 
@@ -438,7 +479,9 @@ JSON Body Örneği:
 │  └────────────────────────────────┘  │
 └──────────────────────────────────────┘
 ```
+
 Veri Akışı Diagramı:
+
 ```
 ┌─────────────┐
 │  Workshop   │ (ID: 1, Name: "Erol Kaftanoğlu Atölyesi")
@@ -450,7 +493,6 @@ Veri Akışı Diagramı:
        │
        └─────→ TimeSlot #3 (15:00-16:00) → Faciliator #1 (Ayşe) ← Tekrar aynı kişiye dönebiliyor.
 ```
-
 
 Endpointlerine dönecek olursak.
 
@@ -494,7 +536,8 @@ GET - localhost:2012/workshops
 }
 ```
 
-2. Seçtiğin bir workshop'un takvimini görüntüleme
+1. Seçtiğin bir workshop'un takvimini görüntüleme
+
 ```
 GET - http://localhost:2012/workshops/:id/schedule
 
@@ -521,7 +564,8 @@ GET - http://localhost:2012/workshops/:id/schedule
 }
 ```
 
-3. Aktif Workshopları Görüntüleme
+1. Aktif Workshopları Görüntüleme
+
 ```
 GET - localhost:2012/workshops/current
 
@@ -549,7 +593,9 @@ GET - localhost:2012/workshops/current
     "total": 1
 }
 ```
-4. Sonraki Workshopları Görüntüleme
+
+1. Sonraki Workshopları Görüntüleme
+
 ```
 GET - localhost:2012/workshops/upcoming
 {
@@ -573,7 +619,7 @@ GET - localhost:2012/workshops/upcoming
 }
 ```
 
-5. Spesifik bir workshopun altındaki slotları görüntüleme
+1. Spesifik bir workshopun altındaki slotları görüntüleme
 
 ```
 GET - localhost:2012/workshop/:id/slots
@@ -597,7 +643,7 @@ GET - localhost:2012/workshop/:id/slots
 }
 ```
 
-6. Workshop Oluşturma (Admin)
+1. Workshop Oluşturma (Admin)
 
 **!!Önemli: Bu istek JWT Token gerektirmektedir.**
 
@@ -628,7 +674,7 @@ Yanıt:
 }
 ```
 
-7. Workshop'a Slot Ekleme (Admin)
+1. Workshop'a Slot Ekleme (Admin)
 
 ```
 POST - localhost:2012/admin/:id/addslots
@@ -657,7 +703,7 @@ Yanıt:
 }
 ```
 
-8. Workshop'u Silme (Admin)
+1. Workshop'u Silme (Admin)
 
 ```
 DELETE - localhost:2012/admin/workshop/:id
@@ -673,7 +719,7 @@ Yanıt:
 Not: Bunu sildiğinde tüm slot'ları da otomatik olarak siler.
 ```
 
-9. Workshop Güncelleme (Admin)
+1. Workshop Güncelleme (Admin)
 
 ```
 PUT - localhost:2012/admin/workshop/:id
@@ -695,7 +741,7 @@ Yanıt:
 }
 ```
 
-10. Workshop'a Gecikme Ekleme (Admin)
+1. Workshop'a Gecikme Ekleme (Admin)
 
 Eğer bir workshop'un tüm slotlarını belirli bir süre ertelemek veya erkene almak istersen bu endpoint'i kullan.
 
@@ -720,7 +766,7 @@ Yanıt:
 }
 ```
 
-11. Slot Silme (Admin)
+1. Slot Silme (Admin)
 
 ```
 DELETE - localhost:2012/admin/slot/:id
@@ -732,7 +778,7 @@ Yanıt:
 }
 ```
 
-12. Slot Güncelleme (Admin)
+1. Slot Güncelleme (Admin)
 
 Tek bir slot'u güncellemek için kullanılır. Sadece güncellemek istediğiniz alanları gönderin.
 
@@ -781,7 +827,7 @@ GET - localhost:2012/sponsors
 ]
 ```
 
-2. Sponsor Oluşturma (Admin)
+1. Sponsor Oluşturma (Admin)
 
 **!!Önemli: Bu istek JWT Token gerektirmektedir.**
 
@@ -803,7 +849,7 @@ Yanıt:
 }
 ```
 
-3. Sponsor Silme (Admin)
+1. Sponsor Silme (Admin)
 
 ```
 DELETE - localhost:2012/admin/sponsor/:id
@@ -815,7 +861,7 @@ Yanıt:
 }
 ```
 
-4. Sponsor Güncelleme (Admin)
+1. Sponsor Güncelleme (Admin)
 
 ```
 PUT - localhost:2012/admin/sponsor/:id
@@ -834,6 +880,7 @@ WebSocket endpoints aracılığıyla real-time veriler alabilirsiniz. Bir WebSoc
 **WebSocket Bağlantısı Nasıl Kurulur:**
 
 JavaScript örneği:
+
 ```javascript
 const ws = new WebSocket('ws://localhost:2012/ws/current');
 
@@ -884,7 +931,7 @@ Gönderilen Veri Yapısı (İlk bağlantıdan ~2 saniye sonra):
 Güncelleme Sıklığı: 2 saniyede bir
 ```
 
-2. Yaklaşan Slotlar WebSocket
+1. Yaklaşan Slotlar WebSocket
 
 ```
 WS - ws://localhost:2012/ws/upcoming
@@ -912,7 +959,7 @@ Güncelleme Sıklığı: 5 saniyede bir
 Not: Sadece sonraki 5 etkinlik gösterilir.
 ```
 
-3. Sponsorlar WebSocket
+1. Sponsorlar WebSocket
 
 ```
 WS - ws://localhost:2012/ws/sponsors
@@ -933,7 +980,7 @@ Gönderilen Veri Yapısı:
 Güncelleme Sıklığı: 10 saniyede bir
 ```
 
-4. Spesifik Workshop'un Takvimi WebSocket
+1. Spesifik Workshop'un Takvimi WebSocket
 
 ```
 WS - ws://localhost:2012/ws/workshop/:id/schedule
@@ -962,7 +1009,7 @@ Gönderilen Veri Yapısı:
 Güncelleme Sıklığı: 5 saniyede bir
 ```
 
-5. Spesifik Workshop'un Aktif Slotu WebSocket
+1. Spesifik Workshop'un Aktif Slotu WebSocket
 
 ```
 WS - ws://localhost:2012/ws/:id/current
@@ -995,7 +1042,6 @@ Not: Eğer aktif slot yoksa null döner.
 ### Health Checker - Sistem Sağlığı Monitoring
 
 Sistem sağlığı altyapı olarak Protobuf temelli *gRPC* sistemi kullanılmıştır. bundan ötürü direkt health endpointine istek atmanız binary bir veri döndürür. Örneğin;
-
 
 ```
 GET - localhost:2012/health
@@ -1055,6 +1101,7 @@ GET - localhost:2012/health?format=json
 ```
 
 **Sistem Sağlığı Parametreleri:**
+
 - **app_uptime**: Uygulamanın çalışma süresi (İnsan tarafından okunabilir format)
 - **system_uptime_seconds**: İşletim sisteminin çalışma süresi (saniye cinsinden)
 - **cpu_usage_percent**: İşlemci kullanım yüzdesi
@@ -1080,7 +1127,7 @@ GET - localhost:2012/health?format=json
   - **requests_by_method**: Metoda göre istek sayısı (GET, POST, PUT, DELETE, OPTIONS)
 
 **Güncelleme Sıklığı:** 1 saniyede bir
-**! Not:** Health endpointleri için loglar hem Gin'in içinden hem kendi log configlerim içinden **dışında tutulmuştur**. *Ayrıca API metriklerini de **etkilememektedir.** 
+**! Not:** Health endpointleri için loglar hem Gin'in içinden hem kendi log configlerim içinden **dışında tutulmuştur**. *Ayrıca API metriklerini de **etkilememektedir.**
 
 ### Circuit Breaker - Hata Toleransı
 
@@ -1117,6 +1164,7 @@ GET - localhost:2012/circuitbreaker
 ```
 
 **Circuit Breaker Durumları:**
+
 - **CLOSED**: Normal çalışma, tüm istekler kabul edilir
 - **OPEN**: Hata sayısı eşiği aştığında, istekler reddedilir
 - **HALF_OPEN**: OPEN durumdan çıkış deneniyor, sınırlı istekler kabul edilir
@@ -1133,6 +1181,7 @@ RateLimit:
 ```
 
 **Rate Limit Aşıldığında:**
+
 ```
 HTTP Status: 429 Too Many Requests
 
@@ -1153,6 +1202,7 @@ Middleware:
 ```
 
 **Timeout Aşıldığında:**
+
 ```
 HTTP Status: 504 Gateway Timeout
 
@@ -1264,6 +1314,7 @@ Fallback Aktif Oldugunda:
 Bu mekanizma `bufferedWriter` kullanarak response'u tamponlar. Controller hata donerse istemciye hicbir veri gitmeden Redis fallback devreye girer.
 
 **Monitorlama:**
+
 ```
 GET /health endpoint'inden pool istatistikleri:
 
@@ -1307,6 +1358,7 @@ Circuit Breaker Durumları:
 ```
 
 **Config'deki Circuit Breaker Ayarları:**
+
 ```yaml
 circuit_breaker:
   threshold: 15      # 15 hatadan sonra OPEN olur
@@ -1314,6 +1366,7 @@ circuit_breaker:
 ```
 
 **Monitorlama:**
+
 ```
 GET /circuitbreaker endpoint'i:
 
@@ -1336,6 +1389,7 @@ OPEN durumu (Hata):
 ```
 
 **Circuit Breaker'ın Avantajları:**
+
 - ✅ **Cascade Failure Önleme**: Bir serviste sorun varsa, tüm sisteme yayılmaz
 - ✅ **Hızlı Başarısızlık**: Sorunlu servise istek gönderilmeye çalışılmaz
 - ✅ **Otomatik İyileşme**: HALF-OPEN modu ile servisteki sorun çözüldüğünde otomatik devam eder
@@ -1365,6 +1419,7 @@ IP: 192.168.1.100
 ```
 
 **Config'deki Rate Limit Ayarları:**
+
 ```yaml
 rate_limit:
   burst: 5    # Bir anda 5 ekstra istek yapılabilir (ani pik)
@@ -1372,11 +1427,13 @@ rate_limit:
 ```
 
 **Mekanizma Detayları:**
+
 - **Limit**: Normal hız (10 istek/saniye)
 - **Burst**: Ani artışlar için ekstra kapasite (5 istek)
 - **Token Bucket**: Tokenler akar gibi hızda eklenir
 
 **Limit Aşıldığında:**
+
 ```
 HTTP 429 Too Many Requests
 
@@ -1388,6 +1445,7 @@ HTTP 429 Too Many Requests
 ```
 
 **Rate Limiting Faydaları:**
+
 - ✅ **DDoS Koruması**: Saldırı trafiğini sınırlandırır
 - ✅ **Adil Kaynak Dağılımı**: Bir istemcinin sistemi tekellemesini engeller
 - ✅ **API Stabilizesi**: Ani trafik artışlarından korunur
@@ -1417,11 +1475,13 @@ t=5m (300s) └─────────────────────�
 ```
 
 **Config'deki Timeout Ayarı:**
+
 ```yaml
 request_timeout: 5m  # 5 dakika = 300 saniye
 ```
 
 **Timeout Aşıldığında:**
+
 ```
 HTTP 504 Gateway Timeout
 
@@ -1473,6 +1533,7 @@ mutex.Unlock()
 ```
 
 **Metriklerin Faydaları:**
+
 - ✅ **Performans Monitoring**: Ortalama response time takip
 - ✅ **Hata Tespiti**: Hata oranı yüksekse alert
 - ✅ **Yavaş Request Tespit**: 500ms+ istekler loglanır
@@ -1593,12 +1654,14 @@ t=30s   ┌──────────────▼────────
 ```
 
 **Config'deki Shutdown Ayarı:**
+
 ```yaml
 server:
   shutdown_timeout: 30s  
 ```
 
 **Faydaları:**
+
 - ✅ **Veri Kaybı Önleme**: Açık transactionlar tamamlanır
 - ✅ **Bağlantı Kapatma**: Tüm bağlantılar düzgün kapatılır
 - ✅ **Temiz Çıkış**: Log ve cache'ler düzgün kapatılır
@@ -1620,6 +1683,7 @@ public/
 ```
 
 Veritabanında dosya yolunu şu şekilde belirtmelisiniz:
+
 ```
 /public/faciliators/ornek.png
 /public/sponsors/google.png
@@ -1643,8 +1707,8 @@ Veritabanında dosya yolunu şu şekilde belirtmelisiniz:
 
 Sistemle ilgili sorularınız veya bulduğunuz hatalar için lütfen GitHub Issues'de bir issue açınız.
 
-GitHub: https://github.com/poizdev/devtv
+GitHub: <https://github.com/poizdev/devtv>
 
-Mail: musa@gdgbursa.com 
+Mail: <musa@gdgbursa.com>
 
 **Son Guncelleme:** Mayis 09, 2026

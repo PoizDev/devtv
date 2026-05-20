@@ -347,7 +347,7 @@ func startCurrentSlotsBroadcaster() {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		err := in.DB.WithContext(ctx).
-			Preload("Faciliator").
+			Preload("Facilitator").
 			Preload("Workshop").
 			Where("slot_start <= ? AND slot_end >= ?", now, now).
 			Find(&slots).Error
@@ -389,12 +389,12 @@ func startCurrentSlotsBroadcaster() {
 					SlotStart: slot.SlotStart,
 					SlotEnd:   slot.SlotEnd,
 					SlotOrder: slot.SlotOrder,
-					Faciliator: models.FaciliatorResponse{
-						FaciliatorID: slot.Faciliator.FaciliatorID,
-						Name:         slot.Faciliator.Name,
-						Topic:        slot.Faciliator.Topic,
-						TopicDetails: slot.Faciliator.TopicDetails,
-						Photograph:   slot.Faciliator.Photograph,
+					Facilitator: models.FacilitatorResponse{
+						FacilitatorID: slot.Facilitator.FacilitatorID,
+						Name:         slot.Facilitator.Name,
+						Topic:        slot.Facilitator.Topic,
+						TopicDetails: slot.Facilitator.TopicDetails,
+						Photograph:   slot.Facilitator.Photograph,
 					},
 				}
 				workshopInfo = append(workshopInfo, gin.H{
@@ -453,7 +453,7 @@ func startUpcomingSlotsBroadcaster() {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		err := in.DB.WithContext(ctx).
-			Preload("Faciliator").
+			Preload("Facilitator").
 			Preload("Workshop").
 			Where("slot_start > ?", now).
 			Order("slot_start ASC").
@@ -496,12 +496,12 @@ func startUpcomingSlotsBroadcaster() {
 					WorkshopName: slot.Workshop.WorkshopName,
 					SlotStart:    slot.SlotStart,
 					SlotEnd:      slot.SlotEnd,
-					Faciliator: models.FaciliatorResponse{
-						FaciliatorID: slot.Faciliator.FaciliatorID,
-						Name:         slot.Faciliator.Name,
-						Topic:        slot.Faciliator.Topic,
-						TopicDetails: slot.Faciliator.TopicDetails,
-						Photograph:   slot.Faciliator.Photograph,
+					Facilitator: models.FacilitatorResponse{
+						FacilitatorID: slot.Facilitator.FacilitatorID,
+						Name:         slot.Facilitator.Name,
+						Topic:        slot.Facilitator.Topic,
+						TopicDetails: slot.Facilitator.TopicDetails,
+						Photograph:   slot.Facilitator.Photograph,
 					},
 					TimeUntilStart: formatDuration(slot.SlotStart.Sub(now)),
 				})
@@ -631,7 +631,7 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 				return db.Order("slot_order ASC")
 			}).
-			Preload("TimeSlots.Faciliator").
+			Preload("TimeSlots.Facilitator").
 			First(&workshop, workshopID).Error
 		cancel()
 
@@ -666,12 +666,12 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 				SlotStart: slot.SlotStart,
 				SlotEnd:   slot.SlotEnd,
 				SlotOrder: slot.SlotOrder,
-				Faciliator: models.FaciliatorResponse{
-					FaciliatorID: slot.Faciliator.FaciliatorID,
-					Name:         slot.Faciliator.Name,
-					Topic:        slot.Faciliator.Topic,
-					TopicDetails: slot.Faciliator.TopicDetails,
-					Photograph:   slot.Faciliator.Photograph,
+				Facilitator: models.FacilitatorResponse{
+					FacilitatorID: slot.Facilitator.FacilitatorID,
+					Name:         slot.Facilitator.Name,
+					Topic:        slot.Facilitator.Topic,
+					TopicDetails: slot.Facilitator.TopicDetails,
+					Photograph:   slot.Facilitator.Photograph,
 				},
 			}
 			if now.After(slot.SlotStart) && now.Before(slot.SlotEnd) {
@@ -740,7 +740,7 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 				return db.Order("slot_order ASC")
 			}).
-			Preload("TimeSlots.Faciliator").
+			Preload("TimeSlots.Facilitator").
 			First(&workshop, workshopID).Error
 		cancel()
 
@@ -776,12 +776,12 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 					SlotStart: slot.SlotStart,
 					SlotEnd:   slot.SlotEnd,
 					SlotOrder: slot.SlotOrder,
-					Faciliator: models.FaciliatorResponse{
-						FaciliatorID: slot.Faciliator.FaciliatorID,
-						Name:         slot.Faciliator.Name,
-						Topic:        slot.Faciliator.Topic,
-						TopicDetails: slot.Faciliator.TopicDetails,
-						Photograph:   slot.Faciliator.Photograph,
+					Facilitator: models.FacilitatorResponse{
+						FacilitatorID: slot.Facilitator.FacilitatorID,
+						Name:         slot.Facilitator.Name,
+						Topic:        slot.Facilitator.Topic,
+						TopicDetails: slot.Facilitator.TopicDetails,
+						Photograph:   slot.Facilitator.Photograph,
 					},
 				}
 				if i+1 < len(workshop.TimeSlots) {
@@ -791,12 +791,12 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 						SlotStart: nxt.SlotStart,
 						SlotEnd:   nxt.SlotEnd,
 						SlotOrder: nxt.SlotOrder,
-						Faciliator: models.FaciliatorResponse{
-							FaciliatorID: nxt.Faciliator.FaciliatorID,
-							Name:         nxt.Faciliator.Name,
-							Topic:        nxt.Faciliator.Topic,
-							TopicDetails: nxt.Faciliator.TopicDetails,
-							Photograph:   nxt.Faciliator.Photograph,
+						Facilitator: models.FacilitatorResponse{
+							FacilitatorID: nxt.Facilitator.FacilitatorID,
+							Name:         nxt.Facilitator.Name,
+							Topic:        nxt.Facilitator.Topic,
+							TopicDetails: nxt.Facilitator.TopicDetails,
+							Photograph:   nxt.Facilitator.Photograph,
 						},
 					}
 				}
@@ -812,12 +812,12 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 						SlotStart: slot.SlotStart,
 						SlotEnd:   slot.SlotEnd,
 						SlotOrder: slot.SlotOrder,
-						Faciliator: models.FaciliatorResponse{
-							FaciliatorID: slot.Faciliator.FaciliatorID,
-							Name:         slot.Faciliator.Name,
-							Topic:        slot.Faciliator.Topic,
-							TopicDetails: slot.Faciliator.TopicDetails,
-							Photograph:   slot.Faciliator.Photograph,
+						Facilitator: models.FacilitatorResponse{
+							FacilitatorID: slot.Facilitator.FacilitatorID,
+							Name:         slot.Facilitator.Name,
+							Topic:        slot.Facilitator.Topic,
+							TopicDetails: slot.Facilitator.TopicDetails,
+							Photograph:   slot.Facilitator.Photograph,
 						},
 					}
 					break

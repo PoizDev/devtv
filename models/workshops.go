@@ -17,8 +17,8 @@ type WorkshopTimeSlot struct {
 	WorkshopID uint       `json:"workshop_id" gorm:"not null;index:idx_workshop_slots,priority:1"` // Composite index
 	Workshop   *Workshops `json:"workshop,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 
-	FaciliatorID uint         `json:"faciliator_id" gorm:"not null;index"`
-	Faciliator   *Faciliators `json:"faciliator,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	FacilitatorID uint          `json:"facilitator_id" gorm:"not null;index"`
+	Facilitator   *Facilitators `json:"facilitator,omitempty" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 
 	SlotStart time.Time `json:"slot_start" gorm:"type:timestamp;not null;index:idx_time_range,priority:1;index:idx_workshop_slots,priority:2"`
 	SlotEnd   time.Time `json:"slot_end" gorm:"type:timestamp;not null;index:idx_time_range,priority:2"`
@@ -42,11 +42,11 @@ type TimeSlotResponse struct {
 	SlotStart  time.Time          `json:"slot_start"`
 	SlotEnd    time.Time          `json:"slot_end"`
 	SlotOrder  int                `json:"slot_order"`
-	Faciliator FaciliatorResponse `json:"faciliator"`
+	Facilitator FacilitatorResponse `json:"facilitator"`
 }
 
-type FaciliatorResponse struct {
-	FaciliatorID uint   `json:"faciliator_id"`
+type FacilitatorResponse struct {
+	FacilitatorID uint   `json:"facilitator_id"`
 	Name         string `json:"name"`
 	Topic        string `json:"topic"`
 	TopicDetails string `json:"topic_details"`
@@ -58,6 +58,6 @@ type UpcomingSlotResponse struct {
 	WorkshopName   string             `json:"workshop_name"`
 	SlotStart      time.Time          `json:"slot_start"`
 	SlotEnd        time.Time          `json:"slot_end"`
-	Faciliator     FaciliatorResponse `json:"faciliator"`
+	Facilitator     FacilitatorResponse `json:"facilitator"`
 	TimeUntilStart string             `json:"time_until_start"`
 }

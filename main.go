@@ -107,7 +107,7 @@ func main() {
 	cachedRoutes.Use(middlewares.RedisFallbackCache(in.RDB, 5*time.Second))
 	{
 		//'Konuşmacılar / Atölye tayfa
-		cachedRoutes.GET("/facilitator", controllers.GetAllFaciliators)
+		cachedRoutes.GET("/facilitator", controllers.GetAllFacilitators)
 		//'Sponsorluk görüntüleme
 		cachedRoutes.GET("/sponsors", controllers.GetSponsors)
 		cachedRoutes.GET("/workshops", controllers.GetAllWorkshops)
@@ -141,8 +141,8 @@ func main() {
 		admin.DELETE("/users/:id", controllers.DeleteUser)
 		admin.PUT("/users/:id", controllers.UpdateUser)
 
-		admin.POST("/create/facilitator", controllers.CreateFaciliator)
-		admin.PUT("/facilitator/:id", controllers.UpdateFaciliator)
+		admin.POST("/create/facilitator", controllers.CreateFacilitator)
+		admin.PUT("/facilitator/:id", controllers.UpdateFacilitator)
 		admin.DELETE("facilitator/:id", controllers.DeleteFacilitator)
 
 		admin.POST("sponsors/add", controllers.CreateSponsor)

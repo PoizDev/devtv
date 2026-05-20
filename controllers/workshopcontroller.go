@@ -79,10 +79,10 @@ func AddSlotsToWorkshop(c *gin.Context) {
 	}
 
 	for _, slot := range req.TimeSlots {
-		var facilitator models.Faciliators
-		if err := in.DB.First(&facilitator, slot.FaciliatorID).Error; err != nil {
-			log.Error("Facilitator ID'si %d olan kişi bulunamadı.", slot.FaciliatorID)
-			c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Facilitator ID'si %d olan kişi bulunamadı", slot.FaciliatorID)})
+		var facilitator models.Facilitators
+		if err := in.DB.First(&facilitator, slot.FacilitatorID).Error; err != nil {
+			log.Error("Facilitator ID'si %d olan kişi bulunamadı.", slot.FacilitatorID)
+			c.JSON(http.StatusNotFound, gin.H{"error": fmt.Sprintf("Facilitator ID'si %d olan kişi bulunamadı", slot.FacilitatorID)})
 			return
 		}
 	}
@@ -120,7 +120,7 @@ func GetWorkshopSchedule(c *gin.Context) {
 		Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 			return db.Order("slot_order ASC")
 		}).
-		Preload("TimeSlots.Faciliator").
+		Preload("TimeSlots.Facilitator").
 		First(&workshop, workshopID).Error
 
 	if err != nil {
@@ -138,12 +138,12 @@ func GetWorkshopSchedule(c *gin.Context) {
 			SlotStart: slot.SlotStart,
 			SlotEnd:   slot.SlotEnd,
 			SlotOrder: slot.SlotOrder,
-			Faciliator: models.FaciliatorResponse{
-				FaciliatorID: slot.Faciliator.FaciliatorID,
-				Name:         slot.Faciliator.Name,
-				Topic:        slot.Faciliator.Topic,
-				TopicDetails: slot.Faciliator.TopicDetails,
-				Photograph:   slot.Faciliator.Photograph,
+			Facilitator: models.FacilitatorResponse{
+				FacilitatorID: slot.Facilitator.FacilitatorID,
+				Name:         slot.Facilitator.Name,
+				Topic:        slot.Facilitator.Topic,
+				TopicDetails: slot.Facilitator.TopicDetails,
+				Photograph:   slot.Facilitator.Photograph,
 			},
 		}
 
@@ -171,7 +171,7 @@ func GetCurrentSlots(c *gin.Context) {
 
 	var slots []models.WorkshopTimeSlot
 	err := in.DB.WithContext(c.Request.Context()).
-		Preload("Faciliator").
+		Preload("Facilitator").
 		Preload("Workshop").
 		Where("slot_start <= ? AND slot_end >= ?", now, now).
 		Find(&slots).Error
@@ -198,12 +198,12 @@ func GetCurrentSlots(c *gin.Context) {
 			SlotStart: slot.SlotStart,
 			SlotEnd:   slot.SlotEnd,
 			SlotOrder: slot.SlotOrder,
-			Faciliator: models.FaciliatorResponse{
-				FaciliatorID: slot.Faciliator.FaciliatorID,
-				Name:         slot.Faciliator.Name,
-				Topic:        slot.Faciliator.Topic,
-				TopicDetails: slot.Faciliator.TopicDetails,
-				Photograph:   slot.Faciliator.Photograph,
+			Facilitator: models.FacilitatorResponse{
+				FacilitatorID: slot.Facilitator.FacilitatorID,
+				Name:         slot.Facilitator.Name,
+				Topic:        slot.Facilitator.Topic,
+				TopicDetails: slot.Facilitator.TopicDetails,
+				Photograph:   slot.Facilitator.Photograph,
 			},
 		})
 	}
@@ -230,7 +230,7 @@ func GetUpcomingSlots(c *gin.Context) {
 
 	var slots []models.WorkshopTimeSlot
 	err := in.DB.WithContext(c.Request.Context()).
-		Preload("Faciliator").
+		Preload("Facilitator").
 		Preload("Workshop").
 		Where("slot_start > ?", now).
 		Order("slot_start ASC").
@@ -263,12 +263,12 @@ func GetUpcomingSlots(c *gin.Context) {
 			WorkshopName: slot.Workshop.WorkshopName,
 			SlotStart:    slot.SlotStart,
 			SlotEnd:      slot.SlotEnd,
-			Faciliator: models.FaciliatorResponse{
-				FaciliatorID: slot.Faciliator.FaciliatorID,
-				Name:         slot.Faciliator.Name,
-				Topic:        slot.Faciliator.Topic,
-				TopicDetails: slot.Faciliator.TopicDetails,
-				Photograph:   slot.Faciliator.Photograph,
+			Facilitator: models.FacilitatorResponse{
+				FacilitatorID: slot.Facilitator.FacilitatorID,
+				Name:         slot.Facilitator.Name,
+				Topic:        slot.Facilitator.Topic,
+				TopicDetails: slot.Facilitator.TopicDetails,
+				Photograph:   slot.Facilitator.Photograph,
 			},
 			TimeUntilStart: timeText,
 		})
@@ -351,7 +351,7 @@ func GetAllWorkshops(c *gin.Context) {
 		Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
 			return db.Order("slot_order ASC")
 		}).
-		Preload("TimeSlots.Faciliator").
+		Preload("TimeSlots.Facilitator").
 		Find(&workshops)
 
 	if result.Error != nil {
@@ -550,7 +550,7 @@ func UpdateTimeSlot(c *gin.Context) {
 
 	// 2. Request struct
 	type UpdateSlotRequest struct {
-		FaciliatorID *uint      `json:"faciliator_id"` // Pointer = opsiyonel
+		FacilitatorID *uint      `json:"facilitator_id"` // Pointer = opsiyonel
 		SlotStart    *time.Time `json:"slot_start"`
 		SlotEnd      *time.Time `json:"slot_end"`
 		SlotOrder    *int       `json:"slot_order"`
@@ -603,13 +603,13 @@ func UpdateTimeSlot(c *gin.Context) {
 
 	updates := make(map[string]interface{})
 
-	if req.FaciliatorID != nil {
-		var faciliator models.Faciliators
-		if err := in.DB.First(&faciliator, *req.FaciliatorID).Error; err != nil {
+	if req.FacilitatorID != nil {
+		var facilitator models.Facilitators
+		if err := in.DB.First(&facilitator, *req.FacilitatorID).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Konuşmacı bulunamadı"})
 			return
 		}
-		updates["faciliator_id"] = *req.FaciliatorID
+		updates["facilitator_id"] = *req.FacilitatorID
 	}
 
 	if req.SlotStart != nil {
@@ -642,7 +642,7 @@ func UpdateTimeSlot(c *gin.Context) {
 		return
 	}
 
-	if err := in.DB.Preload("Faciliator").Preload("Workshop").First(&slot, slotID).Error; err != nil {
+	if err := in.DB.Preload("Facilitator").Preload("Workshop").First(&slot, slotID).Error; err != nil {
 		log.Error("Güncel slot alınamadı: ", err)
 	}
 
@@ -663,7 +663,7 @@ func GetCurrentSlotInWorkshop(c *gin.Context) {
 	}
 
 	var workshop models.Workshops
-	err := in.DB.WithContext(c.Request.Context()).Preload("TimeSlots").Preload("TimeSlots.Faciliator").
+	err := in.DB.WithContext(c.Request.Context()).Preload("TimeSlots").Preload("TimeSlots.Facilitator").
 		Where("slot_start <= ? AND slot_end >= ?", time.Now(), time.Now()).
 		First(&workshop, workshopID).Error
 
