@@ -1,33 +1,24 @@
 <p align="center">
-  <img src="https://i.hizliresim.com/7ndpq83.png" alt="GDG Bursa Logo" height="64">
+  <img src="https://i.hizliresim.com/7ndpq83.png" alt="GDG Bursa Logo" height="80">
 </p>
 
-<h1 align="center">DevTV</h1>
+<h1 align="center">GDG Bursa — DevTV</h1>
 
 <p align="center">
-  <code>devtv.devfestbursa.com</code> için geliştirilmiş bir etkinlik akışı sistemidir. Bu sistem production'a hazırlık açısından pek çok önlem ve özellikle bezenmiştir.
+  <code>devtv.devfestbursa.com</code> için geliştirilmiş, yüksek performanslı bir etkinlik akışı ve veri platformu sistemidir. Production ortamı için gelişmiş önbellek mekanizmaları, sağlık kontrolleri ve optimize edilmiş container mimarisiyle donatılmıştır.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Go-1.25-00ADD8?style=for-the-badge&logo=go" alt="Go">
-  <img src="https://img.shields.io/badge/Gin-1.12-00ADD8?style=for-the-badge&logo=go" alt="Gin">
-  <img src="https://img.shields.io/badge/PostgreSQL-15+-316192?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/Redis-7 Alpine-DC382D?style=for-the-badge&logo=redis" alt="Redis">
-  <img src="https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Go-1.24+-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go">
+  <img src="https://img.shields.io/badge/gRPC-Protobuf-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="gRPC">
+  <img src="https://img.shields.io/badge/Gin-v1.11.0-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Gin">
+  <img src="https://img.shields.io/badge/PostgreSQL-17+-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Redis-Alpine-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis">
+  <img src="https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
 </p>
 
 ---
-
-# GDG Bursa - DevTV
-
-![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=for-the-badge&logo=go)
-![Gin Framework](https://img.shields.io/badge/Gin-v1.11.0-00ADD8?style=for-the-badge&logo=go)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-316192?style=for-the-badge&logo=postgresql)
-![Redis](https://img.shields.io/badge/Redis-alpine-DC382D?style=for-the-badge&logo=redis)
-![Protobuf](https://img.shields.io/badge/Protobuf-Health-4285F4?style=for-the-badge&logo=google)
-![Docker](https://img.shields.io/badge/Docker-Distroless-2496ED?style=for-the-badge&logo=docker)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ## Kullanilan Teknolojiler
 
