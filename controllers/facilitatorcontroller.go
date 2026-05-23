@@ -100,11 +100,12 @@ func UpdateFacilitator(c *gin.Context) {
 	}
 
 	type UpdateFacilitatorReq struct {
-		Name         string `json:"name"`
-		Title        string `json:"title"`
-		Topic        string `json:"topic"`
-		TopicDetails string `json:"topic_details"`
-		Photograph   string `json:"photograph"` //path/to/photograph
+		Name         string   `json:"name"`
+		Title        string   `json:"title"`
+		Topic        string   `json:"topic"`
+		Tags         []string `json:"tags"`
+		TopicDetails string   `json:"topic_details"`
+		Photograph   string   `json:"photograph"` //path/to/photograph
 	}
 	var req UpdateFacilitatorReq
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -131,6 +132,9 @@ func UpdateFacilitator(c *gin.Context) {
 	}
 	if req.Topic != "" {
 		updateData["topic"] = req.Topic
+	}
+	if req.Tags != nil {
+		updateData["tags"] = req.Tags
 	}
 	if req.TopicDetails != "" {
 		updateData["topic_details"] = req.TopicDetails
