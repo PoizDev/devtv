@@ -3,6 +3,7 @@ package controllers
 import (
 	"devtv/in"
 	"devtv/models"
+	"encoding/json"
 	"net/http"
 
 	log "github.com/jeanphorn/log4go"
@@ -134,7 +135,8 @@ func UpdateFacilitator(c *gin.Context) {
 		updateData["topic"] = req.Topic
 	}
 	if req.Tags != nil {
-		updateData["tags"] = req.Tags
+		tagsJSON, _ := json.Marshal(req.Tags)
+		updateData["tags"] = tagsJSON
 	}
 	if req.TopicDetails != "" {
 		updateData["topic_details"] = req.TopicDetails
