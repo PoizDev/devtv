@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"context"
+	"devtv/config"
 	"devtv/in"
 	"devtv/models"
 	"fmt"
@@ -11,14 +12,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("Auth")
 		if err != nil {
-			log.Warn("Auth cookie bulunamadı")
+			config.Log.Warn("Auth cookie bulunamadı")
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access denied - Token bulunamadı"})
 			c.Abort()
 			return
@@ -26,7 +27,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		jwtSecret := in.Auth.JWTSecret
 		if jwtSecret == "" {
-			log.Critical("JWT_SECRET tanımlanmamış! Auth doğrulaması yapılamaz.")
+			config.Log.Error("JWT_SECRET tanımlanmış! Auth doğrulaması yapılamaz.")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Sunucu yapılandırma hatası"})
 			c.Abort()
 			return
@@ -41,7 +42,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			log.Warn("Token doğrulanamadı: ", err)
+			config.Log.Warn("Token doğrulanamadı", zap.Error(err))
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access denied - Geçersiz token"})
 			c.Abort()
 			return
@@ -52,7 +53,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		var user models.User
 		if err := in.DB.First(&user, userID).Error; err != nil {
-			log.Error("Kullanıcı bulunamadı: ", err)
+			config.Log.Error("Kullanıcı bulunamadı: ", zap.Error(err))
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Kullanıcı bulunamadı"})
 			c.Abort()
 			return
@@ -60,7 +61,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		// Sadece admin erişebilir
 		if strings.ToLower(user.Role) != "admin" {
-			log.Warn("Yetkisiz erişim denemesi - Kullanıcı: ", user.Username, " Role: ", user.Role)
+			config.Log.Warn("Yetkisiz erişim denemesi", zap.String("username", user.Username), zap.String("role", user.Role))
 			c.JSON(http.StatusForbidden, gin.H{"error": "Bu işlemi yapma yetkiniz yok - Sadece admin erişebilir"})
 			c.Abort()
 			return
@@ -81,7 +82,7 @@ func TimeoutMiddleware(timeout time.Duration) func(*gin.Context) {
 		c.Next()
 
 		if ctx.Err() == context.DeadlineExceeded {
-			log.Warn("İstek zaman aşımına uğradı: ", c.Request.URL.Path)
+			config.Log.Warn("İstek zaman aşımına uğradı: ", zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusGatewayTimeout, gin.H{"error": "İstek zaman aşımına uğradı"})
 			c.Abort()
 		}
@@ -101,14 +102,13 @@ func RequestLoggerMiddleWare() gin.HandlerFunc {
 		c.Next()
 
 		duration := time.Since(start)
-		log.Info(fmt.Sprintf(
-			"%s %s %s %d %s",
-			c.Request.Method,
-			c.Request.URL.Path,
-			c.ClientIP(),
-			c.Writer.Status(),
-			duration,
-		))
+		config.Log.Info("Request finished",
+			zap.String("method", c.Request.Method),
+			zap.String("path", c.Request.URL.Path),
+			zap.String("ip", c.ClientIP()),
+			zap.Int("status", c.Writer.Status()),
+			zap.Duration("duration", duration),
+		)
 	}
 }
 

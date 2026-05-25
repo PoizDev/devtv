@@ -1,12 +1,13 @@
 package controllers
 
 import (
+	"devtv/config"
 	"devtv/in"
 	"devtv/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 )
 
 //'Redis ile Cache'lenme yapılacak ama şimdi değil
@@ -14,17 +15,17 @@ import (
 func CreateSponsor(c *gin.Context) {
 	var sponsors models.Sponsors
 	if err := c.BindJSON(&sponsors); err != nil {
-		log.Error("Json'ı eşlerken hata oluştu: ", err)
+		config.Log.Error("Json'ı eşlerken hata oluştu", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 	result := in.DB.Create(&sponsors)
 	if result.Error != nil {
-		log.Error("Sponsor oluşturulurken hata oluştu: ", result.Error)
+		config.Log.Error("Sponsor oluşturulurken hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create sponsor"})
 		return
 	}
-	log.Info("Sponsor oluşturuldu: ", sponsors.SponsorName)
+	config.Log.Info("Sponsor oluşturuldu", zap.String("name", sponsors.SponsorName))
 	c.JSON(http.StatusOK, gin.H{"message": "Sponsor created successfully"})
 }
 
@@ -32,12 +33,12 @@ func GetSponsors(c *gin.Context) {
 	var sponsors []models.Sponsors
 	result := in.DB.WithContext(c.Request.Context()).Find(&sponsors)
 	if result.Error != nil {
-		log.Error("Sponsorlar alınırken hata oluştu: ", result.Error)
+		config.Log.Error("Sponsorlar alınırken hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve sponsors"})
 		return
 	}
 	c.JSON(http.StatusOK, sponsors)
-	log.Info("Tüm sponsorlar alındı")
+	config.Log.Info("Tüm sponsorlar alındı")
 }
 
 func DeleteSponsors(c *gin.Context) {
@@ -45,21 +46,21 @@ func DeleteSponsors(c *gin.Context) {
 
 	if sponsorID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Sponsor ID gereklidir"})
-		log.Warn("Sponsor ID alanı boş")
+		config.Log.Warn("Sponsor ID alanı boş")
 		return
 	}
 
 	var sponsor models.Sponsors
 	if err := in.DB.First(&sponsor, "sponsor_id = ?", sponsorID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Sponsor bulunamadı"})
-		log.Warn("Silinmek istenen sponsor bulunamadı: ", sponsorID)
+		config.Log.Warn("Silinmek istenen sponsor bulunamadı", zap.String("id", sponsorID))
 		return
 	}
 
 	result := in.DB.Delete(&sponsor)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sponsor silinirken bir hata oluştu"})
-		log.Error("Sponsor silme hatası: ", result.Error)
+		config.Log.Error("Sponsor silme hatası", zap.Error(result.Error))
 		return
 	}
 
@@ -72,7 +73,7 @@ func UpdateSponsor(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Sponsor ID gereklidir",
 		})
-		log.Warn("Sponsor ID alanı boş")
+		config.Log.Warn("Sponsor ID alanı boş")
 		return
 	}
 
@@ -81,14 +82,14 @@ func UpdateSponsor(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": "Sponsor bulunamadı",
 		})
-		log.Warn("Sponsor bulunamadı")
+		config.Log.Warn("Sponsor bulunamadı")
 		return
 	}
 	if err := c.BindJSON(&sponsor); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Geçersiz istek verisi",
 		})
-		log.Error("Geçersiz istek verisi: ", err)
+		config.Log.Error("Geçersiz istek verisi", zap.Error(err))
 		return
 	}
 	result := in.DB.Save(&sponsor)
@@ -96,7 +97,7 @@ func UpdateSponsor(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Sponsor'u güncellerken bir hata oluştu, " + result.Error.Error(),
 		})
-		log.Error("Sponsor'u güncellerken bir hata oluştu, ", result.Error)
+		config.Log.Error("Sponsor'u güncellerken bir hata oluştu", zap.Error(result.Error))
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{

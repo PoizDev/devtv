@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"devtv/config"
 	"devtv/in"
 	healthpb "devtv/middlewares/proto"
 	"net/http"
@@ -10,12 +11,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/shirou/gopsutil/v3/host"
 	"github.com/shirou/gopsutil/v3/mem"
 	"github.com/shirou/gopsutil/v3/net"
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/durationpb"
@@ -57,7 +58,7 @@ func StartHealthCollector() {
 		}
 	}()
 
-	log.Info("Health collector başlatıldı - Güncelleme: 1 saniye")
+	config.Log.Info("Health collector başlatıldı - Güncelleme: 1 saniye")
 }
 
 func collectSystemMetricsProto() *healthpb.SystemMetricsResponse {
@@ -180,13 +181,13 @@ func UpdateProtoCache() {
 
 	data, err := proto.Marshal(resp)
 	if err != nil {
-		log.Error("Proto health marshal hatası: %s", err)
+		config.Log.Error("Proto health marshal hatası", zap.Error(err))
 		return
 	}
 
 	jsonData, err := protojson.Marshal(resp)
 	if err != nil {
-		log.Error("JSON health marshal hatası: %s", err)
+		config.Log.Error("JSON health marshal hatası", zap.Error(err))
 		return
 	}
 

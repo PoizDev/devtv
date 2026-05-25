@@ -1,13 +1,14 @@
 package middlewares
 
 import (
+	"devtv/config"
 	"fmt"
 	"strings"
 	"sync/atomic"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 )
 
 // Metrics - Global metrikler (atomic operasyonlar ile thread-safe)
@@ -64,13 +65,12 @@ func MetricsMiddleware() gin.HandlerFunc {
 
 		// Yavaş istekleri logla (> 500ms)
 		if duration > 500*time.Millisecond {
-			log.Warn(fmt.Sprintf(
-				"SLOW REQUEST: %s %s | Duration: %dms | Status: %d",
-				c.Request.Method,
-				c.Request.URL.Path,
-				durationMs,
-				c.Writer.Status(),
-			))
+			config.Log.Warn("SLOW REQUEST",
+				zap.String("method", c.Request.Method),
+				zap.String("path", c.Request.URL.Path),
+				zap.Int64("duration_ms", durationMs),
+				zap.Int("status", c.Writer.Status()),
+			)
 		}
 	}
 }
@@ -125,7 +125,7 @@ func ResetMetrics() {
 		atomic.StoreInt64(counter, 0)
 	}
 
-	log.Info("Metrikler sıfırlandı")
+	config.Log.Info("Metrikler sıfırlandı")
 }
 
 // GetMetricsHandler - Metrics endpoint handler

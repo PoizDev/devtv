@@ -19,6 +19,7 @@ type ServerConfig struct {
 	Port            string        `yaml:"port"`
 	ShutdownTimeout time.Duration `yaml:"shutdown_timeout"`
 	LogConfigPath   string        `yaml:"log_config_path"`
+	ActiveLevel     string        `yaml:"active_level"`
 	EnvPath         string        `yaml:"env_path"`
 }
 

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"devtv/config"
 	"devtv/in"
 	"devtv/models"
 	"encoding/json"
@@ -11,7 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -133,7 +134,7 @@ func (cm *ClientManager) BroadcastRaw(data []byte) {
 	select {
 	case cm.broadcastRaw <- data:
 	default:
-		log.Warn("BroadcastRaw buffer full, dropping message")
+		config.Log.Warn("BroadcastRaw buffer full, dropping message")
 	}
 }
 
@@ -141,7 +142,7 @@ func (cm *ClientManager) Broadcast(message interface{}) {
 	select {
 	case cm.broadcast <- message:
 	default:
-		log.Warn("Broadcast buffer full, dropping message")
+		config.Log.Warn("Broadcast buffer full, dropping message")
 	}
 }
 
@@ -158,7 +159,7 @@ func (cm *ClientManager) Shutdown() {
 func marshalOrLog(v interface{}) []byte {
 	raw, err := json.Marshal(v)
 	if err != nil {
-		log.Error("JSON marshal error: ", err)
+		config.Log.Error("JSON marshal error", zap.Error(err))
 		return nil
 	}
 	return raw
@@ -196,7 +197,7 @@ func init() {
 func GetCurrentSlotsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WS upgrade error: ", err)
+		config.Log.Error("WS upgrade error", zap.Error(err))
 		return
 	}
 	ws.SetPongHandler(func(string) error {
@@ -218,7 +219,7 @@ func GetCurrentSlotsWS(c *gin.Context) {
 func GetUpcomingSlotsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WS upgrade error: ", err)
+		config.Log.Error("WS upgrade error", zap.Error(err))
 		return
 	}
 	ws.SetPongHandler(func(string) error {
@@ -240,7 +241,7 @@ func GetUpcomingSlotsWS(c *gin.Context) {
 func GetSponsorsWS(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WS upgrade error: ", err)
+		config.Log.Error("WS upgrade error", zap.Error(err))
 		return
 	}
 	ws.SetPongHandler(func(string) error {
@@ -293,7 +294,7 @@ func GetCurrentSlotInWorkshopWS(c *gin.Context) {
 	workshopID := c.Param("id")
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Error("WS upgrade error: ", err)
+		config.Log.Error("WS upgrade error", zap.Error(err))
 		return
 	}
 	ws.SetPongHandler(func(string) error {
@@ -354,20 +355,20 @@ func startCurrentSlotsBroadcaster() {
 		cancel()
 
 		if err != nil {
-			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+			config.Log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor", zap.Error(err))
 
 			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
 			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
 			cancelRedis()
 
 			if redisErr == nil && len(redisData) > 0 {
-				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				config.Log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
 				currentSlotsManager.BroadcastRaw(redisData)
 				continue
 			}
 
 			if cachedJSON != nil {
-				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				config.Log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
 				currentSlotsManager.BroadcastRaw(cachedJSON)
 			}
 			continue
@@ -391,11 +392,11 @@ func startCurrentSlotsBroadcaster() {
 					SlotOrder: slot.SlotOrder,
 					Facilitator: models.FacilitatorResponse{
 						FacilitatorID: slot.Facilitator.FacilitatorID,
-						Name:         slot.Facilitator.Name,
-						Topic:        slot.Facilitator.Topic,
-						Tags:         slot.Facilitator.Tags,
-						TopicDetails: slot.Facilitator.TopicDetails,
-						Photograph:   slot.Facilitator.Photograph,
+						Name:          slot.Facilitator.Name,
+						Topic:         slot.Facilitator.Topic,
+						Tags:          slot.Facilitator.Tags,
+						TopicDetails:  slot.Facilitator.TopicDetails,
+						Photograph:    slot.Facilitator.Photograph,
 					},
 				}
 				workshopInfo = append(workshopInfo, gin.H{
@@ -423,7 +424,7 @@ func startCurrentSlotsBroadcaster() {
 		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
 		cancelRedis()
 		if errRedis != nil {
-			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+			config.Log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor)", zap.Error(errRedis))
 		}
 
 		currentSlotsManager.BroadcastRaw(cachedJSON)
@@ -462,20 +463,20 @@ func startUpcomingSlotsBroadcaster() {
 		cancel()
 
 		if err != nil {
-			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+			config.Log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor", zap.Error(err))
 
 			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
 			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
 			cancelRedis()
 
 			if redisErr == nil && len(redisData) > 0 {
-				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				config.Log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
 				currentSlotsManager.BroadcastRaw(redisData)
 				continue
 			}
 
 			if cachedJSON != nil {
-				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				config.Log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
 				currentSlotsManager.BroadcastRaw(cachedJSON)
 			}
 			continue
@@ -499,11 +500,11 @@ func startUpcomingSlotsBroadcaster() {
 					SlotEnd:      slot.SlotEnd,
 					Facilitator: models.FacilitatorResponse{
 						FacilitatorID: slot.Facilitator.FacilitatorID,
-						Name:         slot.Facilitator.Name,
-						Topic:        slot.Facilitator.Topic,
-						Tags:         slot.Facilitator.Tags,
-						TopicDetails: slot.Facilitator.TopicDetails,
-						Photograph:   slot.Facilitator.Photograph,
+						Name:          slot.Facilitator.Name,
+						Topic:         slot.Facilitator.Topic,
+						Tags:          slot.Facilitator.Tags,
+						TopicDetails:  slot.Facilitator.TopicDetails,
+						Photograph:    slot.Facilitator.Photograph,
 					},
 					TimeUntilStart: formatDuration(slot.SlotStart.Sub(now)),
 				})
@@ -526,7 +527,7 @@ func startUpcomingSlotsBroadcaster() {
 		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
 		cancelRedis()
 		if errRedis != nil {
-			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+			config.Log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor)", zap.Error(errRedis))
 		}
 
 		upcomingSlotsManager.BroadcastRaw(cachedJSON)
@@ -559,20 +560,20 @@ func startSponsorsBroadcaster() {
 		cancel()
 
 		if err != nil {
-			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+			config.Log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor", zap.Error(err))
 
 			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
 			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
 			cancelRedis()
 
 			if redisErr == nil && len(redisData) > 0 {
-				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				config.Log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
 				sponsorsManager.BroadcastRaw(redisData)
 				continue
 			}
 
 			if cachedJSON != nil {
-				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				config.Log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
 				sponsorsManager.BroadcastRaw(cachedJSON)
 			}
 			continue
@@ -595,7 +596,7 @@ func startSponsorsBroadcaster() {
 		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
 		cancelRedis()
 		if errRedis != nil {
-			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+			config.Log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor)", zap.Error(errRedis))
 		}
 
 		sponsorsManager.BroadcastRaw(cachedJSON)
@@ -638,19 +639,19 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 		cancel()
 
 		if err != nil {
-			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+			config.Log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor", zap.Error(err))
 
 			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
 			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
 			cancelRedis()
 
 			if redisErr == nil && len(redisData) > 0 {
-				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				config.Log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
 				currentSlotsManager.BroadcastRaw(redisData)
 				continue
 			}
 			if cachedJSON != nil {
-				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				config.Log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
 				manager.BroadcastRaw(cachedJSON)
 				continue
 			}
@@ -670,11 +671,11 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 				SlotOrder: slot.SlotOrder,
 				Facilitator: models.FacilitatorResponse{
 					FacilitatorID: slot.Facilitator.FacilitatorID,
-					Name:         slot.Facilitator.Name,
-					Topic:        slot.Facilitator.Topic,
-					Tags:         slot.Facilitator.Tags,
-					TopicDetails: slot.Facilitator.TopicDetails,
-					Photograph:   slot.Facilitator.Photograph,
+					Name:          slot.Facilitator.Name,
+					Topic:         slot.Facilitator.Topic,
+					Tags:          slot.Facilitator.Tags,
+					TopicDetails:  slot.Facilitator.TopicDetails,
+					Photograph:    slot.Facilitator.Photograph,
 				},
 			}
 			if now.After(slot.SlotStart) && now.Before(slot.SlotEnd) {
@@ -703,7 +704,7 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
 		cancelRedis()
 		if errRedis != nil {
-			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+			config.Log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor)", zap.Error(errRedis))
 		}
 
 		manager.BroadcastRaw(cachedJSON)
@@ -748,20 +749,20 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		cancel()
 
 		if err != nil {
-			log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor: %v", err)
+			config.Log.Error("Veritabanı hatası! Fallback mekanizmaları devreye giriyor", zap.Error(err))
 
 			ctxRedis, cancelRedis := context.WithTimeout(context.Background(), 2*time.Second)
 			redisData, redisErr := in.RDB.Get(ctxRedis, redisFallbackKey).Bytes()
 			cancelRedis()
 
 			if redisErr == nil && len(redisData) > 0 {
-				log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
+				config.Log.Warn("Sistem Redis (L2) ile ayakta tutuluyor!")
 				manager.BroadcastRaw(redisData)
 				continue
 			}
 
 			if cachedJSON != nil {
-				log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
+				config.Log.Error("DB ve Redis yok Zombi modunda son bilinen RAM verisi basılıyor.")
 				manager.BroadcastRaw(cachedJSON)
 				continue
 			}
@@ -781,11 +782,11 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 					SlotOrder: slot.SlotOrder,
 					Facilitator: models.FacilitatorResponse{
 						FacilitatorID: slot.Facilitator.FacilitatorID,
-						Name:         slot.Facilitator.Name,
-						Topic:        slot.Facilitator.Topic,
-						Tags:         slot.Facilitator.Tags,
-						TopicDetails: slot.Facilitator.TopicDetails,
-						Photograph:   slot.Facilitator.Photograph,
+						Name:          slot.Facilitator.Name,
+						Topic:         slot.Facilitator.Topic,
+						Tags:          slot.Facilitator.Tags,
+						TopicDetails:  slot.Facilitator.TopicDetails,
+						Photograph:    slot.Facilitator.Photograph,
 					},
 				}
 				if i+1 < len(workshop.TimeSlots) {
@@ -797,11 +798,11 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 						SlotOrder: nxt.SlotOrder,
 						Facilitator: models.FacilitatorResponse{
 							FacilitatorID: nxt.Facilitator.FacilitatorID,
-							Name:         nxt.Facilitator.Name,
-							Topic:        nxt.Facilitator.Topic,
-							Tags:         nxt.Facilitator.Tags,
-							TopicDetails: nxt.Facilitator.TopicDetails,
-							Photograph:   nxt.Facilitator.Photograph,
+							Name:          nxt.Facilitator.Name,
+							Topic:         nxt.Facilitator.Topic,
+							Tags:          nxt.Facilitator.Tags,
+							TopicDetails:  nxt.Facilitator.TopicDetails,
+							Photograph:    nxt.Facilitator.Photograph,
 						},
 					}
 				}
@@ -819,11 +820,11 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 						SlotOrder: slot.SlotOrder,
 						Facilitator: models.FacilitatorResponse{
 							FacilitatorID: slot.Facilitator.FacilitatorID,
-							Name:         slot.Facilitator.Name,
-							Topic:        slot.Facilitator.Topic,
-							Tags:         slot.Facilitator.Tags,
-							TopicDetails: slot.Facilitator.TopicDetails,
-							Photograph:   slot.Facilitator.Photograph,
+							Name:          slot.Facilitator.Name,
+							Topic:         slot.Facilitator.Topic,
+							Tags:          slot.Facilitator.Tags,
+							TopicDetails:  slot.Facilitator.TopicDetails,
+							Photograph:    slot.Facilitator.Photograph,
 						},
 					}
 					break
@@ -867,7 +868,7 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		errRedis := in.RDB.Set(ctxRedis, redisFallbackKey, raw, 1*time.Hour).Err()
 		cancelRedis()
 		if errRedis != nil {
-			log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor): %v", errRedis)
+			config.Log.Warn("Redis yedeklemesi başarısız (Ama sistem çalışmaya devam ediyor)", zap.Error(errRedis))
 		}
 
 		manager.BroadcastRaw(cachedJSON)

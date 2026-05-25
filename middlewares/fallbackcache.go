@@ -3,12 +3,13 @@ package middlewares
 import (
 	"bytes"
 	"context"
+	"devtv/config"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
 	"github.com/redis/go-redis/v9"
+	"go.uber.org/zap"
 )
 
 type bufferedWriter struct {
@@ -57,7 +58,7 @@ func RedisFallbackCache(rdb *redis.Client, ttl time.Duration) gin.HandlerFunc {
 		redisCancel()
 
 		if err == nil {
-			log.Info("⚡ Cache HIT: %s", cacheKey)
+			config.Log.Info("⚡ Cache HIT", zap.String("key", cacheKey))
 			c.Data(http.StatusOK, "application/json; charset=utf-8", cachedData)
 			c.Abort()
 			return
@@ -93,21 +94,21 @@ func RedisFallbackCache(rdb *redis.Client, ttl time.Duration) gin.HandlerFunc {
 			writeCancel()
 
 			if errPipe != nil {
-				log.Error("Redis'e yazılırken hata oluştu: %v", errPipe)
+				config.Log.Error("Redis'e yazılırken hata oluştu", zap.Error(errPipe))
 			} else {
-				log.Info("Cache MISS → Yeni Veri Redis'e Kaydedildi: %s", cacheKey)
+				config.Log.Info("Cache MISS → Yeni Veri Redis'e Kaydedildi", zap.String("key", cacheKey))
 			}
 			return
 		}
 
-		log.Warn("Controller hata döndü (status=%d) veya DB timeout, Redis fallback deneniyor: %s", bw.statusCode, cacheKey)
+		config.Log.Warn("Controller hata döndü veya DB timeout, Redis fallback deneniyor", zap.Int("status", bw.statusCode), zap.String("key", cacheKey))
 
 		fallbackCtx, fallbackCancel := context.WithTimeout(context.Background(), 2*time.Second)
 		staleData, staleErr := rdb.Get(fallbackCtx, fallbackKey).Bytes()
 		fallbackCancel()
 
 		if staleErr == nil && len(staleData) > 0 {
-			log.Warn("Redis FALLBACK aktif — stale veri servis ediliyor: %s", fallbackKey)
+			config.Log.Warn("Redis FALLBACK aktif — stale veri servis ediliyor", zap.String("key", fallbackKey))
 			bw.body.Reset()
 			bw.statusCode = http.StatusOK
 			bw.body.Write(staleData)
@@ -118,7 +119,7 @@ func RedisFallbackCache(rdb *redis.Client, ttl time.Duration) gin.HandlerFunc {
 			return
 		}
 
-		log.Error("Redis'te de veri yok, controller hatası istemciye iletiliyor: %s", cacheKey)
+		config.Log.Error("Redis'te de veri yok, controller hatası istemciye iletiliyor", zap.String("key", cacheKey))
 		bw.flush()
 	}
 }

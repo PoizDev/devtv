@@ -1,12 +1,13 @@
 package middlewares
 
 import (
+	"devtv/config"
 	"net/http"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 )
 
 //! Fallback Cache Mekanizması Eklenecek Prod'a çıkmadan kesin ve net! (eklenemedi ama bu sene eklencek.)
@@ -42,7 +43,7 @@ func CircuitBreakerMiddleware(cb *CircuitBreaker) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Devre açık mı kontrol et
 		if !cb.AllowRequest() {
-			log.Warn("Circuit Breaker AÇIK - İstek reddedildi: ", c.Request.URL.Path)
+			config.Log.Warn("Circuit Breaker AÇIK - İstek reddedildi", zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusServiceUnavailable, gin.H{
 				"error":   "Servis geçici olarak kullanılamıyor",
 				"message": "Lütfen birkaç saniye sonra tekrar deneyin",
@@ -77,7 +78,7 @@ func (cb *CircuitBreaker) AllowRequest() bool {
 		// Timeout geçti mi? Geçtiyse half-open'a geç
 		if time.Since(cb.lastFailTime) > cb.timeout {
 			cb.state = StateHalfOpen
-			log.Info("Circuit Breaker HALF-OPEN'a geçti (test modu)")
+			config.Log.Info("Circuit Breaker HALF-OPEN'a geçti (test modu)")
 			return true
 		}
 		// Hala timeout içinde, reddet
@@ -105,13 +106,13 @@ func (cb *CircuitBreaker) RecordFailure() {
 		// Eşik aşıldı mı?
 		if cb.failures >= cb.maxFailures {
 			cb.state = StateOpen
-			log.Warn("Circuit Breaker AÇILDI - Başarısız istek sayısı: %d", cb.failures)
+			config.Log.Warn("Circuit Breaker AÇILDI", zap.Int("failures", cb.failures))
 		}
 
 	case StateHalfOpen:
 		// Test başarısız, tekrar aç
 		cb.state = StateOpen
-		log.Warn("Circuit Breaker tekrar AÇILDI - Test başarısız")
+		config.Log.Warn("Circuit Breaker tekrar AÇILDI - Test başarısız")
 	}
 }
 
@@ -125,7 +126,7 @@ func (cb *CircuitBreaker) RecordSuccess() {
 		// Test başarılı, kapat
 		cb.state = StateClosed
 		cb.failures = 0
-		log.Info("Circuit Breaker KAPANDI - Servis normale döndü")
+		config.Log.Info("Circuit Breaker KAPANDI - Servis normale döndü")
 
 	case StateClosed:
 		// Normal çalışma, hata sayacını sıfırla

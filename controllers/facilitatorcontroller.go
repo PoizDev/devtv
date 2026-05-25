@@ -1,14 +1,14 @@
 package controllers
 
 import (
+	"devtv/config"
 	"devtv/in"
 	"devtv/models"
 	"encoding/json"
 	"net/http"
 
-	log "github.com/jeanphorn/log4go"
-
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func CreateFacilitator(c *gin.Context) {
@@ -19,11 +19,11 @@ func CreateFacilitator(c *gin.Context) {
 	}
 	result := in.DB.Create(&facilitator)
 	if result.Error != nil {
-		log.Error("Facilitator oluşturulurken hata oluştu: ", result.Error)
+		config.Log.Error("Facilitator oluşturulurken hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create facilitator"})
 		return
 	}
-	log.Info("Facilitator oluşturuldu: ", facilitator.Name)
+	config.Log.Info("Facilitator oluşturuldu", zap.String("name", facilitator.Name))
 	c.JSON(http.StatusOK, gin.H{"message": "Facilitator created successfully"})
 }
 
@@ -31,12 +31,12 @@ func GetAllFacilitators(c *gin.Context) {
 	var facilitators []models.Facilitators
 	result := in.DB.WithContext(c.Request.Context()).Find(&facilitators)
 	if result.Error != nil {
-		log.Error("Facilitator'lar alınırken hata oluştu: ", result.Error)
+		config.Log.Error("Facilitator'lar alınırken hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve facilitators"})
 		return
 	}
 	c.JSON(http.StatusOK, facilitators)
-	log.Info("Tüm facilitator'lar alındı")
+	config.Log.Info("Tüm facilitator'lar alındı")
 }
 
 func GetFacilitatorsByTopic(c *gin.Context) {
@@ -44,11 +44,11 @@ func GetFacilitatorsByTopic(c *gin.Context) {
 	var facilitators []models.Facilitators
 	result := in.DB.Where("topic = ?", topic).Find(&facilitators)
 	if result.Error != nil {
-		log.Error("konuya göre konuşmacıları çekerken bir hata oluştu: ", result.Error)
+		config.Log.Error("konuya göre konuşmacıları çekerken bir hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve facilitators by topic"})
 		return
 	}
-	log.Fine("Konuya göre konuşmacılar çekildi")
+	config.Log.Debug("Konuya göre konuşmacılar çekildi")
 	c.JSON(http.StatusOK, facilitators)
 }
 
@@ -59,7 +59,7 @@ func DeleteFacilitator(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Facilitator ID gerekli",
 		})
-		log.Warn("Facilitator ID boş")
+		config.Log.Warn("Facilitator ID boş")
 		return
 	}
 
@@ -68,7 +68,7 @@ func DeleteFacilitator(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": "Facilitator Bulunamadı",
 		})
-		log.Warn("Silinmek istenen facilitator bulunamadı")
+		config.Log.Warn("Silinmek istenen facilitator bulunamadı")
 		return
 	}
 
@@ -78,14 +78,14 @@ func DeleteFacilitator(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Facilitator silinirken bir hata oluştu" + result.Error.Error(),
 		})
-		log.Error("Facilitator silinirken bir hata oluştu: ", result.Error)
+		config.Log.Error("Facilitator silinirken bir hata oluştu", zap.Error(result.Error))
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message":        "Facilitator başarıyla silindi",
 		"facilitator_id": facilID,
 	})
-	log.Info("Facilitator başarıyla silindi - ID", facilID)
+	config.Log.Info("Facilitator başarıyla silindi", zap.String("id", facilID))
 
 }
 
@@ -96,7 +96,7 @@ func UpdateFacilitator(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Facilitator ID zorunlu",
 		})
-		log.Warn("Facilitator ID Boş")
+		config.Log.Warn("Facilitator ID Boş")
 		return
 	}
 
@@ -111,7 +111,7 @@ func UpdateFacilitator(c *gin.Context) {
 	var req UpdateFacilitatorReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "JSON Parse ederken hata oluştu " + err.Error()})
-		log.Warn("json parse hatası: ", err)
+		config.Log.Warn("json parse hatası", zap.Error(err))
 		return
 	}
 
@@ -120,7 +120,7 @@ func UpdateFacilitator(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Facilitator bulunamadı",
 		})
-		log.Warn("Güncellenecek facilitator bulunamadı - ID ", facilID)
+		config.Log.Warn("Güncellenecek facilitator bulunamadı", zap.String("id", facilID))
 		return
 	}
 	updateData := map[string]interface{}{}
@@ -146,7 +146,7 @@ func UpdateFacilitator(c *gin.Context) {
 	}
 
 	if err := in.DB.Model(&facilitator).Updates(updateData).Error; err != nil {
-		log.Error("Facilitator güncellenirken hata: ", err)
+		config.Log.Error("Facilitator güncellenirken hata", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Facilitator güncellenemedi"})
 		return
 	}
@@ -154,5 +154,5 @@ func UpdateFacilitator(c *gin.Context) {
 		"message":     "Facilitator başarıyla güncellendi",
 		"facilitator": facilitator,
 	})
-	log.Info("Facilitator güncellendi - ID: ", facilID, "İsim: ", facilitator.Name)
+	config.Log.Info("Facilitator güncellendi", zap.String("id", facilID), zap.String("name", facilitator.Name))
 }

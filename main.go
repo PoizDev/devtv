@@ -14,7 +14,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 	"golang.org/x/time/rate"
 )
 
@@ -29,7 +29,7 @@ func initialize() {
 		panic("Config dosyası (conf.yaml) yüklenemedi: " + err.Error())
 	}
 
-	log.LoadConfiguration(conf.Server.LogConfigPath)
+	config.InitLogger(conf.Server.ActiveLevel)
 
 	in.Connect(conf.Database, conf.Redis, conf.Auth, conf.Server.EnvPath)
 
@@ -38,6 +38,11 @@ func initialize() {
 
 func main() {
 	initialize()
+	defer func() {
+		if config.Log != nil {
+			_ = config.Log.Sync()
+		}
+	}()
 
 	r := gin.New()
 	r.Use(gin.Recovery())
@@ -50,8 +55,8 @@ func main() {
 		},
 	}))
 
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{
 		"http://localhost:3000",
 		"http://127.0.0.1:5500",
 		"http://localhost:5500", // Bunu ekleyin
@@ -60,11 +65,11 @@ func main() {
 		"http://127.0.0.1", // Bunu da
 	}
 
-	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
-	config.AllowHeaders = []string{"Origin", "Content-Type", "Authorization", "Accept"}
-	config.AllowCredentials = true
-	config.AllowWebSockets = true
-	r.Use(cors.New(config))
+	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
+	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Authorization", "Accept"}
+	corsConfig.AllowCredentials = true
+	corsConfig.AllowWebSockets = true
+	r.Use(cors.New(corsConfig))
 
 	middlewares.StartHealthCollector()
 
@@ -167,9 +172,9 @@ func main() {
 	}
 
 	go func() {
-		log.Info("Server Başlatılıyor - Port: %s", srv.Addr)
+		config.Log.Info("Server Başlatılıyor", zap.String("port", srv.Addr))
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Critical("Server başlatılamadı: %s", err)
+			config.Log.Fatal("Server başlatılamadı", zap.Error(err))
 		}
 	}()
 
@@ -182,15 +187,15 @@ func main() {
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Critical("Server zorla kapatıldı: %s", err.Error())
+		config.Log.Fatal("Server zorla kapatıldı", zap.Error(err))
 	}
 
 	sqlDB, _ := in.DB.DB()
 	if err := sqlDB.Close(); err != nil {
-		log.Error("DB Bağlantısı kapanamadı: %s", err)
+		config.Log.Error("DB Bağlantısı kapanamadı", zap.Error(err))
 	}
 
-	log.Info("Server kapatıldı.")
+	config.Log.Info("Server kapatıldı.")
 }
 
 /* //' Cors planlaması, live'a alınırken bu kullanılacak:

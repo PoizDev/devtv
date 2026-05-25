@@ -1,12 +1,12 @@
 package middlewares
 
 import (
-	"fmt"
+	"devtv/config"
 	"net/http"
 	"sync"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/jeanphorn/log4go"
+	"go.uber.org/zap"
 	"golang.org/x/time/rate"
 )
 
@@ -51,8 +51,7 @@ func RateLimitMiddleware(limiter *IPRateLimiter) gin.HandlerFunc {
 
 		// İstek yapılabilir mi kontrol et
 		if !ipLimiter.Allow() {
-			// log4go için doğru format
-			log.Warn(fmt.Sprintf("Rate limit aşıldı - IP: %s | Path: %s", ip, c.Request.URL.Path))
+			config.Log.Warn("Rate limit aşıldı", zap.String("ip", ip), zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusTooManyRequests, gin.H{
 				"error":       "Çok fazla istek",
 				"message":     "Lütfen bir süre bekleyip tekrar deneyin",
@@ -75,6 +74,6 @@ func (i *IPRateLimiter) Cleanup() {
 	// Not: Production'da daha sofistike bir cleanup gerekebilir
 	if len(i.limiters) > 10000 {
 		i.limiters = make(map[string]*rate.Limiter)
-		log.Info("Rate limiter cache temizlendi")
+		config.Log.Info("Rate limiter cache temizlendi")
 	}
 }
