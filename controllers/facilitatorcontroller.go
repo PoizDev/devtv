@@ -4,19 +4,43 @@ import (
 	"devtv/config"
 	"devtv/in"
 	"devtv/models"
-	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 func CreateFacilitator(c *gin.Context) {
-	var facilitator models.Facilitators
-	if err := c.BindJSON(&facilitator); err != nil {
+	type CreateFacilitatorReq struct {
+		Name         string `json:"name" binding:"required"`
+		Title        string `json:"title" binding:"required"`
+		Topic        string `json:"topic" binding:"required"`
+		TagIDs       []uint `json:"tag_ids"`
+		TopicDetails string `json:"topic_details" binding:"required"`
+		Photograph   string `json:"photograph" binding:"required"`
+	}
+
+	var req CreateFacilitatorReq
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
+
+	var tags []models.Tag
+	if len(req.TagIDs) > 0 {
+		in.DB.Find(&tags, req.TagIDs)
+	}
+
+	facilitator := models.Facilitators{
+		Name:         req.Name,
+		Title:        req.Title,
+		Topic:        req.Topic,
+		Tags:         tags,
+		TopicDetails: req.TopicDetails,
+		Photograph:   req.Photograph,
+	}
+
 	result := in.DB.Create(&facilitator)
 	if result.Error != nil {
 		config.Log.Error("Facilitator oluşturulurken hata oluştu", zap.Error(result.Error))
@@ -29,7 +53,7 @@ func CreateFacilitator(c *gin.Context) {
 
 func GetAllFacilitators(c *gin.Context) {
 	var facilitators []models.Facilitators
-	result := in.DB.WithContext(c.Request.Context()).Find(&facilitators)
+	result := in.DB.WithContext(c.Request.Context()).Preload("Tags").Find(&facilitators)
 	if result.Error != nil {
 		config.Log.Error("Facilitator'lar alınırken hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve facilitators"})
@@ -42,7 +66,7 @@ func GetAllFacilitators(c *gin.Context) {
 func GetFacilitatorsByTopic(c *gin.Context) {
 	topic := c.Param("topic")
 	var facilitators []models.Facilitators
-	result := in.DB.Where("topic = ?", topic).Find(&facilitators)
+	result := in.DB.Where("topic = ?", topic).Preload("Tags").Find(&facilitators)
 	if result.Error != nil {
 		config.Log.Error("konuya göre konuşmacıları çekerken bir hata oluştu", zap.Error(result.Error))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve facilitators by topic"})
@@ -101,12 +125,12 @@ func UpdateFacilitator(c *gin.Context) {
 	}
 
 	type UpdateFacilitatorReq struct {
-		Name         string   `json:"name"`
-		Title        string   `json:"title"`
-		Topic        string   `json:"topic"`
-		Tags         []string `json:"tags"`
-		TopicDetails string   `json:"topic_details"`
-		Photograph   string   `json:"photograph"` //path/to/photograph
+		Name         string `json:"name"`
+		Title        string `json:"title"`
+		Topic        string `json:"topic"`
+		TagIDs       []uint `json:"tag_ids"`
+		TopicDetails string `json:"topic_details"`
+		Photograph   string `json:"photograph"` //path/to/photograph
 	}
 	var req UpdateFacilitatorReq
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -123,33 +147,53 @@ func UpdateFacilitator(c *gin.Context) {
 		config.Log.Warn("Güncellenecek facilitator bulunamadı", zap.String("id", facilID))
 		return
 	}
-	updateData := map[string]interface{}{}
+	err := in.DB.Transaction(func(tx *gorm.DB) error {
+		updateData := map[string]interface{}{}
 
-	if req.Name != "" {
-		updateData["name"] = req.Name
-	}
-	if req.Title != "" {
-		updateData["title"] = req.Title
-	}
-	if req.Topic != "" {
-		updateData["topic"] = req.Topic
-	}
-	if req.Tags != nil {
-		tagsJSON, _ := json.Marshal(req.Tags)
-		updateData["tags"] = tagsJSON
-	}
-	if req.TopicDetails != "" {
-		updateData["topic_details"] = req.TopicDetails
-	}
-	if req.Photograph != "" {
-		updateData["photograph"] = req.Photograph
-	}
+		if req.Name != "" {
+			updateData["name"] = req.Name
+		}
+		if req.Title != "" {
+			updateData["title"] = req.Title
+		}
+		if req.Topic != "" {
+			updateData["topic"] = req.Topic
+		}
+		if req.TopicDetails != "" {
+			updateData["topic_details"] = req.TopicDetails
+		}
+		if req.Photograph != "" {
+			updateData["photograph"] = req.Photograph
+		}
 
-	if err := in.DB.Model(&facilitator).Updates(updateData).Error; err != nil {
+		if len(updateData) > 0 {
+			if err := tx.Model(&facilitator).Updates(updateData).Error; err != nil {
+				return err
+			}
+		}
+
+		if req.TagIDs != nil {
+			var tags []models.Tag
+			if len(req.TagIDs) > 0 {
+				if err := tx.Find(&tags, req.TagIDs).Error; err != nil {
+					return err
+				}
+			}
+			if err := tx.Model(&facilitator).Association("Tags").Replace(&tags); err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
 		config.Log.Error("Facilitator güncellenirken hata", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Facilitator güncellenemedi"})
 		return
 	}
+
+	in.DB.Preload("Tags").First(&facilitator, facilID)
 	c.JSON(http.StatusOK, gin.H{
 		"message":     "Facilitator başarıyla güncellendi",
 		"facilitator": facilitator,

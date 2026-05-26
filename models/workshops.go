@@ -49,7 +49,7 @@ type FacilitatorResponse struct {
 	FacilitatorID uint     `json:"facilitator_id"`
 	Name          string   `json:"name"`
 	Topic         string   `json:"topic"`
-	Tags          []string `json:"tags"`
+	Tags          []Tag    `json:"tags"`
 	TopicDetails  string   `json:"topic_details"`
 	Photograph    string   `json:"photograph"`
 }

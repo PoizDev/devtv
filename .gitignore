@@ -2,3 +2,4 @@
 *.exe
 /logs
 /tmp
+/temp_test

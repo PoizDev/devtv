@@ -4,7 +4,6 @@ import (
 	"context"
 	"devtv/config"
 	"devtv/in"
-	"devtv/models"
 	"fmt"
 	"net/http"
 	"strings"
@@ -19,7 +18,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := c.Cookie("Auth")
 		if err != nil {
-			config.Log.Warn("Auth cookie bulunamadı")
+			config.Log.Warn("Auth cookie bulunamadı", zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access denied - Token bulunamadı"})
 			c.Abort()
 			return
@@ -27,7 +26,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		jwtSecret := in.Auth.JWTSecret
 		if jwtSecret == "" {
-			config.Log.Error("JWT_SECRET tanımlanmış! Auth doğrulaması yapılamaz.")
+			config.Log.Error("JWT_SECRET tanımlanmamış! Auth doğrulaması yapılamaz.")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Sunucu yapılandırma hatası"})
 			c.Abort()
 			return
@@ -42,33 +41,62 @@ func AuthMiddleware() gin.HandlerFunc {
 		})
 
 		if err != nil || !token.Valid {
-			config.Log.Warn("Token doğrulanamadı", zap.Error(err))
+			config.Log.Warn("Token doğrulanamadı", zap.Error(err), zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Access denied - Geçersiz token"})
 			c.Abort()
 			return
 		}
 
-		claims := token.Claims.(jwt.MapClaims)
-		userID := uint(claims["sub"].(float64))
-
-		var user models.User
-		if err := in.DB.First(&user, userID).Error; err != nil {
-			config.Log.Error("Kullanıcı bulunamadı: ", zap.Error(err))
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Kullanıcı bulunamadı"})
+		claims, ok := token.Claims.(jwt.MapClaims)
+		if !ok {
+			config.Log.Warn("Geçersiz token yapısı", zap.String("path", c.Request.URL.Path))
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Geçersiz token yapısı"})
 			c.Abort()
 			return
 		}
 
-		// Sadece admin erişebilir
-		if strings.ToLower(user.Role) != "admin" {
-			config.Log.Warn("Yetkisiz erişim denemesi", zap.String("username", user.Username), zap.String("role", user.Role))
+		// sub (userID) bilgisini güvenli bir şekilde al
+		userIDFloat, ok := claims["sub"].(float64)
+		if !ok {
+			config.Log.Warn("Token içinde kullanıcı ID bulunamadı", zap.String("path", c.Request.URL.Path))
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token içinde kullanıcı ID bulunamadı"})
+			c.Abort()
+			return
+		}
+		userID := uint(userIDFloat)
+
+		// ROL BİLGİSİNİ DOĞRUDAN JWT'DEN ALIYORUZ (Veritabanı sorgusunu sildik!)
+		role := ""
+		if roleClaim, ok := claims["role"].(string); ok {
+			role = roleClaim
+		}
+
+		// Context'e sadece gerekli olan ham verileri gömüyoruz
+		c.Set("userID", userID)
+		c.Set("userRole", role)
+		c.Next()
+	}
+}
+
+func AdminMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		roleObj, exists := c.Get("userRole")
+		if !exists {
+			config.Log.Warn("Rol bilgisi bulunamadı", zap.String("path", c.Request.URL.Path))
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Rol bilgisi bulunamadı"})
+			c.Abort()
+			return
+		}
+
+		// Gelen objeyi string'e çevirip kontrol ediyoruz
+		role, ok := roleObj.(string)
+		if !ok || strings.ToLower(role) != "admin" {
+			config.Log.Warn("Yetkisiz admin erişim denemesi", zap.String("role", role), zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusForbidden, gin.H{"error": "Bu işlemi yapma yetkiniz yok - Sadece admin erişebilir"})
 			c.Abort()
 			return
 		}
 
-		c.Set("userID", userID)
-		c.Set("user", user)
 		c.Next()
 	}
 }
@@ -82,7 +110,7 @@ func TimeoutMiddleware(timeout time.Duration) func(*gin.Context) {
 		c.Next()
 
 		if ctx.Err() == context.DeadlineExceeded {
-			config.Log.Warn("İstek zaman aşımına uğradı: ", zap.String("path", c.Request.URL.Path))
+			config.Log.Warn("İstek zaman aşımına uğradı", zap.String("path", c.Request.URL.Path))
 			c.JSON(http.StatusGatewayTimeout, gin.H{"error": "İstek zaman aşımına uğradı"})
 			c.Abort()
 		}

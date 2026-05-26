@@ -4,6 +4,7 @@ import (
 	"devtv/config"
 	"devtv/in"
 	"devtv/models"
+	"errors"
 	"net/http"
 	"strings"
 	"time"
@@ -12,13 +13,11 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
-// İzin verilen roller — signup'ta sadece bunlar kabul edilir
 var allowedRoles = map[string]bool{
-	"user":      true,
-	"moderator": true,
-	// "admin" burada YOK — admin rolü sadece mevcut admin tarafından atanabilir
+	"user": true,
 }
 
 func Signup(c *gin.Context) {
@@ -48,6 +47,17 @@ func Signup(c *gin.Context) {
 	if !allowedRoles[role] {
 		config.Log.Warn("Yetkisiz rol denemesi", zap.String("requested_role", body.Role), zap.String("username", body.Username))
 		c.JSON(http.StatusForbidden, gin.H{"error": "Bu rol ile kayıt olunamazsınız"})
+		return
+	}
+
+	// Kullanıcı adı çakışma kontrolü
+	var existingUser models.User
+	if err := in.DB.Select("user_id").Where("username = ?", body.Username).First(&existingUser).Error; err == nil {
+		c.JSON(http.StatusConflict, gin.H{"error": "Bu kullanıcı adı zaten alınmış"})
+		return
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		config.Log.Error("Kullanıcı çakışma kontrolü yapılırken hata oluştu", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kullanıcı kontrolü başarısız oldu"})
 		return
 	}
 
@@ -86,15 +96,19 @@ func Login(c *gin.Context) {
 	}
 
 	var user models.User
-	result := in.DB.Where("username = ?", body.Username).First(&user)
-	if result.Error != nil {
-		config.Log.Error("Kullanıcı bulunamadı", zap.Error(result.Error))
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+	if err := in.DB.Where("username = ?", body.Username).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			config.Log.Warn("Hatalı giriş denemesi - Kullanıcı bulunamadı", zap.String("username", body.Username))
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+			return
+		}
+		config.Log.Error("Giriş yapılırken veritabanı hatası", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Giriş işlemi başarısız oldu"})
 		return
 	}
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 	if err != nil {
-		config.Log.Error("Şifre doğrulanamadı", zap.Error(err))
+		config.Log.Warn("Hatalı şifre denemesi", zap.String("username", body.Username), zap.Error(err))
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
 		return
 	}
@@ -114,7 +128,7 @@ func Login(c *gin.Context) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub":  user.UserID,
+		"sub":  user.ID,
 		"role": user.Role,
 		"exp":  time.Now().Add(time.Hour * 24 * time.Duration(expiryDays)).Unix(),
 	})
@@ -166,10 +180,13 @@ func DeleteUser(c *gin.Context) {
 
 	var user models.User
 	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Silinmek istenen user bulunamadı",
-		})
-		config.Log.Warn("Silinmek istenen user bulunamadı", zap.String("id", userID))
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Silinmek istenen user bulunamadı"})
+			config.Log.Warn("Silinmek istenen user bulunamadı", zap.String("id", userID))
+			return
+		}
+		config.Log.Error("Kullanıcı aranırken veritabanı hatası", zap.Error(err), zap.String("id", userID))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Veritabanı hatası"})
 		return
 	}
 
@@ -201,17 +218,20 @@ func UpdateUser(c *gin.Context) {
 		Password string `json:"password"`
 		Role     string `json:"role"`
 	}
-	if err := c.BindJSON(&body); err != nil {
+	if err := c.ShouldBindJSON(&body); err != nil {
 		config.Log.Error("Json'ı eşlerken hata oluştu", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 	var user models.User
 	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Güncellenmek istenen user bulunamadı",
-		})
-		config.Log.Warn("Güncellenmek istenen user bulunamadı", zap.String("id", userID))
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Güncellenmek istenen user bulunamadı"})
+			config.Log.Warn("Güncellenmek istenen user bulunamadı", zap.String("id", userID))
+			return
+		}
+		config.Log.Error("Kullanıcı aranırken veritabanı hatası", zap.Error(err), zap.String("id", userID))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Veritabanı hatası"})
 		return
 	}
 	if body.Password != "" {
@@ -224,7 +244,12 @@ func UpdateUser(c *gin.Context) {
 		user.Password = string(hash)
 	}
 	if body.Role != "" {
-		user.Role = body.Role
+		newRole := strings.ToLower(strings.TrimSpace(body.Role))
+		if newRole != "admin" && newRole != "user" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz rol. Sadece 'admin' veya 'user' rolleri atanabilir."})
+			return
+		}
+		user.Role = newRole
 	}
 	result := in.DB.Save(&user)
 	if result.Error != nil {

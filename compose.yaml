@@ -59,7 +59,6 @@ services:
     volumes:
       - ./in/devtv.env:/in/devtv.env:ro
       - ./conf.yaml:/conf.yaml:ro
-      - ./log4go.json:/log4go.json:ro
       - devtv-logs:/logs
     networks:
       - devtv-net

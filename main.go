@@ -34,6 +34,7 @@ func initialize() {
 	in.Connect(conf.Database, conf.Redis, conf.Auth, conf.Server.EnvPath)
 
 	in.AutoMigrate()
+	in.SeedAdminUser()
 }
 
 func main() {
@@ -132,6 +133,15 @@ func main() {
 	r.GET("/ws/upcoming", controllers.GetUpcomingSlotsWS)
 	r.GET("/ws/sponsors", controllers.GetSponsorsWS)
 
+	//'Survey tayfası (Sadece yetkili kullanıcılar anket çözebilir)
+	survey := r.Group("/survey")
+	survey.Use(middlewares.AuthMiddleware())
+	{
+		survey.GET("/questions", controllers.GetActiveQuestions)
+		survey.POST("/submit", controllers.SubmitSurvey)
+		survey.GET("/results", controllers.GetSurveyResults)
+	}
+
 	//'Workshop HTTP istekleri
 
 	//' Protobuf health endpoint'leri — daha küçük payload, daha hızlı serialize
@@ -140,7 +150,7 @@ func main() {
 
 	//'Admin Accessi
 	admin := r.Group("/admin")
-	admin.Use(middlewares.AuthMiddleware())
+	admin.Use(middlewares.AuthMiddleware(), middlewares.AdminMiddleware())
 	{
 		admin.GET("/users", controllers.GetAllUsers)
 		admin.DELETE("/users/:id", controllers.DeleteUser)
@@ -163,6 +173,26 @@ func main() {
 
 		admin.DELETE("/slots/:id", controllers.DeleteSlots)
 		admin.PUT("/slots/:id", controllers.UpdateTimeSlot)
+
+		// Survey Admin
+		admin.GET("/categories", controllers.GetAllCategories)
+		admin.POST("/categories", controllers.CreateCategory)
+		admin.PUT("/categories/:id", controllers.UpdateCategory)
+		admin.DELETE("/categories/:id", controllers.DeleteCategory)
+
+		admin.GET("/tags", controllers.GetAllTags)
+		admin.POST("/tags", controllers.CreateTag)
+		admin.PUT("/tags/:id", controllers.UpdateTag)
+		admin.DELETE("/tags/:id", controllers.DeleteTag)
+
+		admin.GET("/survey/questions", controllers.GetAllSurveyQuestions)
+		admin.POST("/survey/questions", controllers.CreateSurveyQuestion)
+		admin.PUT("/survey/questions/:id", controllers.UpdateSurveyQuestion)
+		admin.DELETE("/survey/questions/:id", controllers.DeleteSurveyQuestion)
+		
+		admin.POST("/survey/options", controllers.CreateSurveyOption)
+		admin.PUT("/survey/options/:id", controllers.UpdateSurveyOption)
+		admin.DELETE("/survey/options/:id", controllers.DeleteSurveyOption)
 	}
 
 	// 'Server Config ayarları

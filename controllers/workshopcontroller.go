@@ -88,18 +88,26 @@ func AddSlotsToWorkshop(c *gin.Context) {
 		}
 	}
 
-	var maxOrder int
-	in.DB.Model(&models.WorkshopTimeSlot{}).
-		Where("workshop_id = ?", workshopID).
-		Select("COALESCE(MAX(slot_order), 0)").
-		Scan(&maxOrder)
+	err := in.DB.Transaction(func(tx *gorm.DB) error {
+		var maxOrder int
+		tx.Model(&models.WorkshopTimeSlot{}).
+			Where("workshop_id = ?", workshopID).
+			Select("COALESCE(MAX(slot_order), 0)").
+			Scan(&maxOrder)
 
-	for i := range req.TimeSlots {
-		req.TimeSlots[i].WorkshopID = workshop.WorkshopID
-		req.TimeSlots[i].SlotOrder = maxOrder + i + 1
-	}
+		for i := range req.TimeSlots {
+			req.TimeSlots[i].WorkshopID = workshop.WorkshopID
+			req.TimeSlots[i].SlotOrder = maxOrder + i + 1
+		}
 
-	if err := in.DB.Create(&req.TimeSlots).Error; err != nil {
+		if err := tx.Create(&req.TimeSlots).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
 		config.Log.Error("Slot'lar eklenirken hata", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot'lar eklenemedi"})
 		return
@@ -122,6 +130,7 @@ func GetWorkshopSchedule(c *gin.Context) {
 			return db.Order("slot_order ASC")
 		}).
 		Preload("TimeSlots.Facilitator").
+		Preload("TimeSlots.Facilitator.Tags").
 		First(&workshop, workshopID).Error
 
 	if err != nil {
@@ -174,6 +183,7 @@ func GetCurrentSlots(c *gin.Context) {
 	var slots []models.WorkshopTimeSlot
 	err := in.DB.WithContext(c.Request.Context()).
 		Preload("Facilitator").
+		Preload("Facilitator.Tags").
 		Preload("Workshop").
 		Where("slot_start <= ? AND slot_end >= ?", now, now).
 		Find(&slots).Error
@@ -234,6 +244,7 @@ func GetUpcomingSlots(c *gin.Context) {
 	var slots []models.WorkshopTimeSlot
 	err := in.DB.WithContext(c.Request.Context()).
 		Preload("Facilitator").
+		Preload("Facilitator.Tags").
 		Preload("Workshop").
 		Where("slot_start > ?", now).
 		Order("slot_start ASC").
@@ -356,6 +367,7 @@ func GetAllWorkshops(c *gin.Context) {
 			return db.Order("slot_order ASC")
 		}).
 		Preload("TimeSlots.Facilitator").
+		Preload("TimeSlots.Facilitator.Tags").
 		Find(&workshops)
 
 	if result.Error != nil {
@@ -405,42 +417,28 @@ func DeleteWorkshop(c *gin.Context) {
 	}
 
 	// 4. Transaction başlat
-	tx := in.DB.Begin()
-	defer func() {
-		if r := recover(); r != nil {
-			tx.Rollback()
+	var deletedSlotCount int64
+
+	err := in.DB.Transaction(func(tx *gorm.DB) error {
+		// 5. Önce slot'ları sil
+		deleteSlots := tx.Where("workshop_id = ?", workshopID).Delete(&models.WorkshopTimeSlot{})
+		if deleteSlots.Error != nil {
+			return deleteSlots.Error
 		}
-	}()
 
-	if tx.Error != nil {
-		config.Log.Error("Transaction başlatılamadı", zap.Error(tx.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "İşlem başlatılamadı"})
-		return
-	}
+		deletedSlotCount = deleteSlots.RowsAffected
 
-	// 5. Önce slot'ları sil
-	deleteSlots := tx.Where("workshop_id = ?", workshopID).Delete(&models.WorkshopTimeSlot{})
-	if deleteSlots.Error != nil {
-		tx.Rollback()
-		config.Log.Error("Slot'lar silinirken hata", zap.Error(deleteSlots.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot'lar silinemedi"})
-		return
-	}
+		// 6. Sonra workshop'u sil
+		if err := tx.Delete(&workshop).Error; err != nil {
+			return err
+		}
 
-	deletedSlotCount := deleteSlots.RowsAffected
+		return nil
+	})
 
-	// 6. Sonra workshop'u sil
-	if err := tx.Delete(&workshop).Error; err != nil {
-		tx.Rollback()
-		config.Log.Error("Workshop silinirken hata", zap.Error(err))
+	if err != nil {
+		config.Log.Error("Workshop silinirken hata oluştu", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Workshop silinemedi"})
-		return
-	}
-
-	// 7. Transaction'ı tamamla
-	if err := tx.Commit().Error; err != nil {
-		config.Log.Error("Transaction commit edilemedi", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "İşlem tamamlanamadı"})
 		return
 	}
 
@@ -585,22 +583,9 @@ func UpdateTimeSlot(c *gin.Context) {
 		targetEnd = *req.SlotEnd
 	}
 
-	if req.SlotStart != nil || req.SlotEnd != nil {
-		var conflictCount int64
-		err := in.DB.Model(&models.WorkshopTimeSlot{}).
-			Where("workshop_id = ? AND slot_id <> ? AND slot_start = ? AND slot_end = ?",
-				slot.WorkshopID, slot.SlotID, targetStart, targetEnd).
-			Count(&conflictCount).Error
-
-		if err != nil {
-			config.Log.Error("Çakışma kontrolü sırasında DB hatası", zap.Error(err))
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Sistem hatası"})
-			return
-		}
-
-		if conflictCount > 0 {
-			config.Log.Warn("Slot çakışması engellendi", zap.Uint("workshop_id", slot.WorkshopID), zap.Time("start", targetStart))
-			c.JSON(http.StatusConflict, gin.H{"error": "Bu zaman aralığında bu workshop için zaten bir slot mevcut. Güncelleme reddedildi."})
+	if req.SlotStart != nil && req.SlotEnd != nil {
+		if req.SlotEnd.Before(*req.SlotStart) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Bitiş zamanı başlangıçtan önce olamaz"})
 			return
 		}
 	}
@@ -633,20 +618,45 @@ func UpdateTimeSlot(c *gin.Context) {
 		return
 	}
 
-	if req.SlotStart != nil && req.SlotEnd != nil {
-		if req.SlotEnd.Before(*req.SlotStart) {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Bitiş zamanı başlangıçtan önce olamaz"})
-			return
+	conflictFound := false
+	err := in.DB.Transaction(func(tx *gorm.DB) error {
+		if req.SlotStart != nil || req.SlotEnd != nil {
+			var conflictCount int64
+			err := tx.Model(&models.WorkshopTimeSlot{}).
+				Where("workshop_id = ? AND slot_id <> ? AND slot_start = ? AND slot_end = ?",
+					slot.WorkshopID, slot.SlotID, targetStart, targetEnd).
+				Count(&conflictCount).Error
+
+			if err != nil {
+				return err
+			}
+
+			if conflictCount > 0 {
+				conflictFound = true
+				return nil
+			}
 		}
+
+		if err := tx.Model(&slot).Updates(updates).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if conflictFound {
+		config.Log.Warn("Slot çakışması engellendi", zap.Uint("workshop_id", slot.WorkshopID), zap.Time("start", targetStart))
+		c.JSON(http.StatusConflict, gin.H{"error": "Bu zaman aralığında bu workshop için zaten bir slot mevcut. Güncelleme reddedildi."})
+		return
 	}
 
-	if err := in.DB.Model(&slot).Updates(updates).Error; err != nil {
+	if err != nil {
 		config.Log.Error("Slot güncellenirken hata", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Slot güncellenemedi"})
 		return
 	}
 
-	if err := in.DB.Preload("Facilitator").Preload("Workshop").First(&slot, slotID).Error; err != nil {
+	if err := in.DB.Preload("Facilitator").Preload("Facilitator.Tags").Preload("Workshop").First(&slot, slotID).Error; err != nil {
 		config.Log.Error("Güncel slot alınamadı", zap.Error(err))
 	}
 
@@ -667,7 +677,7 @@ func GetCurrentSlotInWorkshop(c *gin.Context) {
 	}
 
 	var workshop models.Workshops
-	err := in.DB.WithContext(c.Request.Context()).Preload("TimeSlots").Preload("TimeSlots.Facilitator").
+	err := in.DB.WithContext(c.Request.Context()).Preload("TimeSlots").Preload("TimeSlots.Facilitator").Preload("TimeSlots.Facilitator.Tags").
 		Where("slot_start <= ? AND slot_end >= ?", time.Now(), time.Now()).
 		First(&workshop, workshopID).Error
 

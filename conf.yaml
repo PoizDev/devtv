@@ -1,7 +1,6 @@
 server: 
   port: ":2012" #'Sunucu portu
   shutdown_timeout: 30s #'Sistem kapanmadan önce istekleri yerine getirmek için bulunan süre
-  log_config_path: "./log4go.json" #'Log dosyasının yolu
   active_level: "dev"
   env_path: "./in/devtv.env" #'Env dosyası yolu
 

@@ -21,7 +21,6 @@ COPY --from=build /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=build /bin/devtv /devtv
 
 COPY conf.yaml  /conf.yaml
-COPY log4go.json /log4go.json
 
 COPY frontend/ /frontend/
 
