@@ -22,7 +22,6 @@ var conf *config.Config
 
 func initialize() {
 	var err error
-	//'İçeriye aktaracaklarım burada
 
 	conf, err = config.LoadConfig("conf.yaml")
 	if err != nil {
@@ -48,7 +47,6 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Recovery())
 
-	//'Health istekleri loglanmaz
 	r.Use(gin.LoggerWithConfig(gin.LoggerConfig{
 		SkipPaths: []string{
 			"/health",
@@ -56,30 +54,31 @@ func main() {
 		},
 	}))
 
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{
+	allowedOrigins := []string{
 		"http://localhost:3000",
 		"http://127.0.0.1:5500",
-		"http://localhost:5500", // Bunu ekleyin
-		"http://127.0.0.1:5500/frontend/index.html",
-		"http://localhost", // Bunu da ekleyin
-		"http://127.0.0.1", // Bunu da
+		"http://localhost:5500",
+		"http://localhost",
+		"http://127.0.0.1",
 	}
 
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = allowedOrigins
 	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
 	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Authorization", "Accept"}
 	corsConfig.AllowCredentials = true
 	corsConfig.AllowWebSockets = true
 	r.Use(cors.New(corsConfig))
 
+	//' WebSocket origin doğrulaması CORS listesiyle senkronize ediliyor
+	controllers.SetWSAllowedOrigins(allowedOrigins)
+
 	middlewares.StartHealthCollector()
 
-	//'Sağlık için kontrolcüler setuplar falan filan
 	circuitBreaker := middlewares.NewCircuitBreaker(
-		int(conf.Middleware.CircuitBreaker.Threshold), //'Conf'dan alıyor artık her şeyi
+		int(conf.Middleware.CircuitBreaker.Threshold),
 		conf.Middleware.CircuitBreaker.Timeout,
 	)
-	//'Circuit Breaker dalgası
 	r.GET("/circuitbreaker", func(c *gin.Context) {
 		state := circuitBreaker.GetState()
 		failures := circuitBreaker.GetFailures()
@@ -97,12 +96,12 @@ func main() {
 		})
 	})
 
-	//'IP Limiter tayfası DDoS engellemek için bu
 	rateLimiter := middlewares.NewIPRateLimiter(
 		rate.Limit(conf.Middleware.RateLimit.Limit),
 		conf.Middleware.RateLimit.Burst,
 	)
-	//'Middleware Tayfayı burada kullandırıyorum
+	rateLimiter.StartCleanup(10 * time.Minute)
+
 	r.Use(middlewares.MetricsMiddleware())
 	r.Use(middlewares.RateLimitMiddleware(rateLimiter))
 	r.Use(middlewares.CircuitBreakerMiddleware(circuitBreaker))
@@ -112,9 +111,7 @@ func main() {
 	cachedRoutes := r.Group("/")
 	cachedRoutes.Use(middlewares.RedisFallbackCache(in.RDB, 5*time.Second))
 	{
-		//'Konuşmacılar / Atölye tayfa
 		cachedRoutes.GET("/facilitator", controllers.GetAllFacilitators)
-		//'Sponsorluk görüntüleme
 		cachedRoutes.GET("/sponsors", controllers.GetSponsors)
 		cachedRoutes.GET("/workshops", controllers.GetAllWorkshops)
 		cachedRoutes.GET("/workshops/:id/schedule", controllers.GetWorkshopSchedule)
@@ -123,17 +120,15 @@ func main() {
 		cachedRoutes.GET("/workshop/:id/slots", controllers.GetCurrentSlotInWorkshop)
 	}
 
-	//'Auth tayfası
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
-	//'WebSocketler
+
 	r.GET("/ws/current", controllers.GetCurrentSlotsWS)
 	r.GET("/ws/:id/current", controllers.GetCurrentSlotInWorkshopWS)
 	r.GET("/ws/workshop/:id/schedule", controllers.GetWorkshopScheduleWS)
 	r.GET("/ws/upcoming", controllers.GetUpcomingSlotsWS)
 	r.GET("/ws/sponsors", controllers.GetSponsorsWS)
 
-	//'Survey tayfası (Sadece yetkili kullanıcılar anket çözebilir)
 	survey := r.Group("/survey")
 	survey.Use(middlewares.AuthMiddleware())
 	{
@@ -142,13 +137,9 @@ func main() {
 		survey.GET("/results", controllers.GetSurveyResults)
 	}
 
-	//'Workshop HTTP istekleri
-
-	//' Protobuf health endpoint'leri — daha küçük payload, daha hızlı serialize
 	r.GET("/health", middlewares.ProtoHealthHandler)
 	r.GET("/health/check", middlewares.ProtoHealthCheckHandler)
 
-	//'Admin Accessi
 	admin := r.Group("/admin")
 	admin.Use(middlewares.AuthMiddleware(), middlewares.AdminMiddleware())
 	{
@@ -156,13 +147,12 @@ func main() {
 		admin.DELETE("/users/:id", controllers.DeleteUser)
 		admin.PUT("/users/:id", controllers.UpdateUser)
 
-		admin.POST("/create/facilitator", controllers.CreateFacilitator)
-		admin.PUT("/facilitator/:id", controllers.UpdateFacilitator)
-		admin.DELETE("facilitator/:id", controllers.DeleteFacilitator)
+		admin.POST("/facilitators", controllers.CreateFacilitator)
+		admin.PUT("/facilitators/:id", controllers.UpdateFacilitator)
+		admin.DELETE("/facilitators/:id", controllers.DeleteFacilitator)
 
-		admin.POST("sponsors/add", controllers.CreateSponsor)
-		admin.DELETE("sponsors/:id", controllers.DeleteSponsors)
-		admin.POST("/create/sponsors", controllers.CreateSponsor)
+		admin.POST("/sponsors", controllers.CreateSponsor)
+		admin.DELETE("/sponsors/:id", controllers.DeleteSponsors)
 		admin.PUT("/sponsors/:id", controllers.UpdateSponsor)
 
 		admin.POST("/workshops/create", controllers.CreateWorkshopWithSlots)
@@ -174,7 +164,6 @@ func main() {
 		admin.DELETE("/slots/:id", controllers.DeleteSlots)
 		admin.PUT("/slots/:id", controllers.UpdateTimeSlot)
 
-		// Survey Admin
 		admin.GET("/categories", controllers.GetAllCategories)
 		admin.POST("/categories", controllers.CreateCategory)
 		admin.PUT("/categories/:id", controllers.UpdateCategory)
@@ -189,13 +178,12 @@ func main() {
 		admin.POST("/survey/questions", controllers.CreateSurveyQuestion)
 		admin.PUT("/survey/questions/:id", controllers.UpdateSurveyQuestion)
 		admin.DELETE("/survey/questions/:id", controllers.DeleteSurveyQuestion)
-		
+
 		admin.POST("/survey/options", controllers.CreateSurveyOption)
 		admin.PUT("/survey/options/:id", controllers.UpdateSurveyOption)
 		admin.DELETE("/survey/options/:id", controllers.DeleteSurveyOption)
 	}
 
-	// 'Server Config ayarları
 	srv := &http.Server{
 		Addr:    conf.Server.Port,
 		Handler: r,
@@ -212,7 +200,6 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	//'Shutdown Timeout
 	ctx, cancel := context.WithTimeout(context.Background(), conf.Server.ShutdownTimeout)
 	defer cancel()
 
@@ -227,14 +214,3 @@ func main() {
 
 	config.Log.Info("Server kapatıldı.")
 }
-
-/* //' Cors planlaması, live'a alınırken bu kullanılacak:
-
-	AllowOrigins:     []string{
-	"https://devfestbursa.com"
-	"https://www.devfestbursa.com"},
-    AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-    AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "Accept"},
-    ExposeHeaders: []string{"Content-Length", "Set-Cookie"}
-    AllowCredentials: true,
-    MaxAge: 12 * time.Hour,*/

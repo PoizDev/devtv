@@ -74,7 +74,7 @@ func SubmitSurvey(c *gin.Context) {
 		})
 	}
 
-	//' Kullanıcı aynı soruya tekrar cevap verirse çakışmayı engellemek için Upsert yapıyoruz
+	//' Upsert — aynı soruya tekrar cevap verilirse çakışma yerine güncelleme yapılır
 	err := in.DB.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "user_id"}, {Name: "question_id"}},
 		DoUpdates: clause.AssignmentColumns([]string{"option_id", "updated_at"}),
@@ -149,6 +149,7 @@ func getUpcomingSlots() ([]models.WorkshopTimeSlot, error) {
 	now := time.Now()
 	err := in.DB.Preload("Facilitator").Preload("Facilitator.Tags").Preload("Workshop").
 		Where("slot_start > ?", now).
+		Limit(100). //' Bellek taşmasını önlemek için üst sınır
 		Find(&slots).Error
 
 	if err != nil {
@@ -191,7 +192,7 @@ func calculateSurveyResults(userID uint) (*SurveyCalculationResult, error) {
 	topCats := sortMapToSlice(categoryScores)
 	topTags := sortMapToSlice(tagScores)
 
-	//' Anket sonuçlarına göre kullanıcıya en uygun olan Akıllı Takvimi (Smart Scheduling) oluşturuyoruz
+	//' Anket sonuçlarına göre akıllı takvim oluşturma
 	upcomingSlots, err := getUpcomingSlots()
 	if err != nil {
 		config.Log.Error("Yaklaşan slotlar alınamadı", zap.Error(err))
@@ -216,7 +217,6 @@ func calculateSurveyResults(userID uint) (*SurveyCalculationResult, error) {
 		}
 	}
 
-	//' Sıralama: Önce Başlangıç Zamanı (ASC), sonra Uyum Skoru (DESC)
 	sort.Slice(scoredSlots, func(i, j int) bool {
 		if scoredSlots[i].Slot.SlotStart.Equal(scoredSlots[j].Slot.SlotStart) {
 			return scoredSlots[i].Score > scoredSlots[j].Score
@@ -229,27 +229,13 @@ func calculateSurveyResults(userID uint) (*SurveyCalculationResult, error) {
 
 	for _, ss := range scoredSlots {
 		if ss.Slot.SlotStart.Before(lastEndTime) {
-			//' Oturum çakışması tespit edildiği için bu oturumu atlıyoruz
 			continue
 		}
 
 		recommendedSchedule = append(recommendedSchedule, ScheduleSlotResponse{
-			TimeSlotResponse: models.TimeSlotResponse{
-				SlotID:    ss.Slot.SlotID,
-				SlotStart: ss.Slot.SlotStart,
-				SlotEnd:   ss.Slot.SlotEnd,
-				SlotOrder: ss.Slot.SlotOrder,
-				Facilitator: models.FacilitatorResponse{
-					FacilitatorID: ss.Slot.Facilitator.FacilitatorID,
-					Name:          ss.Slot.Facilitator.Name,
-					Topic:         ss.Slot.Facilitator.Topic,
-					Tags:          ss.Slot.Facilitator.Tags,
-					TopicDetails:  ss.Slot.Facilitator.TopicDetails,
-					Photograph:    ss.Slot.Facilitator.Photograph,
-				},
-			},
-			WorkshopName: ss.Slot.Workshop.WorkshopName,
-			MatchScore:   ss.Score,
+			TimeSlotResponse: ss.Slot.ToResponse(),
+			WorkshopName:     ss.Slot.Workshop.WorkshopName,
+			MatchScore:       ss.Score,
 		})
 		lastEndTime = ss.Slot.SlotEnd
 	}

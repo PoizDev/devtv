@@ -19,12 +19,11 @@ func invalidateActiveQuestionsCache() {
 	}
 }
 
-// ---- CATEGORY ----
 func GetAllCategories(c *gin.Context) {
 	var cats []models.Category
 	if err := in.DB.Find(&cats).Error; err != nil {
 		config.Log.Error("Kategoriler alınamadı", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kategoriler alınamadı: " + err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kategoriler alınamadı"})
 		return
 	}
 	c.JSON(http.StatusOK, cats)
@@ -51,11 +50,26 @@ func UpdateCategory(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Kategori bulunamadı"})
 		return
 	}
-	if err := c.ShouldBindJSON(&cat); err != nil {
+
+	//' Sadece izin verilen alanlar güncelleniyor — mass assignment koruması
+	var req struct {
+		Name        string `json:"name"`
+		Description string `json:"description"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek"})
 		return
 	}
-	if err := in.DB.Save(&cat).Error; err != nil {
+
+	updates := map[string]interface{}{}
+	if req.Name != "" {
+		updates["name"] = req.Name
+	}
+	if req.Description != "" {
+		updates["description"] = req.Description
+	}
+
+	if err := in.DB.Model(&cat).Updates(updates).Error; err != nil {
 		config.Log.Error("Kategori güncellenemedi", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kategori güncellenemedi"})
 		return
@@ -74,12 +88,11 @@ func DeleteCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Kategori silindi"})
 }
 
-// ---- TAG ----
 func GetAllTags(c *gin.Context) {
 	var tags []models.Tag
 	if err := in.DB.Preload("Categories").Find(&tags).Error; err != nil {
 		config.Log.Error("Tagler alınamadı", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tagler alınamadı: " + err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tagler alınamadı"})
 		return
 	}
 	c.JSON(http.StatusOK, tags)
@@ -98,7 +111,7 @@ func CreateTag(c *gin.Context) {
 	tag := models.Tag{Name: req.Name}
 	if err := in.DB.Create(&tag).Error; err != nil {
 		config.Log.Error("Tag oluşturulamadı", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tag oluşturulamadı: " + err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tag oluşturulamadı"})
 		return
 	}
 
@@ -155,7 +168,7 @@ func UpdateTag(c *gin.Context) {
 
 	if err != nil {
 		config.Log.Error("Tag güncellenemedi", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tag güncellenemedi: " + err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Tag güncellenemedi"})
 		return
 	}
 
@@ -174,13 +187,14 @@ func DeleteTag(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Tag silindi"})
 }
 
-// ---- SURVEY QUESTION ----
+// ' Survey soruları — sadece izin verilen alanlar güncelleniyor
 func CreateSurveyQuestion(c *gin.Context) {
 	var sq models.SurveyQuestion
 	if err := c.ShouldBindJSON(&sq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek"})
 		return
 	}
+	sq.ID = 0 //' Client'ın ID set etmesini engelle
 	if err := in.DB.Create(&sq).Error; err != nil {
 		config.Log.Error("Soru oluşturulamadı", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Soru oluşturulamadı"})
@@ -197,11 +211,29 @@ func UpdateSurveyQuestion(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Soru bulunamadı"})
 		return
 	}
-	if err := c.ShouldBindJSON(&sq); err != nil {
+
+	var req struct {
+		Text     string `json:"text"`
+		IsActive *bool  `json:"is_active"`
+		Order    *int   `json:"order"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek"})
 		return
 	}
-	if err := in.DB.Save(&sq).Error; err != nil {
+
+	updates := map[string]interface{}{}
+	if req.Text != "" {
+		updates["text"] = req.Text
+	}
+	if req.IsActive != nil {
+		updates["is_active"] = *req.IsActive
+	}
+	if req.Order != nil {
+		updates["order"] = *req.Order
+	}
+
+	if err := in.DB.Model(&sq).Updates(updates).Error; err != nil {
 		config.Log.Error("Soru güncellenemedi", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Soru güncellenemedi"})
 		return
@@ -222,13 +254,13 @@ func DeleteSurveyQuestion(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Soru silindi"})
 }
 
-// ---- SURVEY OPTION ----
 func CreateSurveyOption(c *gin.Context) {
 	var so models.SurveyOption
 	if err := c.ShouldBindJSON(&so); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek"})
 		return
 	}
+	so.ID = 0
 	if err := in.DB.Create(&so).Error; err != nil {
 		config.Log.Error("Şık oluşturulamadı", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Şık oluşturulamadı"})
@@ -245,11 +277,29 @@ func UpdateSurveyOption(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Şık bulunamadı"})
 		return
 	}
-	if err := c.ShouldBindJSON(&so); err != nil {
+
+	var req struct {
+		Text   string `json:"text"`
+		TagID  *uint  `json:"tag_id"`
+		Points *int   `json:"points"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek"})
 		return
 	}
-	if err := in.DB.Save(&so).Error; err != nil {
+
+	updates := map[string]interface{}{}
+	if req.Text != "" {
+		updates["text"] = req.Text
+	}
+	if req.TagID != nil {
+		updates["tag_id"] = *req.TagID
+	}
+	if req.Points != nil {
+		updates["points"] = *req.Points
+	}
+
+	if err := in.DB.Model(&so).Updates(updates).Error; err != nil {
 		config.Log.Error("Şık güncellenemedi", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Şık güncellenemedi"})
 		return
@@ -270,14 +320,12 @@ func DeleteSurveyOption(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Şık silindi"})
 }
 
-// ---- ADMIN: GET ALL QUESTIONS (ACTIVE & INACTIVE) ----
 func GetAllSurveyQuestions(c *gin.Context) {
 	var questions []models.SurveyQuestion
-	// Preload Options and Option's Tag for admin view
 	err := in.DB.Preload("Options.Tag.Categories").Order("\"order\" asc").Find(&questions).Error
 	if err != nil {
 		config.Log.Error("Tüm sorular alınamadı", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sorular alınırken bir hata oluştu: " + err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sorular alınırken bir hata oluştu"})
 		return
 	}
 	c.JSON(http.StatusOK, questions)

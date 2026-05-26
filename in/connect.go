@@ -1,8 +1,10 @@
 package in
 
 import (
-	"devtv/config" // Config paketini import et
+	"context"
+	"devtv/config"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
@@ -54,12 +56,19 @@ func Connect(dbConf config.DatabaseConfig, redisConf config.RedisConfig, authCon
 		DB:       redisConf.Db,
 	})
 
-	// Config dosyasından gelen değerleri set ediyoruz
+	pingCtx, pingCancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer pingCancel()
+	if err = RDB.Ping(pingCtx).Err(); err != nil {
+		config.Log.Error("Redis bağlantısı başarısız", zap.Error(err))
+		RDB = nil
+	} else {
+		config.Log.Info("Redis bağlantısı başarılı")
+	}
+
 	sqlDB.SetMaxIdleConns(dbConf.MaxIdleConns)
 	sqlDB.SetMaxOpenConns(dbConf.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(dbConf.ConnMaxLifetime)
 	sqlDB.SetConnMaxIdleTime(dbConf.ConnMaxIdleTime)
 
-	config.Log.Debug("Veritabanına başarıyla bağlanıldı.")
-	config.Log.Info("Connection Pooling ayarları uygulandı.")
+	config.Log.Info("Veritabanı bağlantısı ve connection pooling ayarları uygulandı")
 }

@@ -28,18 +28,15 @@ func Signup(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&body); err != nil {
-		config.Log.Error("Json'ı eşlerken hata oluştu", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Username ve password zorunludur"})
 		return
 	}
 
-	// Şifre uzunluk kontrolü
 	if len(body.Password) < 6 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Şifre en az 6 karakter olmalıdır"})
 		return
 	}
 
-	// Role validasyonu — boşsa "user" yap, izin verilmeyen rol gelirse reddet
 	role := strings.ToLower(strings.TrimSpace(body.Role))
 	if role == "" {
 		role = "user"
@@ -50,7 +47,6 @@ func Signup(c *gin.Context) {
 		return
 	}
 
-	// Kullanıcı adı çakışma kontrolü
 	var existingUser models.User
 	if err := in.DB.Select("user_id").Where("username = ?", body.Username).First(&existingUser).Error; err == nil {
 		c.JSON(http.StatusConflict, gin.H{"error": "Bu kullanıcı adı zaten alınmış"})
@@ -64,7 +60,7 @@ func Signup(c *gin.Context) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
 	if err != nil {
 		config.Log.Error("Şifre hashlenirken bir hata oluştu", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Şifre işlenemedi"})
 		return
 	}
 
@@ -73,14 +69,14 @@ func Signup(c *gin.Context) {
 		Password: string(hash),
 		Role:     role,
 	}
-	result := in.DB.Create(&user)
-	if result.Error != nil {
+	if result := in.DB.Create(&user); result.Error != nil {
 		config.Log.Error("Kullanıcı oluşturulurken hata oluştu", zap.Error(result.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kullanıcı oluşturulamadı"})
 		return
 	}
+
 	config.Log.Info("Kullanıcı başarıyla oluşturuldu", zap.String("username", user.Username), zap.String("role", user.Role))
-	c.JSON(http.StatusOK, gin.H{"message": "User created successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "Kullanıcı başarıyla oluşturuldu"})
 }
 
 func Login(c *gin.Context) {
@@ -90,7 +86,6 @@ func Login(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&body); err != nil {
-		config.Log.Error("Json'ı eşlerken hata oluştu", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Username ve password zorunludur"})
 		return
 	}
@@ -98,33 +93,31 @@ func Login(c *gin.Context) {
 	var user models.User
 	if err := in.DB.Where("username = ?", body.Username).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			config.Log.Warn("Hatalı giriş denemesi - Kullanıcı bulunamadı", zap.String("username", body.Username))
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+			config.Log.Warn("Hatalı giriş denemesi", zap.String("username", body.Username))
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Geçersiz kullanıcı adı veya şifre"})
 			return
 		}
 		config.Log.Error("Giriş yapılırken veritabanı hatası", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Giriş işlemi başarısız oldu"})
 		return
 	}
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
-	if err != nil {
-		config.Log.Warn("Hatalı şifre denemesi", zap.String("username", body.Username), zap.Error(err))
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password)); err != nil {
+		config.Log.Warn("Hatalı şifre denemesi", zap.String("username", body.Username))
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Geçersiz kullanıcı adı veya şifre"})
 		return
 	}
 
-	// JWT Secret kontrolü
 	jwtSecret := in.Auth.JWTSecret
 	if jwtSecret == "" {
-		config.Log.Error("JWT_SECRET tanımlanmamış! Login yapılamaz.")
+		config.Log.Error("JWT_SECRET tanımlanmamış")
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Sunucu yapılandırma hatası"})
 		return
 	}
 
-	// Token süresi config'den alınıyor
 	expiryDays := in.Auth.TokenExpiryDays
 	if expiryDays <= 0 {
-		expiryDays = 30 // Varsayılan
+		expiryDays = 30
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -136,11 +129,10 @@ func Login(c *gin.Context) {
 	tokenString, err := token.SignedString([]byte(jwtSecret))
 	if err != nil {
 		config.Log.Error("Token imzalanırken hata oluştu", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Token oluşturulamadı"})
 		return
 	}
 
-	// Cookie ayarları config'den okunuyor
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie(
 		"Auth",
@@ -149,10 +141,10 @@ func Login(c *gin.Context) {
 		"/",
 		in.Auth.CookieDomain,
 		in.Auth.CookieSecure,
-		true, // HttpOnly — JavaScript erişemez
+		true,
 	)
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
 	config.Log.Info("Kullanıcı giriş yaptı", zap.String("username", user.Username))
+	c.JSON(http.StatusOK, gin.H{"message": "Giriş başarılı"})
 }
 
 func GetAllUsers(c *gin.Context) {
@@ -160,29 +152,23 @@ func GetAllUsers(c *gin.Context) {
 	result := in.DB.Select("user_id", "username", "role", "created_at").Find(&users)
 	if result.Error != nil {
 		config.Log.Error("Kullanıcılar alınırken hata oluştu", zap.Error(result.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve users"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kullanıcılar alınamadı"})
 		return
 	}
 	c.JSON(http.StatusOK, users)
-	config.Log.Info("Tüm kullanıcılar alındı", zap.Uint("userID", c.GetUint("userID")))
 }
 
 func DeleteUser(c *gin.Context) {
 	userID := c.Param("id")
-
 	if userID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "User ID gerekli",
-		})
-		config.Log.Warn("User ID parametresi boş")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User ID gerekli"})
 		return
 	}
 
 	var user models.User
 	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Silinmek istenen user bulunamadı"})
-			config.Log.Warn("Silinmek istenen user bulunamadı", zap.String("id", userID))
+			c.JSON(http.StatusNotFound, gin.H{"error": "Kullanıcı bulunamadı"})
 			return
 		}
 		config.Log.Error("Kullanıcı aranırken veritabanı hatası", zap.Error(err), zap.String("id", userID))
@@ -190,59 +176,56 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	result := in.DB.Delete(&user)
-	if result.Error != nil {
+	if result := in.DB.Delete(&user); result.Error != nil {
 		config.Log.Error("User silinirken hata", zap.Error(result.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "User silinemedi, " + result.Error.Error(),
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kullanıcı silinemedi"})
 		return
 	}
+
+	config.Log.Info("User silindi", zap.String("id", userID))
 	c.JSON(http.StatusOK, gin.H{
-		"message": "User silindi",
+		"message": "Kullanıcı silindi",
 		"user_id": userID,
 	})
-	config.Log.Info("User silindi", zap.String("id", userID))
 }
 
 func UpdateUser(c *gin.Context) {
 	userID := c.Param("id")
 	if userID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "User ID Gerekli",
-		})
-		config.Log.Warn("User ID parametresi boş")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User ID gerekli"})
 		return
 	}
+
 	var body struct {
 		Password string `json:"password"`
 		Role     string `json:"role"`
 	}
 	if err := c.ShouldBindJSON(&body); err != nil {
-		config.Log.Error("Json'ı eşlerken hata oluştu", zap.Error(err))
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Geçersiz istek verisi"})
 		return
 	}
+
 	var user models.User
 	if err := in.DB.First(&user, "user_id = ?", userID).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Güncellenmek istenen user bulunamadı"})
-			config.Log.Warn("Güncellenmek istenen user bulunamadı", zap.String("id", userID))
+			c.JSON(http.StatusNotFound, gin.H{"error": "Kullanıcı bulunamadı"})
 			return
 		}
 		config.Log.Error("Kullanıcı aranırken veritabanı hatası", zap.Error(err), zap.String("id", userID))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Veritabanı hatası"})
 		return
 	}
+
 	if body.Password != "" {
 		hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
 		if err != nil {
 			config.Log.Error("Şifre hashlenirken hata oluştu", zap.Error(err))
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Şifre hashlenirken hata oluştu"})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Şifre işlenemedi"})
 			return
 		}
 		user.Password = string(hash)
 	}
+
 	if body.Role != "" {
 		newRole := strings.ToLower(strings.TrimSpace(body.Role))
 		if newRole != "admin" && newRole != "user" {
@@ -251,12 +234,13 @@ func UpdateUser(c *gin.Context) {
 		}
 		user.Role = newRole
 	}
-	result := in.DB.Save(&user)
-	if result.Error != nil {
+
+	if result := in.DB.Save(&user); result.Error != nil {
 		config.Log.Error("User güncellenirken hata oluştu", zap.Error(result.Error))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "User güncellenirken bir hata oluştu"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Kullanıcı güncellenemedi"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "User güncellendi"})
+
 	config.Log.Info("User güncellendi", zap.String("id", userID))
+	c.JSON(http.StatusOK, gin.H{"message": "Kullanıcı güncellendi"})
 }

@@ -55,10 +55,34 @@ type FacilitatorResponse struct {
 }
 
 type UpcomingSlotResponse struct {
-	SlotID         uint               `json:"slot_id"`
-	WorkshopName   string             `json:"workshop_name"`
-	SlotStart      time.Time          `json:"slot_start"`
-	SlotEnd        time.Time          `json:"slot_end"`
-	Facilitator     FacilitatorResponse `json:"facilitator"`
-	TimeUntilStart string             `json:"time_until_start"`
+	SlotID         uint                `json:"slot_id"`
+	WorkshopName   string              `json:"workshop_name"`
+	SlotStart      time.Time           `json:"slot_start"`
+	SlotEnd        time.Time           `json:"slot_end"`
+	Facilitator    FacilitatorResponse  `json:"facilitator"`
+	TimeUntilStart string              `json:"time_until_start"`
+}
+
+func (f *Facilitators) ToResponse() FacilitatorResponse {
+	return FacilitatorResponse{
+		FacilitatorID: f.FacilitatorID,
+		Name:          f.Name,
+		Topic:         f.Topic,
+		Tags:          f.Tags,
+		TopicDetails:  f.TopicDetails,
+		Photograph:    f.Photograph,
+	}
+}
+
+func (s *WorkshopTimeSlot) ToResponse() TimeSlotResponse {
+	resp := TimeSlotResponse{
+		SlotID:    s.SlotID,
+		SlotStart: s.SlotStart,
+		SlotEnd:   s.SlotEnd,
+		SlotOrder: s.SlotOrder,
+	}
+	if s.Facilitator != nil {
+		resp.Facilitator = s.Facilitator.ToResponse()
+	}
+	return resp
 }

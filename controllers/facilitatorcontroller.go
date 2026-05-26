@@ -97,12 +97,9 @@ func DeleteFacilitator(c *gin.Context) {
 	}
 
 	result := in.DB.Delete(&facil)
-
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Facilitator silinirken bir hata oluştu" + result.Error.Error(),
-		})
-		config.Log.Error("Facilitator silinirken bir hata oluştu", zap.Error(result.Error))
+		config.Log.Error("Facilitator silinirken hata", zap.Error(result.Error))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Facilitator silinemedi"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{

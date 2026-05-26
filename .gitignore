@@ -3,3 +3,4 @@
 /logs
 /tmp
 /temp_test
+*_test.go

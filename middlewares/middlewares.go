@@ -185,10 +185,6 @@ func FormatUptime(d time.Duration) string {
 		parts = parts[:2]
 	}
 
-	if len(parts) > 3 {
-		parts = parts[:3]
-	}
-
 	return joinParts(parts)
 }
 

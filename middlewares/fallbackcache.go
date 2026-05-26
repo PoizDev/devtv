@@ -23,6 +23,10 @@ func (w *bufferedWriter) Write(b []byte) (int, error) {
 	return w.body.Write(b)
 }
 
+func (w *bufferedWriter) WriteString(s string) (int, error) {
+	return w.body.WriteString(s)
+}
+
 func (w *bufferedWriter) WriteHeader(statusCode int) {
 	w.statusCode = statusCode
 }
