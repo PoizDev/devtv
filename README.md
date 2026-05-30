@@ -32,6 +32,18 @@
 | Protobuf | 1.36.11 | Health endpoint serializasyonu |
 | Docker | distroless | Container runtime |
 
+## Güvenlik ve Performans Özellikleri
+
+Sistem, production ortamında güvenli ve stabil çalışması için çeşitli katmanlarla donatılmıştır:
+
+- **Hassas Veri Koruması (Information Exposure Prevention):** API yanıtlarında veritabanı hataları veya iç sistem detayları dışarıya sızdırılmaz. Özel hata mesajları ile sistem izole edilmiştir.
+- **DDoS ve Brute Force Koruması (Rate Limiter):** IP tabanlı, otomatik bellek temizleme (cleanup) özelliğine sahip rate limiter ile kötü niyetli istekler engellenir.
+- **Sıkı CORS ve WebSocket Origin Kontrolleri:** İzin verilen origin'ler merkezi olarak yönetilir ve WebSocket bağlantıları da bu CORS politikalarıyla senkronize şekilde doğrulanır.
+- **Hata Toleransı (Circuit Breaker):** Servislerde yaşanan ardışık hatalarda sistemin kendini korumaya alması ve çökmesinin engellenmesi sağlanır.
+- **Önbellekleme (Redis Fallback Cache):** Yüksek trafik anında veritabanı yükünü azaltmak için aktif veriler önbelleklenir.
+- **Distroless Konteyner Mimarisi:** Minimum saldırı yüzeyi sunan, shell barındırmayan `nonroot` Docker imajları ile maksimum sunucu güvenliği.
+- **Güvenli JWT Auth:** Kimlik doğrulama token'ları JavaScript tarafından erişilemeyen (HttpOnly, SameSite) çerezler ile taşınır.
+
 ## Standart Sistem Kurulumu
 
 1. Repoyu Klonlayın
@@ -863,6 +875,91 @@ Yanıt:
     "sponsor_id": 1
 }
 ```
+
+### Anket (Survey) ve Akıllı Öneri Sistemi
+
+Sistem, kullanıcıların ilgi alanlarını belirlemek ve onlara en uygun etkinlik takvimini (Smart Recommendation) sunmak için bir anket motoruna sahiptir.
+
+**Not:** Bu endpoint'ler yetkilendirme (JWT Token) gerektirir. Sadece sisteme giriş yapmış kullanıcılar anket doldurabilir.
+
+1. Aktif Anket Sorularını Alma
+
+```text
+GET - localhost:2012/survey/questions
+
+Yanıt:
+[
+    {
+        "id": 1,
+        "text": "Yazılım geliştirirken en çok hangi dili tercih edersiniz?",
+        "options": [
+            { "id": 1, "text": "Go", "points": 10 },
+            { "id": 2, "text": "JavaScript", "points": 8 }
+        ]
+    }
+]
+```
+
+1. Anketi Cevaplama (Gönderme)
+
+Aynı soruya tekrar cevap verilirse çakışma yerine güncelleme yapılır (Upsert).
+
+```text
+POST - localhost:2012/survey/submit
+
+JSON Body Örneği:
+{
+    "answers": [
+        {
+            "question_id": 1,
+            "option_id": 1
+        }
+    ]
+}
+
+Yanıt:
+{
+    "message": "Anket başarıyla kaydedildi",
+    "results": {
+        "top_categories": [...],
+        "top_tags": [...],
+        "recommended_schedule": [...]
+    }
+}
+```
+
+1. Anket Sonuçlarını ve Akıllı Takvim Önerisini Alma
+
+Kullanıcının daha önce verdiği cevaplara göre kişiselleştirilmiş (zaman çakışmaları çözülmüş) atölye/oturum takvimi önerisi oluşturur.
+
+```text
+GET - localhost:2012/survey/results
+
+Yanıt:
+{
+    "top_categories": [
+        { "name": "Backend", "score": 25 }
+    ],
+    "top_tags": [
+        { "name": "Go", "score": 15 }
+    ],
+    "recommended_schedule": [
+        {
+            "slot_id": 10,
+            "workshop_name": "Örnek Atölye",
+            "match_score": 15
+        }
+    ]
+}
+```
+
+#### Survey Admin Kontrolleri (Sadece Admin)
+
+Kategori, Soru ve Seçenek yönetimi Admin yetkisi gerektirir.
+
+- **Kategori Yönetimi:** `GET, POST /admin/categories`, `PUT, DELETE /admin/categories/:id`
+- **Soru Yönetimi:** `POST /admin/survey/questions`, `PUT, DELETE /admin/survey/questions/:id`
+- **Seçenek Yönetimi:** `POST /admin/survey/options`, `PUT, DELETE /admin/survey/options/:id`
 
 ### WebSocket Endpoints
 
