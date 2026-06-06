@@ -109,7 +109,7 @@ func main() {
 	r.Use(middlewares.RequestLoggerMiddleWare())
 
 	cachedRoutes := r.Group("/")
-	cachedRoutes.Use(middlewares.RedisFallbackCache(in.RDB, 5*time.Second))
+	cachedRoutes.Use(middlewares.RedisCache(in.RDB, 5*time.Second))
 	{
 		cachedRoutes.GET("/facilitator", controllers.GetAllFacilitators)
 		cachedRoutes.GET("/sponsors", controllers.GetSponsors)

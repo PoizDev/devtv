@@ -14,10 +14,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 
 var wsAllowedOrigins map[string]bool
+var wsSingleflight singleflight.Group
 
 func SetWSAllowedOrigins(origins []string) {
 	wsAllowedOrigins = make(map[string]bool, len(origins))
@@ -187,7 +189,7 @@ func marshalOrLog(v interface{}) []byte {
 	return raw
 }
 
-//' DB hatası durumunda Redis → RAM fallback zinciri
+// ' DB hatası durumunda Redis → RAM fallback zinciri
 func tryFallback(manager *ClientManager, cachedJSON []byte, redisFallbackKey string) {
 	if in.RDB != nil {
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
@@ -220,6 +222,92 @@ func cacheAndBroadcast(manager *ClientManager, raw []byte, cache *[]byte, cacheT
 	}
 
 	manager.BroadcastRaw(raw)
+}
+
+// ' DB sorgularını singleflight ile sararak eşzamanlı istekleri tekile indirger
+func fetchCurrentSlotsData() ([]models.WorkshopTimeSlot, error) {
+	val, err, _ := wsSingleflight.Do("ws:current_slots", func() (interface{}, error) {
+		now := time.Now()
+		var slots []models.WorkshopTimeSlot
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		err := in.DB.WithContext(ctx).
+			Preload("Facilitator").
+			Preload("Workshop").
+			Where("slot_start <= ? AND slot_end >= ?", now, now).
+			Find(&slots).Error
+		if err != nil {
+			return nil, err
+		}
+		return slots, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return val.([]models.WorkshopTimeSlot), nil
+}
+
+func fetchUpcomingSlotsData() ([]models.WorkshopTimeSlot, error) {
+	val, err, _ := wsSingleflight.Do("ws:upcoming_slots", func() (interface{}, error) {
+		now := time.Now()
+		var slots []models.WorkshopTimeSlot
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		err := in.DB.WithContext(ctx).
+			Preload("Facilitator").
+			Preload("Workshop").
+			Where("slot_start > ?", now).
+			Order("slot_start ASC").
+			Find(&slots).Error
+		if err != nil {
+			return nil, err
+		}
+		return slots, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return val.([]models.WorkshopTimeSlot), nil
+}
+
+func fetchSponsorsData() ([]models.Sponsors, error) {
+	val, err, _ := wsSingleflight.Do("ws:sponsors", func() (interface{}, error) {
+		var sponsors []models.Sponsors
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		err := in.DB.WithContext(ctx).Find(&sponsors).Error
+		if err != nil {
+			return nil, err
+		}
+		return sponsors, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return val.([]models.Sponsors), nil
+}
+
+// ' Schedule ve current-slot broadcaster'ları aynı workshop verisini paylaşır
+func fetchWorkshopWithSlots(workshopID string) (*models.Workshops, error) {
+	val, err, _ := wsSingleflight.Do("ws:workshop:"+workshopID, func() (interface{}, error) {
+		var workshop models.Workshops
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		err := in.DB.WithContext(ctx).
+			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
+				return db.Order("slot_order ASC")
+			}).
+			Preload("TimeSlots.Facilitator").
+			First(&workshop, workshopID).Error
+		if err != nil {
+			return nil, err
+		}
+		return &workshop, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return val.(*models.Workshops), nil
 }
 
 var (
@@ -259,7 +347,7 @@ func setupWSClient(c *gin.Context, manager *ClientManager) {
 		return nil
 	})
 	middlewares.IncreaseWS()
-	
+
 	client := &Client{
 		conn: ws,
 		send: make(chan []byte, 256),
@@ -390,16 +478,7 @@ func startCurrentSlotsBroadcaster() {
 		}
 
 		now := time.Now()
-		var slots []models.WorkshopTimeSlot
-
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		err := in.DB.WithContext(ctx).
-			Preload("Facilitator").
-			Preload("Workshop").
-			Where("slot_start <= ? AND slot_end >= ?", now, now).
-			Find(&slots).Error
-		cancel()
-
+		slots, err := fetchCurrentSlotsData()
 		if err != nil {
 			config.Log.Error("Veritabanı hatası, fallback devreye giriyor", zap.Error(err))
 			tryFallback(currentSlotsManager, cachedJSON, redisFallbackKey)
@@ -459,17 +538,7 @@ func startUpcomingSlotsBroadcaster() {
 		}
 
 		now := time.Now()
-		var slots []models.WorkshopTimeSlot
-
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		err := in.DB.WithContext(ctx).
-			Preload("Facilitator").
-			Preload("Workshop").
-			Where("slot_start > ?", now).
-			Order("slot_start ASC").
-			Find(&slots).Error
-		cancel()
-
+		slots, err := fetchUpcomingSlotsData()
 		if err != nil {
 			config.Log.Error("Veritabanı hatası, fallback devreye giriyor", zap.Error(err))
 			tryFallback(upcomingSlotsManager, cachedJSON, redisFallbackKey)
@@ -531,11 +600,7 @@ func startSponsorsBroadcaster() {
 			continue
 		}
 
-		var sponsors []models.Sponsors
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		err := in.DB.WithContext(ctx).Find(&sponsors).Error
-		cancel()
-
+		sponsors, err := fetchSponsorsData()
 		if err != nil {
 			config.Log.Error("Veritabanı hatası, fallback devreye giriyor", zap.Error(err))
 			tryFallback(sponsorsManager, cachedJSON, redisFallbackKey)
@@ -580,16 +645,7 @@ func startSpecificWorkshopBroadcaster(workshopID string, manager *ClientManager)
 			continue
 		}
 
-		var workshop models.Workshops
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		err := in.DB.WithContext(ctx).
-			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
-				return db.Order("slot_order ASC")
-			}).
-			Preload("TimeSlots.Facilitator").
-			First(&workshop, workshopID).Error
-		cancel()
-
+		workshop, err := fetchWorkshopWithSlots(workshopID)
 		if err != nil {
 			config.Log.Error("Veritabanı hatası, fallback devreye giriyor", zap.Error(err))
 			tryFallback(manager, cachedJSON, redisFallbackKey)
@@ -654,17 +710,7 @@ func startWorkshopCurrentSlotBroadcaster(workshopID string, manager *ClientManag
 		}
 
 		now := time.Now()
-		var workshop models.Workshops
-
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		err := in.DB.WithContext(ctx).
-			Preload("TimeSlots", func(db *gorm.DB) *gorm.DB {
-				return db.Order("slot_order ASC")
-			}).
-			Preload("TimeSlots.Facilitator").
-			First(&workshop, workshopID).Error
-		cancel()
-
+		workshop, err := fetchWorkshopWithSlots(workshopID)
 		if err != nil {
 			config.Log.Error("Veritabanı hatası, fallback devreye giriyor", zap.Error(err))
 			tryFallback(manager, cachedJSON, redisFallbackKey)
