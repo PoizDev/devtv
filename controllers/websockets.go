@@ -39,10 +39,39 @@ var upgrader = websocket.Upgrader{
 	HandshakeTimeout: 10 * time.Second,
 }
 
+type Client struct {
+	conn *websocket.Conn
+	send chan []byte
+}
+
+func (c *Client) writePump() {
+	ticker := time.NewTicker(30 * time.Second)
+	defer func() {
+		ticker.Stop()
+		c.conn.Close()
+	}()
+	for {
+		select {
+		case message, ok := <-c.send:
+			if !ok {
+				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+				return
+			}
+			c.conn.SetWriteDeadline(time.Now().Add(5 * time.Second))
+			c.conn.WriteMessage(websocket.TextMessage, message)
+		case <-ticker.C:
+			c.conn.SetWriteDeadline(time.Now().Add(5 * time.Second))
+			if err := c.conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+				return
+			}
+		}
+	}
+}
+
 type ClientManager struct {
-	clients      map[*websocket.Conn]bool
-	register     chan *websocket.Conn
-	unregister   chan *websocket.Conn
+	clients      map[*Client]bool
+	register     chan *Client
+	unregister   chan *Client
 	broadcast    chan interface{}
 	broadcastRaw chan []byte
 	lock         sync.RWMutex
@@ -53,9 +82,9 @@ type ClientManager struct {
 func NewClientManager() *ClientManager {
 	ctx, cancel := context.WithCancel(context.Background())
 	cm := &ClientManager{
-		clients:      make(map[*websocket.Conn]bool),
-		register:     make(chan *websocket.Conn, 100),
-		unregister:   make(chan *websocket.Conn, 100),
+		clients:      make(map[*Client]bool),
+		register:     make(chan *Client, 100),
+		unregister:   make(chan *Client, 100),
 		broadcast:    make(chan interface{}, 1000),
 		broadcastRaw: make(chan []byte, 1000),
 		ctx:          ctx,
@@ -66,9 +95,6 @@ func NewClientManager() *ClientManager {
 }
 
 func (cm *ClientManager) run() {
-	ticker := time.NewTicker(30 * time.Second)
-	defer ticker.Stop()
-
 	for {
 		select {
 		case <-cm.ctx.Done():
@@ -83,58 +109,47 @@ func (cm *ClientManager) run() {
 			cm.lock.Lock()
 			if _, ok := cm.clients[client]; ok {
 				delete(cm.clients, client)
-				client.Close()
+				close(client.send)
 			}
 			cm.lock.Unlock()
 
 		case raw := <-cm.broadcastRaw:
-			cm.lock.RLock()
+			cm.lock.Lock()
 			for client := range cm.clients {
-				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
-				if err := client.WriteMessage(websocket.TextMessage, raw); err != nil {
-					select {
-					case cm.unregister <- client:
-					default:
-					}
+				select {
+				case client.send <- raw:
+				default:
+					close(client.send)
+					delete(cm.clients, client)
 				}
 			}
-			cm.lock.RUnlock()
+			cm.lock.Unlock()
 
 		case message := <-cm.broadcast:
-			cm.lock.RLock()
+			raw, err := json.Marshal(message)
+			if err != nil {
+				continue
+			}
+			cm.lock.Lock()
 			for client := range cm.clients {
-				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
-				if err := client.WriteJSON(message); err != nil {
-					select {
-					case cm.unregister <- client:
-					default:
-					}
+				select {
+				case client.send <- raw:
+				default:
+					close(client.send)
+					delete(cm.clients, client)
 				}
 			}
-			cm.lock.RUnlock()
-
-		case <-ticker.C:
-			cm.lock.RLock()
-			for client := range cm.clients {
-				client.SetWriteDeadline(time.Now().Add(5 * time.Second))
-				if err := client.WriteMessage(websocket.PingMessage, nil); err != nil {
-					select {
-					case cm.unregister <- client:
-					default:
-					}
-				}
-			}
-			cm.lock.RUnlock()
+			cm.lock.Unlock()
 		}
 	}
 }
 
-func (cm *ClientManager) Add(conn *websocket.Conn) {
-	cm.register <- conn
+func (cm *ClientManager) Add(client *Client) {
+	cm.register <- client
 }
 
-func (cm *ClientManager) Remove(conn *websocket.Conn) {
-	cm.unregister <- conn
+func (cm *ClientManager) Remove(client *Client) {
+	cm.unregister <- client
 }
 
 func (cm *ClientManager) BroadcastRaw(data []byte) {
@@ -244,10 +259,17 @@ func setupWSClient(c *gin.Context, manager *ClientManager) {
 		return nil
 	})
 	middlewares.IncreaseWS()
-	manager.Add(ws)
+	
+	client := &Client{
+		conn: ws,
+		send: make(chan []byte, 256),
+	}
+	manager.Add(client)
+	go client.writePump()
+
 	go func() {
 		defer middlewares.DecreaseWS()
-		defer manager.Remove(ws)
+		defer manager.Remove(client)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		for {
 			if _, _, err := ws.ReadMessage(); err != nil {
@@ -288,10 +310,17 @@ func GetWorkshopScheduleWS(c *gin.Context) {
 	}
 	workshopSchedLock.Unlock()
 	middlewares.IncreaseWS()
-	manager.Add(ws)
+
+	client := &Client{
+		conn: ws,
+		send: make(chan []byte, 256),
+	}
+	manager.Add(client)
+	go client.writePump()
+
 	go func() {
 		defer middlewares.DecreaseWS()
-		defer manager.Remove(ws)
+		defer manager.Remove(client)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		for {
 			if _, _, err := ws.ReadMessage(); err != nil {
@@ -321,10 +350,17 @@ func GetCurrentSlotInWorkshopWS(c *gin.Context) {
 	}
 	workshopCurrentSlotLock.Unlock()
 	middlewares.IncreaseWS()
-	manager.Add(ws)
+
+	client := &Client{
+		conn: ws,
+		send: make(chan []byte, 256),
+	}
+	manager.Add(client)
+	go client.writePump()
+
 	go func() {
 		defer middlewares.DecreaseWS()
-		defer manager.Remove(ws)
+		defer manager.Remove(client)
 		ws.SetReadDeadline(time.Now().Add(60 * time.Second))
 		for {
 			if _, _, err := ws.ReadMessage(); err != nil {
